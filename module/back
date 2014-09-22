@@ -1,0 +1,16 @@
+exports.add = function(title,callback) {
+    var newDb = new DB();
+    newDb.title = title;
+    newDb.save(function(err){
+        if(err){
+            util.log("FATAL"+err);
+            callback(err);
+        }else{
+            callback(null);
+        }
+    });
+
+}
+exports.list = function(callback) {
+    DB.find({}, callback);
+}

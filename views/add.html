@@ -1,0 +1,17 @@
+<% include head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<form method='post'>
+<label>微信公众平台帐号:<input type="text" name="name"></label>
+<label>密码<input type="text" name="pass"></label>
+<input type="hidden" name="phone" value="<%= phone%>">
+<input type="submit" value="注册">
+</form>
+<h3>已添加的公众号</h3>
+<ul>
+  <% list.forEach(function(i){ %>
+    <li><%= i %>123</li>
+  <% }) %>
+</ul>
+<% include foot.html %>
