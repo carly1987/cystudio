@@ -39,4 +39,5 @@ exports.add = function(req, res){
 			phone: req.session.phone
 		});
 	});
+	weixin.openLogin();
 };
