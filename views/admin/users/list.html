@@ -1,0 +1,16 @@
+<% include ../../head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<form method='post'>
+<input type="hidden" name="email" value="<%= email%>">
+<label>密码<input type="password" name="pass"></label>
+<input type="submit" value="修改">
+</form>
+<h2>用户列表</h2>
+<ul>
+  <% list.forEach(function(i){ %>
+    <li><%= i.email %>：<%= i.pass %></li>
+  <% }) %>
+</ul>
+<% include ../../foot.html %>

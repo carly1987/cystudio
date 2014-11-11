@@ -1,0 +1,11 @@
+<% include ../../head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<form method='post'>
+<label>微信公众平台帐号:<input type="text" name="username"></label>
+<label>密码<input type="password" name="pwd"></label>
+<input type="hidden" name="email" value="<%= email%>">
+<input type="submit" value="添加">
+</form>
+<% include ../../foot.html %>

@@ -13,7 +13,9 @@
     "connect-flash": "*",
     "connect-mongo": "*",
     "crypto": "*",
-    "weixin-api": "*"
+    "weixin-api": "*",
+    "urlencode":"*",
+    "moment":"*"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

@@ -1,8 +1,10 @@
-
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
-var weixin = require('./routes/weixin');
+var usersGet = require('./routes/admin/users/index');
+var usersPost = require('./routes/admin/users/user');
+var weixinGet = require('./routes/admin/weixin/index');
+var weixinPost = require('./routes/admin/weixin/weixin');
+// var weixin = require('./routes/weixin');
 var http = require('http');
 var path = require('path');
 var ejs = require('ejs');
@@ -13,7 +15,7 @@ var MongoStore = require('connect-mongo')(express);
 var flash = require('connect-flash');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', 10001);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html'); //替换文件扩展名ejs为html
@@ -42,13 +44,18 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/register', routes.register);
-app.get('/login', routes.login);
-app.get('/add', routes.add);
+app.get('/users', usersGet.users);
+app.get('/register', usersGet.register);
+app.get('/login', usersGet.login);
+app.get('/admin/main', usersGet.main);
+app.get('/admin/index', usersGet.index);
+app.get('/admin/weixin', weixinGet.index);
+app.get('/admin/weixin/add', weixinGet.add);
 
-app.post('/register', user.register);
-app.post('/login', user.login);
-app.post('/add', weixin.add);
+app.post('/register', usersPost.register);
+app.post('/login', usersPost.login);
+app.post('/users', usersPost.change);
+app.post('/weixin/add', weixinPost.add);
 
 db.connect(function(error){
     if (error) throw error;
