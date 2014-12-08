@@ -7,6 +7,9 @@ var UserScheme = new Schema({
 	email:String,
 	pass:String,
 	weixin:String,
+	name:String,
+	phone:Number,
+	qq:Number,
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });
@@ -37,6 +40,15 @@ exports.findOne = function(email,callback){
 			util.log('FATAL '+ err);
 			callback(err, null);
 		}
+		callback(null, doc);
+	});
+}
+exports.findMain = function(email,callback){
+	User.findOne({email:email},function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
 		weixin.list(email, function (err, doc){
 			if (err) {
 				return next(err);
@@ -46,19 +58,19 @@ exports.findOne = function(email,callback){
 		});
 	});
 }
-exports.changePass = function(email,pass,callback){
-	User.findOne({email:email}, function (err, doc) {
-		if (err) {
-			util.log('FATAL '+ err);
-			callback(err, null);
-		}
-		// doc.pass=pass;
-		// doc.save(function(err) {
-		// 	if (err) {
-		// 		util.log('FATAL '+ err);
-		// 		callback(err);
-		// 	} else
-		// 		callback(null);
-		// });
-	});
+exports.changePass = function(options,callback){
+    User.findOne({email:options.email},function(err,doc){
+        if (err) {
+            util.log('FATAL '+ err);
+            callback(err, null);
+        }
+        doc.pass = options.pass;
+        doc.save(function(err){
+            if(err){
+              util.log("FATAL"+err);
+            }else{
+              callback(null, doc);
+            }
+        });
+    });
 }

@@ -1,0 +1,14 @@
+<% include ../../head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<form method='post'>
+<label>账户：<%= user.email%></label>
+<label>昵称：<input type="text" name="name" <% if(user.name){%>value="<%= user.name%>"<%}%>></label>
+<label>手机号码：<input type="text" name="phone" <% if(user.phone){%>value="<%= user.phone%>"<%}%>></label>
+<label>常用QQ号码：<input type="text" name="qq" <% if(user.qq){%>value="<%= user.qq%>"<%}%>></label>
+<label>套餐类型：基础套餐</label>
+<input type="submit" value="修改">
+</form>
+
+<% include ../../foot.html %>

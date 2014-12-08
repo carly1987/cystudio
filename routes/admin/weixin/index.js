@@ -1,5 +1,7 @@
 var weixin = require('../../../module/weixin');
 var date = require('../../../pluin/date');
+var url = require("url");
+var qs = require("querystring");
 exports.index = function(req, res){
 	weixin.list(req.session.email, function (err, list) {
 		if (err) {
@@ -25,3 +27,12 @@ exports.add = function(req, res){
 		email: req.session.email
 	});
 };
+exports.del = function(req, res){
+	var name = url.parse(req.url).query;
+	name = qs.parse(name);
+	name = name["name"];
+	weixin.deleteOne(name, function(err){
+		if(err){res.redirect('/');}
+		res.redirect('admin/weixin');
+	});
+}

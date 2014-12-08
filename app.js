@@ -4,7 +4,7 @@ var usersGet = require('./routes/admin/users/index');
 var usersPost = require('./routes/admin/users/user');
 var weixinGet = require('./routes/admin/weixin/index');
 var weixinPost = require('./routes/admin/weixin/weixin');
-// var weixin = require('./routes/weixin');
+var weixin = require('./weixin');
 var http = require('http');
 var path = require('path');
 var ejs = require('ejs');
@@ -36,7 +36,8 @@ app.use(express.session({
 }));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-
+weixin.watch(app, { token: 'layzer', path: '/wechat' });
+require('./rules')(weixin);
 
 // development only
 if ('development' == app.get('env')) {
@@ -44,18 +45,20 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', usersGet.users);
+app.get('/admin/users', usersGet.users);
 app.get('/register', usersGet.register);
 app.get('/login', usersGet.login);
 app.get('/admin/main', usersGet.main);
 app.get('/admin/index', usersGet.index);
+app.get('/admin/info', usersGet.info);
 app.get('/admin/weixin', weixinGet.index);
 app.get('/admin/weixin/add', weixinGet.add);
+app.get('/admin/weixin/del', weixinGet.del);
 
 app.post('/register', usersPost.register);
 app.post('/login', usersPost.login);
-app.post('/users', usersPost.change);
-app.post('/weixin/add', weixinPost.add);
+app.post('/admin/users', usersPost.changePass);
+app.post('/admin/weixin/add', weixinPost.add);
 
 db.connect(function(error){
     if (error) throw error;
@@ -63,6 +66,7 @@ db.connect(function(error){
 app.on('close', function(errno) {
     db.disconnect(function(err) { });
 });
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

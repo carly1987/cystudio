@@ -62,12 +62,18 @@ exports.login = function(req, res, next) {
     	}
     });
 }
-exports.change = function(req,res,nex){
+exports.changePass = function(req,res,next){
   var email = req.body.email || '';
   var pass = req.body.pass || '';
   var md5 = crypto.createHash('md5');
   pass = md5.update(req.body.pass).digest('hex');
-  user.changePass(email,pass,function(){
-    req.flash('success','登录成功');
+  user.changePass({email:email, pass:pass},function(err,doc){
+    if(err){
+      res.redirect('/');
+    }
+    if(doc){
+      req.flash('success','修改成功！');
+      res.redirect('users');
+    }
   });
 }

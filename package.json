@@ -13,7 +13,9 @@
     "connect-flash": "*",
     "connect-mongo": "*",
     "crypto": "*",
-    "weixin-api": "*",
+    "wechat": "*",
+    "webot": "*",
+    "js-yaml": "*",
     "urlencode":"*",
     "moment":"*"
   },

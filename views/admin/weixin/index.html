@@ -1,9 +1,12 @@
 <% include ../../head.html %>
 <%= title%>
+<a href="weixin/add">添加公众号</a><br>
 <h3>已添加的公众号</h3>
 <ul>
   <% list.forEach(function(i){ %>
-    <li><%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%></li>
+    <li>
+    	<%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%> -- <a href="/admin/weixin/del?name=<%= i.name %>">删除</a>
+    </li>
   <% }) %>
 </ul>
 <% include ../../foot.html %>

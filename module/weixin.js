@@ -49,6 +49,17 @@ exports.findOne = function(name,callback){
 	});
 
 }
+exports.deleteOne = function(name,callback){
+	Weixin.findOne({name:name},function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		if(doc){doc.remove();}
+		callback(null);
+	});
+
+}
 exports.vertify = function(){}
 var headers = {
 			"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0", 
@@ -69,6 +80,7 @@ exports.openLogin = function(){
 	});
 }
 exports.login = function(username,pwd){
+	var cookies = '';
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/cgi-bin/login?lang=zh_cn", 
@@ -87,12 +99,11 @@ exports.login = function(username,pwd){
 	var req=https.request(options, function (res) {
 		// console.log("statusCode: ", res.statusCode); 
 		// console.log("headers: ", res.headers);
-		var cookies = '';
-		res.headers["set-cookie"].forEach(function(cookie){ 
-	        cookies += cookie.replace(/Path=\/;/g, '');  
+		
+		res.headers["set-cookie"].forEach(function(cookie){
+	        cookies += cookie.replace(/ Path=\/; Secure; HttpOnly/g, '');
 	    });
 	    exports.cookie = cookies;
-	    
 		res.on('data', function (d) {
 			// process.stdout.write(d);
 			if(res.statusCode == 200){
@@ -103,7 +114,6 @@ exports.login = function(username,pwd){
 				var tk = '';
 				var token = '';
 				if(ret == 0){
-					console.log('验证成功!');
 					var redirect_url = data.redirect_url;
 					if(redirect_url && redirect_url.trim().length>0){
 						ss = redirect_url.split('?');
@@ -122,8 +132,7 @@ exports.login = function(username,pwd){
 									tk =v.split('=');
 									if(tk[0]!='' && tk[0] == 'token'){
 										token = tk[1];
-										console.log('获取token成功');
-										return exports.index();
+										return exports.index(token);
 									}
 								}
 							});
@@ -137,16 +146,27 @@ exports.login = function(username,pwd){
 				console.log('网络连接错误！');
 				return -1;
 			}
-			
 		}); 
-	}).on('error', function (e) { console.error(e); }); 
+	}).on('error', function (e) { console.error(e); });
 	req.write(str); 
 	req.end();
 }
 exports.index = function(token){
 	https.get({
         hostname:"mp.weixin.qq.com",
-        path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token
+        path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
+        headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0", 
+            "Host": "mp.weixin.qq.com",
+            "Connection": " keep-alive",
+            "Cache-Control":"   max-age=0",
+            "Accept-Language": "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3",
+            "Accept-Encoding": "gzip, deflate", 
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            'Referer': 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token='+token,
+            'Cookie': exports.cookie
+        }
     },function(res){
         res.on('data', function(d) {
             process.stdout.write(d);
