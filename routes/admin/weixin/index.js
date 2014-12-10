@@ -10,6 +10,7 @@ exports.index = function(req, res){
 		if(list === null){
 			list = [];
 		}	
+		req.session.weixin = '';
 		res.render('admin/weixin/index', {
 			title: '管理公众号',
 			list: list,
