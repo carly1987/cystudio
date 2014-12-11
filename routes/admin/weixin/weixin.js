@@ -1,5 +1,4 @@
 var weixin = require('../../../module/weixin');
-var weixinAPI = require('weixin-api');
 var crypto = require('crypto');
 exports.add = function(req, res, next){
 	var email = req.body.email || '';
