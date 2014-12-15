@@ -17,7 +17,7 @@
 		"js-yaml": "*",
 		"urlencode":"*",
 		"moment":"*",
-		"jsdom":"*"
+		"buffer":"*"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.5",

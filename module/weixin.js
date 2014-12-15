@@ -1,7 +1,6 @@
 var https = require('https');
 var urlencode = require('urlencode');
 var querystring = require('querystring');
-var jsdom = require("jsdom");
 var url = require('url');
 var db = require('./db');
 var mongoose = db.mongoose;
@@ -210,50 +209,53 @@ exports.beDev = function(token, request){
 	req.end();
 }
 exports.getInfo = function(token, request){
-	jsdom.env({
-		url: "https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
-		scripts: ["http://code.jquery.com/jquery.js"],
-		done: function (errors, window) {
-			var $ = window.$;
-			console.log("HN Links");
-			var $div = $('.developer_info_item');
-			console.log($div.html());
+	// jsdom.env({
+	// 	url: "https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
+	// 	scripts: ["http://code.jquery.com/jquery.js"],
+	// 	done: function (errors, window) {
+	// 		var $ = window.$;
+	// 		console.log("HN Links");
+	// 		var $div = $('.developer_info_item');
+	// 		console.log($div.html());
+	// 	}
+	// });
+	var options = { 
+		hostname:"mp.weixin.qq.com", 
+		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
+		method: "GET", 
+		headers: {
+			"Host": "mp.weixin.qq.com",
+			"Accept-Encoding": "gzip, deflate, sdch", 
+			"Accept-Language": "zh-CN,zh;q=0.8",
+			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+			"Connection": "keep-alive",
+			"Cache-Control": "no-cache",
+			'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
 		}
-	});
-	// var options = { 
-	// 	hostname:"mp.weixin.qq.com", 
-	// 	path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
-	// 	method: "GET", 
-	// 	headers: {
-	// 		"Host": "mp.weixin.qq.com",
-	// 		"Accept-Encoding": "gzip, deflate, sdch", 
-	// 		"Accept-Language": "zh-CN,zh;q=0.8",
-	// 		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-	// 		"Connection": "keep-alive",
-	// 		"Cache-Control": "no-cache",
-	// 		'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
-	// 	}
-	// };
-	// var data = {
-	// 	action:'dev',
-	// 	t:'advanced/dev',
-	// 	token:token,
-	// 	lang:'zh_CN',
-	// 	f:'json'
-	// }; 
-	// var str = querystring.stringify(data);
-	// options.headers["Content-Length"] = str.length;
-	// options.headers["Cookie"] = request.session.weixin;
-	// options.headers["Referer"] = 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token='+token;
-	// var req=https.request(options, function (res) {
-	// 	if(res.statusCode == 200){
-	// 		console.log('我只想执行一次！');
-
-	// 		return {
-
-	// 		};
-	// 	}
-	// }).on('error', function (e) { console.error(e); });
-	// req.write(str); 
-	// req.end();
+	};
+	var data = {
+		action:'dev',
+		t:'advanced/dev',
+		token:token,
+		lang:'zh_CN',
+		f:'json'
+	}; 
+	var str = querystring.stringify(data);
+	options.headers["Content-Length"] = str.length;
+	options.headers["Cookie"] = request.session.weixin;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token='+token;
+	var req=https.request(options, function (res) {
+		res.setEncoding('utf8');
+		if(res.statusCode == 200){
+			console.log('我只想执行一次！');
+			res.on('data', function (d) {
+					var buf = new Buffer(d);
+					buf = buf.toString('utf8');
+					// var json = JSON.stringify(buf);
+					console.log(buf);
+			});
+		}
+	}).on('error', function (e) { console.error(e); });
+	req.write(str); 
+	req.end();
 }
