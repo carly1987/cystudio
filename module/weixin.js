@@ -111,6 +111,7 @@ exports.login = function(username,pwd, request){
 		request.session.weixin = cookies;
 		res.on('data', function (d) {
 			if(res.statusCode == 200){
+				console.log(d);
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
 				var ss = '';
@@ -214,13 +215,13 @@ exports.getInfo = function(token, request){
 		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
 		method: "GET", 
 		headers: {
-			"Host": "mp.weixin.qq.com",
-			"Accept-Encoding": "gzip, deflate, sdch", 
-			"Accept-Language": "zh-CN,zh;q=0.8",
-			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-			"Connection": "keep-alive",
-			"Cache-Control": "no-cache",
-			'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
+			'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+			'Accept-Encoding':'gzip, deflate, sdch',
+			'Accept-Language':'zh-CN,zh;q=0.8',
+			'Cache-Control':'max-age=0',
+			'Connection':'keep-alive',
+			'Host':'mp.weixin.qq.com',
+			'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
 		}
 	};
 	var data = {
@@ -233,18 +234,20 @@ exports.getInfo = function(token, request){
 	var str = querystring.stringify(data);
 	options.headers["Content-Length"] = str.length;
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token='+token;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/cgi-bin/loginpage?url=%2Fadvanced%2Fadvanced%3Faction%3Ddev%26t%3Dadvanced%2Fdev%26lang%3Dzh_CN%26token%3D'+token;
 	var req=https.request(options, function (res) {
-		// res.setEncoding('utf8');
 		if(res.statusCode == 200){
 			console.log('我只想执行一次！');
+			var data = "";
 			res.on('data', function (d) {
-				console.log(d);
-				process.stdout.write(d);
-					// var buf = new Buffer(d);
-					// buf = buf.toString('utf8');
-					// var json = JSON.stringify(buf);
-					// console.log(buf);
+				data += d;
+
+			}).on('end', function(){
+				// data = querystring.parse(data);
+				console.log(data);
+				console.log(res.headers);
+				console.log(res.body);
+				process.stdout.write(data);
 			});
 		}
 	}).on('error', function (e) { console.error(e); });
