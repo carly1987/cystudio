@@ -209,16 +209,6 @@ exports.beDev = function(token, request){
 	req.end();
 }
 exports.getInfo = function(token, request){
-	// jsdom.env({
-	// 	url: "https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
-	// 	scripts: ["http://code.jquery.com/jquery.js"],
-	// 	done: function (errors, window) {
-	// 		var $ = window.$;
-	// 		console.log("HN Links");
-	// 		var $div = $('.developer_info_item');
-	// 		console.log($div.html());
-	// 	}
-	// });
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
@@ -245,14 +235,16 @@ exports.getInfo = function(token, request){
 	options.headers["Cookie"] = request.session.weixin;
 	options.headers["Referer"] = 'https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token='+token;
 	var req=https.request(options, function (res) {
-		res.setEncoding('utf8');
+		// res.setEncoding('utf8');
 		if(res.statusCode == 200){
 			console.log('我只想执行一次！');
 			res.on('data', function (d) {
-					var buf = new Buffer(d);
-					buf = buf.toString('utf8');
+				console.log(d);
+				process.stdout.write(d);
+					// var buf = new Buffer(d);
+					// buf = buf.toString('utf8');
 					// var json = JSON.stringify(buf);
-					console.log(buf);
+					// console.log(buf);
 			});
 		}
 	}).on('error', function (e) { console.error(e); });
