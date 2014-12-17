@@ -17,7 +17,7 @@
 		"js-yaml": "*",
 		"urlencode":"*",
 		"moment":"*",
-		"buffer":"*"
+		"cheerio":"*"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.5",
