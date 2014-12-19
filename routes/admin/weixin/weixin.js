@@ -22,10 +22,21 @@ exports.add = function(req, res, next){
 					req.flash('error','公众号已经存在');
 					return res.redirect('admin/weixin/add');
 				}else{
-					weixin.login(username,pwd,req);
-					weixin.add({email:email, name:username, pass:pwd}, function(){
-						res.redirect('admin/weixin');
+					weixin.login(username,pwd,req, function(){
+						weixin.add({email:email, name:username, pass:pwd}, function(){
+							console.log('登录成功！');
+							return res.redirect('admin/weixin');
+						});
+					}, function(msg){
+						req.flash('error',msg);
+						return res.redirect('admin/weixin/add');
+					}, function(imgcode){
+						console.log(imgcode);
+						req.flash('imgcode',imgcode);
+						req.flash('error','需要输入验证码');
+						return res.redirect('admin/weixin/add');
 					});
+					
 				}
 			}
 		}); 

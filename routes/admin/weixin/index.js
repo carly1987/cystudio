@@ -21,11 +21,13 @@ exports.index = function(req, res){
 	});
 };
 exports.add = function(req, res){
+	console.log(req.session.imgcode);
 	res.render('admin/weixin/add', {
 		title: '添加公众号',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
-		email: req.session.email
+		email: req.session.email,
+		img: req.session.imgcode
 	});
 };
 exports.del = function(req, res){

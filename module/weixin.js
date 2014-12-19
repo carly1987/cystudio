@@ -75,7 +75,8 @@ exports.openLogin = function(){
 			console.log(e);
 	});
 }
-exports.login = function(username,pwd, request){
+
+exports.login = function(username,pwd, request, scb, fcb, vcb){
 	var cookies = '';
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
@@ -113,13 +114,14 @@ exports.login = function(username,pwd, request){
 		request.session.weixin = cookies;
 		res.on('data', function (d) {
 			if(res.statusCode == 200){
-				console.log(d);
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
 				var ss = '';
 				var ps = '';
 				var tk = '';
 				var token = '';
+				console.log('登录：－－－－'+ret);
+				console.log('登录：－－－－'+JSON.stringify(data));
 				if(ret == 0){
 					var redirect_url = data.redirect_url;
 					if(redirect_url && redirect_url.trim().length>0){
@@ -139,26 +141,31 @@ exports.login = function(username,pwd, request){
 									tk =v.split('=');
 									if(tk[0]!='' && tk[0] == 'token'){
 										token = tk[1];
-										return exports.beDev(token, request);
+										exports.beDev(token, request, scb, fcb);
 									}
 								}
 							});
 						}
 					}
+				}else if(ret == -8){
+					console.log('密码错误');
+					var img = 'https://mp.weixin.qq.com/cgi-bin/verifycode?r=1418976849070&username='+username;
+					vcb(img);
 				}else{
-					console.log('验证失败');
-					return ret;
+					fcb('登录失败！');
 				}
 			}else{
-				console.log('网络连接错误！');
-				return -1;
+				fcb('网络连接错误！');
 			}
 		}); 
-	}).on('error', function (e) { console.error(e); });
+	}).on('error', function (e) { 
+		console.error(e);
+		fcb(e);
+	});
 	req.write(str); 
 	req.end();
 }
-exports.beDev = function(token, request){
+exports.beDev = function(token, request, scb, fcb){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/advanced?action=agreement", 
@@ -192,26 +199,24 @@ exports.beDev = function(token, request){
 			if(res.statusCode == 200){
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
-				console.log('ret:  ---  '+ret);
 				if(ret == 0){
-					console.log('启动开发模式成功!');
-					exports.getInfo(token, request);
-					
+					exports.getInfo(token, request, scb, fcb);
 				}else{
-					console.log('启动开发模式失败');
-					return ret;
+					fcb('启动开发模式失败');
 				}
 			}else{
-				console.log('网络连接错误！');
-				return -1;
+				fcb('网络连接错误！');
 			}
 			
 		}); 
-	}).on('error', function (e) { console.error(e); }); 
+	}).on('error', function (e) { 
+		console.error(e);
+		fcb(e); 
+	}); 
 	req.write(str); 
 	req.end();
 }
-exports.getInfo = function(token, request){
+exports.getInfo = function(token, request, scb, fcb){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
@@ -245,28 +250,31 @@ exports.getInfo = function(token, request){
 			res.on('readable', function() {
 					data = res.read(res.headers['content-length']);
 					zlib.gunzip(data, function(err, d) {
-						console.log(d);
 						if(err) throw err;
 						var $ = cheerio.load(d);
 						var openBt = $('#openBt');
 						var closeBt = $('#closeBt');
 						if(openBt.length>0){
-							exports.advancedswitchform(token, request, 1);
+							exports.updateInterface(token, request, scb, fcb);
+							//exports.advancedswitchform(token, request, 1);
 						}
 						if(closeBt.length>0){
-							exports.advancedswitchform(token, request, 0);
+							exports.advancedswitchform(token, request, 0, scb, fcb);
 						};
 					});
 			})
+		}else{
+			fcb('网络连接错误！');
 		}
 	}).on('error', function (e) { 
-		console.error(e); 
+		console.error(e);
+		fcb(e); 
 	});
 	req.write(str); 
 	req.end();
 }
 
-exports.advancedswitchform=function(token, request, flag){
+exports.advancedswitchform=function(token, request, flag, scb, fcb){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/misc/skeyform?form=advancedswitchform", 
@@ -302,25 +310,31 @@ exports.advancedswitchform=function(token, request, flag){
 			if(res.statusCode == 200){
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
-				console.log('ret:  ---  '+ret);
+				console.log(JSON.stringify(data));
 				if(ret == 0){
-					console.log('启动开发模式成功!');
-					
+					if(flag == 0){
+						exports.updateInterface(token, request, scb, fcb);
+					}else{
+						console.log('scb;-----------');
+						scb();
+					}
 				}else{
-					exports.updateInterface(token, request);
-					return ret;
+					exports.updateInterface(token, request, scb, fcb);
 				}
 			}else{
-				console.log('网络连接错误！');
-				return -1;
+				fcb('网络连接错误！');
 			}
 			
 		}); 
-	}).on('error', function (e) { console.error(e); }); 
+	}).on('error', function (e) { 
+		console.error(e);
+		fcb(e);
+	}); 
 	req.write(str); 
 	req.end();
 }
-exports.updateInterface=function(token, request){
+exports.updateInterface=function(token, request, scb, fcb){
+	console.log('updateInterface');
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/advanced?action=interface&t=advanced/interface&lang=zh_CN&token="+token,
@@ -354,27 +368,26 @@ exports.updateInterface=function(token, request){
 			res.on('readable', function() {
 					data = res.read(res.headers['content-length']);
 					zlib.gunzip(data, function(err, d) {
-						console.log(d);
 						if(err) throw err;
 						var $ = cheerio.load(d);
-						var $msg = $('.main_bd .page_msg');
 						var $form = $('.main_bd form');
-						if($msg.length>0){
-							console.log('资料不全，请上传头像');
-						}
 						if($form.length>0){
-							
+							exports.callbackprofile(token, request, scb, fcb);
 						}
 					});
 			})
+		}else{
+			fcb('请先完善资料！');
 		}
 	}).on('error', function (e) { 
-		console.error(e); 
+		console.error(e);
+		fcb(e);
 	});
 	req.write(str); 
 	req.end();
 }
-exports.callbackprofile=function(token, request){
+exports.callbackprofile=function(token, request, scb, fcb){
+	console.log('callbackprofile');
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/callbackprofile?t=ajax-response&lang=zh_CN&token="+token, 
@@ -392,9 +405,14 @@ exports.callbackprofile=function(token, request){
 		}
 	}; 
 	var data = { 
-		token: token, 
-		lang: 'zh_CN',
-		t:'ajax-response'
+		// token: token, 
+		// lang: 'zh_CN',
+		// t:'ajax-response',
+		url:'http://carly.notes18.com/wechat',
+		callback_token:'layzer',
+		encoding_aeskey:'eeu5ArDNK4pw3vk96OZHE7raCxeqqXqiiTdE2q0BLzy',
+		callback_encrypt_mode:'0',
+		operation_seq:'203072567'
 	}; 
 	var str = querystring.stringify(data); 
 	options.headers["Content-Length"] = str.length;
@@ -406,21 +424,22 @@ exports.callbackprofile=function(token, request){
 			if(res.statusCode == 200){
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
-				console.log('ret:  ---  '+ret);
+				console.log(JSON.stringify(data));
 				if(ret == 0){
-					console.log('启动开发模式成功!');
-					
+					console.log('callbackprofile-启动开发模式成功!');
+					exports.advancedswitchform(token, request, 1, scb, fcb);
 				}else{
-					console.log(data.base_resp.err_msg);
-					return ret;
+					fcb('添加失败！');
 				}
 			}else{
-				console.log('网络连接错误！');
-				return -1;
+				fcb('网络连接错误！');
 			}
 			
 		}); 
-	}).on('error', function (e) { console.error(e); }); 
+	}).on('error', function (e) { 
+		console.error(e);
+		fcb(e); 
+	}); 
 	req.write(str); 
 	req.end();
 }
