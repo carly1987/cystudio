@@ -377,7 +377,7 @@ exports.updateInterface=function(token, request, scb, fcb){
 					});
 			})
 		}else{
-			fcb('请先完善资料！');
+			fcb('请先完善资料！ ');
 		}
 	}).on('error', function (e) { 
 		console.error(e);
