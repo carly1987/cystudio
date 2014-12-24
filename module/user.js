@@ -6,10 +6,10 @@ var Schema = db.Schema;
 var UserScheme = new Schema({
 	email:String,
 	pass:String,
-	weixin:String,
 	name:String,
 	phone:Number,
 	qq:Number,
+	service:String,
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });
@@ -59,18 +59,37 @@ exports.findMain = function(email,callback){
 	});
 }
 exports.changePass = function(options,callback){
-    User.findOne({email:options.email},function(err,doc){
-        if (err) {
-            util.log('FATAL '+ err);
-            callback(err, null);
-        }
-        doc.pass = options.pass;
-        doc.save(function(err){
-            if(err){
-              util.log("FATAL"+err);
-            }else{
-              callback(null, doc);
-            }
-        });
-    });
+	User.findOne({email:options.email},function(err,doc){
+		if (err) {
+				util.log('FATAL '+ err);
+				callback(err, null);
+		}
+		doc.pass = options.pass;
+		doc.save(function(err){
+				if(err){
+					util.log("FATAL"+err);
+				}else{
+					callback(null, doc);
+				}
+		});
+	});
+}
+exports.changeUser = function(options, callback){
+	User.findOne({email:options.email},function(err,doc){
+		if (err) {
+				util.log('FATAL '+ err);
+				callback(err, null);
+		}
+		doc.name = options.name;
+		doc.phone = options.phone;
+		doc.qq = options.qq;
+		doc.service = '基础套餐';
+		doc.save(function(err){
+				if(err){
+					util.log("FATAL"+err);
+				}else{
+					callback(null, doc);
+				}
+		});
+	});
 }

@@ -3,11 +3,11 @@
 <%= success%>
 <%= error%>
 <form method='post'>
-<label>账户：<%= user.email%></label>
+<label>账户：<input type="text" name="email" <% if(user.email){%>value="<%= user.email%>"<%}%> readonly></label>
 <label>昵称：<input type="text" name="name" <% if(user.name){%>value="<%= user.name%>"<%}%>></label>
 <label>手机号码：<input type="text" name="phone" <% if(user.phone){%>value="<%= user.phone%>"<%}%>></label>
 <label>常用QQ号码：<input type="text" name="qq" <% if(user.qq){%>value="<%= user.qq%>"<%}%>></label>
-<label>套餐类型：基础套餐</label>
+<label>套餐类型：<select readonly><option value="0">基础套餐</option></select></label>
 <input type="submit" value="修改">
 </form>
 

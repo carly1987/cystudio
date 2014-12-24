@@ -12,7 +12,7 @@
 <a href="weixin/add">添加公众号</a><br>
 <ul>
   <% list.forEach(function(i){ %>
-    <li><a href="index"><%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%></a></li>
+    <li><a href="index/"><%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%></a></li>
   <% }) %>
 </ul>
 <% include ../foot.html %>

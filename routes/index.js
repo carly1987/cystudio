@@ -1,43 +1,23 @@
-var user = require('../module/user');
-var weixin = require('../module/weixin');
-exports.index = function(req, res, next){
-	user.list(function (err, list) {
-		if (err) {
-				return next(err);
-		}
-		res.render('index', {
-			title: 'Express',
-			list: list
-		});
-	});
-};
-exports.register = function(req, res){
-	res.render('register', { 
-		title: '注册',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString()
-	});
-};
-exports.login = function(req, res){
-	res.render('login', { 
-		title: '登录',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString(),
-		phone: req.session.phone
-	});
-};
-exports.add = function(req, res){
-	weixin.list(function (err, list) {
-		if (err) {
-				return next(err);
-		}
-		res.render('add', {
-			title: '添加公众号',
-			list: list,
-			success:req.flash('success').toString(),
-			error:req.flash('error').toString(),
-			phone: req.session.phone
-		});
-	});
-	weixin.openLogin();
-};
+var get = require('./get');
+var post = require('./post');
+module.exports=function(app){
+	app.get('/', get.index);
+	app.get('/register', get.register);
+	app.get('/login', get.login);
+	app.get('/help', get.help);
+	app.get('/main', get.main);
+	app.get('/info', get.info);
+	app.get('/changePass', get.changePass);
+	app.get('/weixin', get.weixin);
+	app.get('/add', get.add);
+	app.get('/del', get.del);
+	app.get('/admin', get.admin);
+	app.get('/key', get.key);
+	app.get('/message', get.message);
+	app.get('/material', get.material);
+
+	app.post('/register', post.register);
+	app.post('/login', post.login);
+	app.post('/changePass', post.changePass);
+	app.post('/add', post.add);
+}

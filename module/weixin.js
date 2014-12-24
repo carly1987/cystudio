@@ -51,21 +51,23 @@ exports.findOne = function(name,callback){
 	});
 
 }
-exports.deleteOne = function(name,callback){
-	Weixin.findOne({name:name},function(err,doc){
-		if (err) {
-			util.log('FATAL '+ err);
-			callback(err, null);
-		}
-		if(doc){doc.remove();}
-		callback(null);
-	});
-
+exports.deleteOne = function(name, pass, request,fcb,callback){
+	exports.login(name, pass, request, function(){
+		console.log('停用成功！');
+		Weixin.findOne({name:name},function(err,doc){
+			if (err) {
+				util.log('FATAL '+ err);
+				callback(err, null);
+			}
+			if(doc){
+				doc.remove();
+				callback(null);
+			}
+		});
+	}, fcb, function(){
+		console.log('验证码成功！');
+	},1);
 }
-exports.vertify = function(){}
-var headers = {
-			
-		};
 exports.openLogin = function(){
 	https.get('https://mp.weixin.qq.com/', function(res) {
 		res.on('data', function(d) {
@@ -75,8 +77,8 @@ exports.openLogin = function(){
 			console.log(e);
 	});
 }
-
-exports.login = function(username,pwd, request, scb, fcb, vcb){
+//type==0,添加
+exports.login = function(username,pass, request, scb, fcb, vcb, type){
 	var cookies = '';
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
@@ -96,7 +98,7 @@ exports.login = function(username,pwd, request, scb, fcb, vcb){
 	}; 
 	var data = { 
 		username: username, 
-		pwd: pwd, 
+		pwd: pass, 
 		imgcode: "", 
 		f: "json" 
 	}; 
@@ -141,7 +143,9 @@ exports.login = function(username,pwd, request, scb, fcb, vcb){
 									tk =v.split('=');
 									if(tk[0]!='' && tk[0] == 'token'){
 										token = tk[1];
-										exports.beDev(token, request, scb, fcb);
+										request.session.token = token;
+										console.log(token);
+										exports.beDev(request, scb, fcb, type);
 									}
 								}
 							});
@@ -165,7 +169,7 @@ exports.login = function(username,pwd, request, scb, fcb, vcb){
 	req.write(str); 
 	req.end();
 }
-exports.beDev = function(token, request, scb, fcb){
+exports.beDev = function(request, scb, fcb, type){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/advanced/advanced?action=agreement", 
@@ -183,7 +187,7 @@ exports.beDev = function(token, request, scb, fcb){
 		}
 	}; 
 	var data = { 
-		token: token, 
+		token: request.session.token, 
 		lang: 'zh_CN',
 		f: 'json',
 		ajax: 1,
@@ -192,7 +196,7 @@ exports.beDev = function(token, request, scb, fcb){
 	var str = querystring.stringify(data); 
 	options.headers["Content-Length"] = str.length;
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+token;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+request.session.token;
 	var req=https.request(options, function (res) {
 		res.on('data', function (d) {
 			// process.stdout.write(d);
@@ -200,7 +204,7 @@ exports.beDev = function(token, request, scb, fcb){
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
 				if(ret == 0){
-					exports.getInfo(token, request, scb, fcb);
+					exports.getInfo(request, scb, fcb, type);
 				}else{
 					fcb('启动开发模式失败');
 				}
@@ -216,10 +220,10 @@ exports.beDev = function(token, request, scb, fcb){
 	req.write(str); 
 	req.end();
 }
-exports.getInfo = function(token, request, scb, fcb){
+exports.getInfo = function(request, scb, fcb, type){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
-		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+token,
+		path: "/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token="+request.session.token,
 		method: "GET", 
 		headers: {
 			"Host": "mp.weixin.qq.com",
@@ -234,7 +238,7 @@ exports.getInfo = function(token, request, scb, fcb){
 	var data = {
 		action:'dev',
 		t:'advanced/dev',
-		token:token,
+		token:request.session.token,
 		lang:'zh_CN',
 		f:'json'
 	}; 
@@ -242,39 +246,43 @@ exports.getInfo = function(token, request, scb, fcb){
 	options.headers["Content-Length"] = str.length;
 	options.headers["Content-type"] = 'text/html; charset=utf-8';
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+token;
-
-	var req=https.request(options, function (res) {
-		if(res.statusCode == 200){
-			var data;
-			res.on('readable', function() {
-					data = res.read(res.headers['content-length']);
-					zlib.gunzip(data, function(err, d) {
-						if(err) throw err;
-						var $ = cheerio.load(d);
-						var openBt = $('#openBt');
-						var closeBt = $('#closeBt');
-						if(openBt.length>0){
-							exports.updateInterface(token, request, scb, fcb);
-							//exports.advancedswitchform(token, request, 1);
-						}
-						if(closeBt.length>0){
-							exports.advancedswitchform(token, request, 0, scb, fcb);
-						};
-					});
-			})
-		}else{
-			fcb('网络连接错误！');
-		}
-	}).on('error', function (e) { 
-		console.error(e);
-		fcb(e); 
-	});
-	req.write(str); 
-	req.end();
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+request.session.token;
+	if(type == 0){
+		var req=https.request(options, function (res) {
+			if(res.statusCode == 200){
+				var data;
+				res.on('readable', function() {
+						data = res.read(res.headers['content-length']);
+						zlib.gunzip(data, function(err, d) {
+							if(err) throw err;
+							var $ = cheerio.load(d);
+							var openBt = $('#openBt');
+							var closeBt = $('#closeBt');
+							if(openBt.length>0){
+								exports.updateInterface(request, scb, fcb, type);
+								//exports.advancedswitchform(token, request, 1);
+							}
+							if(closeBt.length>0){
+								exports.advancedswitchform(request, 0, scb, fcb, type);
+							};
+						});
+				})
+			}else{
+				fcb('网络连接错误！');
+			}
+		}).on('error', function (e) { 
+			console.error(e);
+			fcb(e); 
+		});
+		req.write(str); 
+		req.end();
+	}else{
+		console.log('这是要删除');
+		exports.advancedswitchform(request, 0, scb, fcb, 1);
+	}
 }
 
-exports.advancedswitchform=function(token, request, flag, scb, fcb){
+exports.advancedswitchform=function(request, flag, scb, fcb, type){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
 		path: "/misc/skeyform?form=advancedswitchform", 
@@ -292,7 +300,7 @@ exports.advancedswitchform=function(token, request, flag, scb, fcb){
 		}
 	}; 
 	var data = { 
-		token: token, 
+		token: request.session.token, 
 		lang: 'zh_CN',
 		f: 'json',
 		ajax: 1,
@@ -303,23 +311,26 @@ exports.advancedswitchform=function(token, request, flag, scb, fcb){
 	var str = querystring.stringify(data); 
 	options.headers["Content-Length"] = str.length;
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+token;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+request.session.token;
 	var req=https.request(options, function (res) {
 		res.on('data', function (d) {
+			console.log('-----advancedswitchform---');
 			// process.stdout.write(d);
 			if(res.statusCode == 200){
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
-				console.log(JSON.stringify(data));
-				if(ret == 0){
-					if(flag == 0){
-						exports.updateInterface(token, request, scb, fcb);
+				if(type == 0){
+					if(ret == 0){
+						if(flag == 0){
+							exports.updateInterface(request, scb, fcb);
+						}else{
+							scb();
+						}
 					}else{
-						console.log('scb;-----------');
-						scb();
+						exports.updateInterface(request, scb, fcb);
 					}
 				}else{
-					exports.updateInterface(token, request, scb, fcb);
+					if(ret == 0){scb();}
 				}
 			}else{
 				fcb('网络连接错误！');
@@ -333,11 +344,10 @@ exports.advancedswitchform=function(token, request, flag, scb, fcb){
 	req.write(str); 
 	req.end();
 }
-exports.updateInterface=function(token, request, scb, fcb){
-	console.log('updateInterface');
+exports.updateInterface=function(request, scb, fcb){
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
-		path: "/advanced/advanced?action=interface&t=advanced/interface&lang=zh_CN&token="+token,
+		path: "/advanced/advanced?action=interface&t=advanced/interface&lang=zh_CN&token="+request.session.token,
 		method: "GET", 
 		headers: {
 			"Host": "mp.weixin.qq.com",
@@ -352,7 +362,7 @@ exports.updateInterface=function(token, request, scb, fcb){
 	var data = {
 		action:'interface',
 		t:'advanced/interface',
-		token:token,
+		token:request.session.token,
 		lang:'zh_CN',
 		f:'json'
 	}; 
@@ -360,7 +370,7 @@ exports.updateInterface=function(token, request, scb, fcb){
 	options.headers["Content-Length"] = str.length;
 	options.headers["Content-type"] = 'text/html; charset=utf-8';
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+token;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=dev&t=advanced/dev&lang=zh_CN&token='+request.session.token;
 
 	var req=https.request(options, function (res) {
 		if(res.statusCode == 200){
@@ -372,7 +382,7 @@ exports.updateInterface=function(token, request, scb, fcb){
 						var $ = cheerio.load(d);
 						var $form = $('.main_bd form');
 						if($form.length>0){
-							exports.callbackprofile(token, request, scb, fcb);
+							exports.callbackprofile(request, scb, fcb);
 						}
 					});
 			})
@@ -386,11 +396,11 @@ exports.updateInterface=function(token, request, scb, fcb){
 	req.write(str); 
 	req.end();
 }
-exports.callbackprofile=function(token, request, scb, fcb){
+exports.callbackprofile=function(request, scb, fcb){
 	console.log('callbackprofile');
 	var options = { 
 		hostname:"mp.weixin.qq.com", 
-		path: "/advanced/callbackprofile?t=ajax-response&lang=zh_CN&token="+token, 
+		path: "/advanced/callbackprofile?t=ajax-response&lang=zh_CN&token="+request.session.token, 
 		method: "POST", 
 		headers: {
 			'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -417,7 +427,7 @@ exports.callbackprofile=function(token, request, scb, fcb){
 	var str = querystring.stringify(data); 
 	options.headers["Content-Length"] = str.length;
 	options.headers["Cookie"] = request.session.weixin;
-	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=interface&t=advanced/interface&lang=zh_CN&token='+token;
+	options.headers["Referer"] = 'https://mp.weixin.qq.com/advanced/advanced?action=interface&t=advanced/interface&lang=zh_CN&token='+request.session.token;
 	var req=https.request(options, function (res) {
 		res.on('data', function (d) {
 			// process.stdout.write(d);
@@ -426,8 +436,7 @@ exports.callbackprofile=function(token, request, scb, fcb){
 				var ret = data.base_resp.ret;
 				console.log(JSON.stringify(data));
 				if(ret == 0){
-					console.log('callbackprofile-启动开发模式成功!');
-					exports.advancedswitchform(token, request, 1, scb, fcb);
+					exports.advancedswitchform(request, 1, scb, fcb);
 				}else{
 					fcb('添加失败！');
 				}

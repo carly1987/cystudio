@@ -1,9 +1,5 @@
 var express = require('express');
-var routes = require('./routes');
-var usersGet = require('./routes/admin/users/index');
-var usersPost = require('./routes/admin/users/user');
-var weixinGet = require('./routes/admin/weixin/index');
-var weixinPost = require('./routes/admin/weixin/weixin');
+var router = require('./routes/index');
 var weixin = require('./weixin');
 var http = require('http');
 var path = require('path');
@@ -43,23 +39,7 @@ require('./rules')(weixin);
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-app.get('/', routes.index);
-app.get('/admin/users', usersGet.users);
-app.get('/register', usersGet.register);
-app.get('/login', usersGet.login);
-app.get('/admin/main', usersGet.main);
-app.get('/admin/index', usersGet.index);
-app.get('/admin/info', usersGet.info);
-app.get('/admin/weixin', weixinGet.index);
-app.get('/admin/weixin/add', weixinGet.add);
-app.get('/admin/weixin/del', weixinGet.del);
-
-app.post('/register', usersPost.register);
-app.post('/login', usersPost.login);
-app.post('/admin/users', usersPost.changePass);
-app.post('/admin/weixin/add', weixinPost.add);
-
+router(app);
 db.connect(function(error){
     if (error) throw error;
 });

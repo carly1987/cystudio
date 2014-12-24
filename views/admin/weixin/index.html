@@ -5,7 +5,7 @@
 <ul>
   <% list.forEach(function(i){ %>
     <li>
-    	<%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%> -- <a href="/admin/weixin/del?name=<%= i.name %>">删除</a>
+    	<%= i.name %> -- <%= format(i.post_date)%>~<%= endDate(i.post_date, 12)%> -- <a href="/admin/weixin/del?name=<%= i.name %>&pass=<%= i.pass %>">删除</a>
     </li>
   <% }) %>
 </ul>
