@@ -1,6 +1,6 @@
 var user = require('../module/user');
 var weixin = require('../module/weixin');
-var date = require('../../../pluin/date');
+var date = require('../pluin/date');
 var url = require("url");
 var qs = require("querystring");
 //首页
@@ -29,8 +29,7 @@ exports.login = function(req, res){
 		title: '登录',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
-		phone: req.session.phone,
-		email: req.session.email
+		user: req.session.user
 	});
 };
 //帮住中心
@@ -39,12 +38,12 @@ exports.help = function(req, res){
 		title: '帮助中心',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
-		email: req.session.email
+		user: req.session.user
 	});
 }
 //账户管理
 exports.main = function(req, res, next){
-	user.findMain(req.session.email,function(err,doc){
+	user.findMain(req.session.user,function(err,doc){
 		if (err) {
 			return next(err);
 		}
@@ -53,14 +52,13 @@ exports.main = function(req, res, next){
 			user: doc,
 			list: doc.weixin,
 			format: date.dateFormat,
-			endDate: date.endDate,
-			email: req.session.email
+			endDate: date.endDate
 		});
 	});
 };
 //账户信息页
 exports.info = function(req, res){
-	user.findOne(req.session.email, function(err, doc){
+	user.findOne(req.session.user, function(err, doc){
 		if(err){
 			req.flash('error',err);
 			return res.redirect('/main');
@@ -82,23 +80,23 @@ exports.changePass = function(req, res){
 		title: '修改密码',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
-		email: req.session.email
+		user: req.session.user
 	});
 };
 //微信公众号管理
 exports.weixin = function(req, res, next){
-	weixin.list(req.session.email, function (err, list) {
+	weixin.list(req.session.user, function (err, list) {
 		if (err) {
 			return next(err);
 		}
 		if(list === null){
 			list = [];
-		}	
+		}
 		req.session.weixin = '';
 		res.render('admin/weixin/index', {
 			title: '管理公众号',
 			list: list,
-			email: req.session.email,
+			user: req.session.user,
 			format: date.dateFormat,
 			endDate: date.endDate
 		});
@@ -106,12 +104,11 @@ exports.weixin = function(req, res, next){
 };
 //微信公众号添加
 exports.add = function(req, res){
-	console.log(req.session.imgcode);
 	res.render('admin/weixin/add', {
 		title: '添加公众号',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
-		email: req.session.email,
+		user: req.session.user,
 		img: req.session.imgcode
 	});
 };
@@ -119,9 +116,9 @@ exports.add = function(req, res){
 exports.del = function(req, res){
 	var $url = url.parse(req.url).query;
 	$url = qs.parse($url);
-	name = $url["name"];
-	pass = $url["pass"];
-	weixin.deleteOne(name,pass, req, function(msg){
+	var email = $url["email"];
+	var pass = $url["pass"];
+	weixin.deleteOne(email,pass, req, function(msg){
 		req.flash('error',msg);
 		return res.redirect('/weixin');
 	}, function(err){
@@ -130,24 +127,35 @@ exports.del = function(req, res){
 	});
 }
 //公众号的配置平台
-exports.admin = function(req, res){
-	res.render('admin/stuff/index', {
-		title: '公众号配置中心',
-		email: req.session.email
+exports.admin = function(req, res, next){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var email = $url["email"];
+	req.session.email = email;
+	weixin.findOne(email, function(err, doc){
+		if (err) {
+			return next(err);
+		}
+		res.render('admin/stuff/index', {
+			title: '公众号配置中心',
+			weixin: doc
+		});
 	});
 }
 //公众号的自动回复
 exports.key = function(req, res){
 	res.render('admin/stuff/key', {
 		title: '自动回复',
-		email: req.session.email
+		email: req.session.email,
+		success:req.flash('success').toString(),
 	});
 }
 //公众号的图文消息
 exports.message = function(req, res){
 	res.render('admin/stuff/message', {
 		title: '图文消息',
-		email: req.session.email
+		email: req.session.email,
+		success:req.flash('success').toString(),
 	});
 }
 //公众号的资料库
