@@ -165,10 +165,22 @@ exports.add = function(req, res, next){
 	}
 }
 //自动回复
-exports.postAuto = function(req, res, next){
+exports.autoMessage = function(req, res, next){
+	console.log('autoMessage');
 	var autoMessage = req.body.autoMessage || '';
-	weixin.autoMessage({email:req.session.email, autoMessage:autoMessage}, function(err, doc){
+	var email = req.session.email;
+	weixin.autoMessage({email:email, autoMessage:autoMessage}, function(err, doc){
 		req.flash('success','添加成功！');
+		res.redirect('/admin/key');
 	});
 }
-
+//首次关注回复
+exports.firstMessage = function(req, res, next){
+	console.log('firstMessage');
+	var firstMessage = req.body.firstMessage || '';
+	var email = req.session.email;
+	weixin.firstMessage({email:email, firstMessage:firstMessage}, function(err, doc){
+		req.flash('success','添加成功！');
+		res.redirect('/admin/key');
+	});
+}

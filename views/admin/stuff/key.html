@@ -1,8 +1,13 @@
 <% include ../../head.html %>
 <%= title%>
+<h1>自动回复</h1>
+<form method="post" action='postAuto'>
+	<textarea name="autoMessage"><%= doc.autoMessage%></textarea>
+	<input type="submit" value="保存">
+</form>
 <h1>首次关注时自动回复</h1>
-<form method='postAuto'>
-<textarea name="autoMessage"></textarea>
-<input type="submit" value="保存">
+<form method="post" action='postFirst'>
+	<textarea name="firstMessage"><%= doc.firstMessage%></textarea>
+	<input type="submit" value="保存">
 </form>
 <% include ../../foot.html %>

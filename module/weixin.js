@@ -23,12 +23,12 @@ var WeixinScheme = new Schema({
 	qrcode:String,
 	autoMessage:String,
 	firstMessage:String,
-	key:Number,
-	single:Number,
-	multi:Number,
-	img:Number,
-	audio:Number,
-	video:Number,
+	key:String,
+	single:String,
+	multi:String,
+	img:String,
+	audio:String,
+	video:String,
 	autoMessage:String,
 	firstMessage:String,
 	post_date:{type:Date,default:Date.now}
@@ -67,14 +67,14 @@ exports.update = function(options,callback){
 		doc.desc = options.desc;
 		doc.location = options.location;
 		doc.qrcode = options.qrcode;
-		doc.autoMessage = options.autoMessage;
-		doc.firstMessage = options.firstMessage;
-		doc.key = options.key;
-		doc.single = options.single;
-		doc.multi = options.multi;
-		doc.img = options.img;
-		doc.audio = options.audio;
-		doc.video = options.video;
+		doc.autoMessage = options.autoMessage || '';
+		doc.firstMessage = options.firstMessage || '';
+		doc.key = options.key || '';
+		doc.single = options.single || '';
+		doc.multi = options.multi || '';
+		doc.img = options.img || '';
+		doc.audio = options.audio || '';
+		doc.video = options.video || '';
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -84,6 +84,25 @@ exports.update = function(options,callback){
 		});
 	});
 }
+exports.getKey = function(email,callback){
+	Weixin.findOne({email:email},function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		var list = {
+			autoMessage: doc.autoMessage,
+			firstMessage: doc.firstMessage,
+			key: doc.key,
+			single: doc.single,
+			multi: doc.multi,
+			img: doc.img,
+			audio: doc.audio,
+			video: doc.video,
+		}
+		callback(null, list);
+	});
+}
 exports.autoMessage = function(options,callback){
 	Weixin.findOne({email:options.email},function(err,doc){
 		if (err) {
@@ -91,6 +110,7 @@ exports.autoMessage = function(options,callback){
 			callback(err, null);
 		}
 		doc.autoMessage = options.autoMessage;
+		console.log('autoMessage----'+options.autoMessage);
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -106,7 +126,7 @@ exports.firstMessage = function(options,callback){
 			util.log('FATAL '+ err);
 			callback(err, null);
 		}
-		doc.autoMessage = options.firstMessage;
+		doc.firstMessage = options.firstMessage;
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);

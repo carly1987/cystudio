@@ -20,5 +20,6 @@ module.exports=function(app){
 	app.post('/login', post.login);
 	app.post('/changePass', post.changePass);
 	app.post('/weixin/add', post.add);
-	app.post('/admin/postAuto', post.postAuto);
+	app.post('/admin/postAuto', post.autoMessage);
+	app.post('/admin/postFirst', post.firstMessage);
 }

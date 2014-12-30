@@ -144,10 +144,13 @@ exports.admin = function(req, res, next){
 }
 //公众号的自动回复
 exports.key = function(req, res){
-	res.render('admin/stuff/key', {
-		title: '自动回复',
-		email: req.session.email,
-		success:req.flash('success').toString(),
+	weixin.getKey(req.session.email, function(err, doc){
+		res.render('admin/stuff/key', {
+			title: '自动回复',
+			email: req.session.email,
+			doc: doc,
+			success:req.flash('success').toString(),
+		});
 	});
 }
 //公众号的图文消息
