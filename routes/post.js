@@ -2,6 +2,7 @@ var user = require('../module/user');
 var crypto = require('crypto');
 var validator = require('validator');
 var weixin = require('../module/weixin');
+var key = require('../module/key');
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -166,7 +167,6 @@ exports.add = function(req, res, next){
 }
 //自动回复
 exports.autoMessage = function(req, res, next){
-	console.log('autoMessage');
 	var autoMessage = req.body.autoMessage || '';
 	var email = req.session.email;
 	weixin.autoMessage({email:email, autoMessage:autoMessage}, function(err, doc){
@@ -176,10 +176,21 @@ exports.autoMessage = function(req, res, next){
 }
 //首次关注回复
 exports.firstMessage = function(req, res, next){
-	console.log('firstMessage');
 	var firstMessage = req.body.firstMessage || '';
 	var email = req.session.email;
 	weixin.firstMessage({email:email, firstMessage:firstMessage}, function(err, doc){
+		req.flash('success','添加成功！');
+		res.redirect('/admin/key');
+	});
+}
+//关键字回复-添加
+exports.key = function(req, res, next){
+	var name = req.body.keyName || '';
+	var keys = req.body.keyKeys || '';
+	var fed = req.body.keyFed || '';
+	var user = req.session.user;
+	var email = req.session.email;
+	key.add({user:user, email:email, name:name, keys:keys, fed:fed}, function(err, doc){
 		req.flash('success','添加成功！');
 		res.redirect('/admin/key');
 	});

@@ -22,4 +22,5 @@ module.exports=function(app){
 	app.post('/weixin/add', post.add);
 	app.post('/admin/postAuto', post.autoMessage);
 	app.post('/admin/postFirst', post.firstMessage);
+	app.post('/admin/postKey', post.key);
 }

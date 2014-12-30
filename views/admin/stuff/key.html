@@ -1,5 +1,7 @@
 <% include ../../head.html %>
 <%= title%>
+<%= success%>
+<%= error%>
 <h1>自动回复</h1>
 <form method="post" action='postAuto'>
 	<textarea name="autoMessage"><%= doc.autoMessage%></textarea>
@@ -10,4 +12,18 @@
 	<textarea name="firstMessage"><%= doc.firstMessage%></textarea>
 	<input type="submit" value="保存">
 </form>
+<h1>关键字回复</h1>
+<form method="post" action='postkey'>
+	<label>规则名<input type="text" name="keyName"></label>
+	<label>关键字<input type="text" name="keyKeys"></label>
+	<label>回复<textarea name="keyFed"></textarea></label>
+	<input type="submit" value="保存">
+</form>
+<ul>
+	<% list.forEach(function(i){ %>
+		<li>
+			<a><%= i.name%>--<%= i.keys%></a>
+		</li>
+	<% }) %>
+</ul>
 <% include ../../foot.html %>

@@ -1,5 +1,6 @@
 var user = require('../module/user');
 var weixin = require('../module/weixin');
+var key = require('../module/key');
 var date = require('../pluin/date');
 var url = require("url");
 var qs = require("querystring");
@@ -145,11 +146,15 @@ exports.admin = function(req, res, next){
 //公众号的自动回复
 exports.key = function(req, res){
 	weixin.getKey(req.session.email, function(err, doc){
-		res.render('admin/stuff/key', {
-			title: '自动回复',
-			email: req.session.email,
-			doc: doc,
-			success:req.flash('success').toString(),
+		key.findAll(req.session.email, function(err, list){
+			res.render('admin/stuff/key', {
+				title: '自动回复',
+				email: req.session.email,
+				doc: doc,
+				list:list,
+				success:req.flash('success').toString(),
+				error:req.flash('error').toString()
+			});
 		});
 	});
 }
