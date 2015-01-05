@@ -1,0 +1,20 @@
+<% include ../../head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<h1><%= doc.title%></h1>
+<img src="<%= doc.img%>"/>
+<% list.forEach(function(i){ %>
+	<p>
+		<a href=""><%= i.title%></a>
+	</p>
+<% }) %>
+
+<form method="post">
+	<label>标题<input type="text" name="title" value="<%= doc.title%>"></label>
+	<label>作者<input type="text" name="author" value="<%= doc.author%>"></label>
+	<label>封面图<input type="file" name="img" value="上传图片"></label>
+	<label>详情<textarea name="editor"><%= doc.editor%></textarea></label>
+	<input type="submit" value="保存">
+</form>
+<% include ../../foot.html %>

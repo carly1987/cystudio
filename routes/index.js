@@ -14,6 +14,8 @@ module.exports=function(app){
 	app.get('/admin', get.admin);
 	app.get('/admin/key', get.key);
 	app.get('/admin/message', get.message);
+	app.get('/admin/single', get.single);
+	app.get('/admin/multi', get.multi);
 	app.get('/admin/material', get.material);
 
 	app.post('/register', post.register);
@@ -23,4 +25,6 @@ module.exports=function(app){
 	app.post('/admin/postAuto', post.autoMessage);
 	app.post('/admin/postFirst', post.firstMessage);
 	app.post('/admin/postKey', post.key);
+	app.post('/admin/multi', post.multi);
+	app.post('/admin/material', post.material);
 }

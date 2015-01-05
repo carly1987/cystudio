@@ -12,6 +12,7 @@
 		"mongoose": "~3.8.15",
 		"connect-flash": "*",
 		"connect-mongo": "*",
+		"weixin-robot":"*",
 		"wechat": "*",
 		"webot": "*",
 		"js-yaml": "*",

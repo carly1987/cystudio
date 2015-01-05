@@ -1,6 +1,7 @@
 var user = require('../module/user');
 var weixin = require('../module/weixin');
 var key = require('../module/key');
+var message = require('../module/message');
 var date = require('../pluin/date');
 var url = require("url");
 var qs = require("querystring");
@@ -145,25 +146,90 @@ exports.admin = function(req, res, next){
 }
 //公众号的自动回复
 exports.key = function(req, res){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
 	weixin.getKey(req.session.email, function(err, doc){
+		if (err) {
+			return next(err);
+		}
 		key.findAll(req.session.email, function(err, list){
-			res.render('admin/stuff/key', {
-				title: '自动回复',
-				email: req.session.email,
-				doc: doc,
-				list:list,
-				success:req.flash('success').toString(),
-				error:req.flash('error').toString()
-			});
+			if (err) {
+				return next(err);
+			}
+			if(id){
+				key.findOne(id, function(err, key){
+					if (err) {
+						return next(err);
+					}
+					res.render('admin/stuff/key', {
+						title: '自动回复',
+						email: req.session.email,
+						doc: doc,
+						list:list,
+						keyName:key.name,
+						keyKeys:key.keys,
+						keyFed:key.fed,
+						success:req.flash('success').toString(),
+						error:req.flash('error').toString()
+					});
+				});
+			}else{
+				res.render('admin/stuff/key', {
+						title: '自动回复',
+						email: req.session.email,
+						doc: doc,
+						list:list,
+						keyName:'',
+						keyKeys:'',
+						keyFed:'',
+						success:req.flash('success').toString(),
+						error:req.flash('error').toString()
+					});
+			}
+			
 		});
 	});
 }
 //公众号的图文消息
 exports.message = function(req, res){
-	res.render('admin/stuff/message', {
-		title: '图文消息',
-		email: req.session.email,
-		success:req.flash('success').toString(),
+	var email = req.session.email;
+	message.findAll(email, function(err, doc){
+		res.render('admin/stuff/message', {
+			title: '图文消息',
+			email: email,
+			list: doc
+		});
+	});
+}
+//单图文消息
+exports.single = function(req, res){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	var email = req.session.email;
+	message.findOne(id, function(err, doc){
+		res.render('admin/stuff/single', {
+			title: '单图文消息',
+			email: email,
+			doc: doc
+		});
+	});
+}
+//多图文消息
+exports.multi = function(req, res){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	var email = req.session.email;
+	message.findOne(id, function(err, doc){
+		var list = JSON.parse(doc.list);
+		res.render('admin/stuff/multi', {
+			title: '多图文消息',
+			email: email,
+			doc: doc,
+			list: list
+		});
 	});
 }
 //公众号的资料库

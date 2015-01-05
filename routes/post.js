@@ -195,3 +195,11 @@ exports.key = function(req, res, next){
 		res.redirect('/admin/key');
 	});
 }
+
+//添加单图文
+exports.single = function(req, res, next){
+	var title = req.body.title || '';
+	var author = req.body.author || '';
+	var img = req.body.img || '';
+	var editor = req.body.editor || '';
+}

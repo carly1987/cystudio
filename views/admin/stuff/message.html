@@ -1,8 +1,13 @@
 <% include ../../head.html %>
 <%= title%>
-<h1>首次关注时自动回复</h1>
-<form method='post'>
-<textarea></textarea>
-<input type="submit" value="保存">
-</form>
+<h1>图文消息</h1>
+<a>+添加单图文</a><br/>
+<a>+添加多图文</a><br/>
+<ul>
+<% list.forEach(function(i){ %>
+	<li>
+		<a href="?id=<%= i._id%>"><%= i.title%></a>
+	</li>
+<% }) %>
+</ul>
 <% include ../../foot.html %>
