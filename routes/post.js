@@ -1,8 +1,12 @@
 var user = require('../module/user');
+var weixin = require('../module/weixin');
 var crypto = require('crypto');
 var validator = require('validator');
-var weixin = require('../module/weixin');
+var single = require('../module/single');
+var multi = require('../module/multi');
 var key = require('../module/key');
+var url = require("url");
+var qs = require("querystring");
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -76,6 +80,7 @@ exports.login = function(req, res, next) {
 }
 //账户密码修改
 exports.changePass = function(req,res,next){
+	console.log('changePass');
 	var email = validator.trim(req.body.email) || '';
 	var pass = validator.trim(req.body.pass) || '';
 	if(!pass){
@@ -85,6 +90,8 @@ exports.changePass = function(req,res,next){
 		var md5 = crypto.createHash('md5');
 		pass = md5.update(req.body.pass).digest('hex');
 		user.changePass({email:email, pass:pass},function(err,doc){
+			console.log('doc');
+			console.log(doc);
 			if(err){
 				res.redirect('/');
 			}
@@ -101,10 +108,10 @@ exports.changeUser = function(req,res,next){
 	var name = validator.trim(req.body.name) || '';
 	var qq = validator.trim(req.body.qq) || '';
 	var phone = validator.trim(req.body.phone) || '';
-	if(phone && !validator.isMobilePhone(phone)){
+	if(phone && validator.isMobilePhone(phone)){
 		req.flash('error','请注意手机号码格式正确！');
 		res.redirect('/info');
-	}else if(qq && !validator.isNumeric(qq)){
+	}else if(qq && validator.isNumeric(qq)){
 		req.flash('error','请注意qq号码格式正确！');
 		res.redirect('/info');
 	}else{
@@ -202,4 +209,48 @@ exports.single = function(req, res, next){
 	var author = req.body.author || '';
 	var img = req.body.img || '';
 	var editor = req.body.editor || '';
+	var user = req.session.user;
+	var email = req.session.email;
+	var des = req.body.des || ''
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	if(id){
+		single.update({_id:id, title:title, author:author, img:img, des:des,editor:editor}, function(err, doc){
+			res.redirect('/admin/message');
+		});
+	}else{
+		single.add({title:title, author:author, img:img, des:des, editor:editor, user:user, email:email}, function(err, doc){
+			res.redirect('/admin/message');
+		});
+	}
 }
+//添加多图文
+exports.multi = function(req, res, next){
+	var ids = req.body.ids || '';
+	var titles = req.body.titles || '';
+	var imgs = req.body.imgs || '';
+	var user = req.session.user;
+	var email = req.session.email;
+	var title = req.body.title || '';
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	if(id){
+		multi.update({_id:id, ids:ids, titles:titles, imgs:imgs, title:title}, function(err, doc){
+			res.redirect('/admin/multi?id='+id);
+		});
+	}else{
+		multi.add({ids:ids, titles:titles, imgs:imgs, user:user, email:email, title:title}, function(err, doc){
+			res.redirect('/admin/message');
+		});
+	}
+}
+//添加素材
+exports.material = function(req, res, next){
+	var title = req.body.title || '';
+	var author = req.body.author || '';
+	var img = req.body.img || '';
+	var editor = req.body.editor || '';
+}
+

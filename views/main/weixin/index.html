@@ -1,0 +1,27 @@
+<% include ../../head.html %>
+<% include ../nav.html %>
+<div class="container-fluid">
+<div class="row">
+	<% include ../sidebar.html %>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	  <h1 class="page-header"></h1>
+	  <div class="row">
+	  	<div class="mod-weixin">
+				<a href="weixin/add" class="thumbnail weixin－add">
+				  + 添加公众号
+				</a>
+			</div>
+			<% list.forEach(function(v){ %>
+				<div class="mod-weixin">
+					<a href="admin?email=<%=v.email%>" class="thumbnail">
+					  <img src="../../public/images/1.jpg" alt="公众号1" width="60" height="60">
+					  <span><%= v.name %></span>
+					</a>
+					<a href="/weixin/del?email=<%= v.email %>&pass=<%= v.pass %>">删除</a>
+				</div>	 
+			<% }) %>
+	  </div>
+	</div>
+</div>
+</div>
+<% include ../../foot.html %>

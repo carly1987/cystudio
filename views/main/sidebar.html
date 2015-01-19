@@ -1,0 +1,9 @@
+<div class="col-sm-3 col-md-2 sidebar">
+  <ul class="nav nav-sidebar">
+		<li <% if(page == 'index'){%>class="active"<%}%> ><a href="/main">账户中心 <% if(page == 'index'){%><span class="sr-only">(current)</span><%}%></a></li>
+		<li <% if(page == 'info'){%>class="active"<%}%> ><a href="/info">账户信息 <% if(page == 'info'){%><span class="sr-only">(current)</span><%}%></a></li>
+		<li <% if(page == 'changePass'){%>class="active"<%}%> ><a href="/changePass">修改密码</a> <% if(page == 'changepass'){%><span class="sr-only">(current)</span><%}%></li>
+		<li <% if(page == 'weixin'){%>class="active"<%}%> ><a href="/weixin">公众号管理 <% if(page == 'weixin'){%><span class="sr-only">(current)</span><%}%></a></li>
+		<li <% if(page == 'help'){%>class="active"<%}%> ><a href="#">帮助中心 <% if(page == 'help'){%><span class="sr-only">(current)</span><%}%></a></li>
+  </ul>
+</div>

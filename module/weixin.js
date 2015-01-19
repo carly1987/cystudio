@@ -90,16 +90,30 @@ exports.getKey = function(email,callback){
 			util.log('FATAL '+ err);
 			callback(err, null);
 		}
-		var list = {
-			autoMessage: doc.autoMessage,
-			firstMessage: doc.firstMessage,
-			key: doc.key,
-			single: doc.single,
-			multi: doc.multi,
-			img: doc.img,
-			audio: doc.audio,
-			video: doc.video,
+		if(doc){
+			var list = {
+				autoMessage: doc.autoMessage,
+				firstMessage: doc.firstMessage,
+				key: doc.key,
+				single: doc.single,
+				multi: doc.multi,
+				img: doc.img,
+				audio: doc.audio,
+				video: doc.video,
+			}
+		}else{
+			var list = {
+				autoMessage: '',
+				firstMessage: '',
+				key: '',
+				single: '',
+				multi: '',
+				img: '',
+				audio: '',
+				video: '',
+			}
 		}
+		
 		callback(null, list);
 	});
 }
@@ -109,8 +123,7 @@ exports.autoMessage = function(options,callback){
 			util.log('FATAL '+ err);
 			callback(err, null);
 		}
-		doc.autoMessage = options.autoMessage;
-		console.log('autoMessage----'+options.autoMessage);
+		doc.autoMessage = options.autoMessage || '';
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -594,26 +607,26 @@ exports.getData=function(request, cb){
 						if(err) throw err;
 						var $ = cheerio.load(d);
 						var $content = $('.meta_content');
-						var name = $($content[0]).text().trim();
-						console.log('name--'+name);
-						var pic = 'https://mp.weixin.qq.com'+$($content[1]).find('img').attr('src');
+						var pic = 'https://mp.weixin.qq.com'+$($content[0]).find('img').attr('src');
 						console.log('pic--'+pic);
-						var weixin_id = $($content[3]).find('span').text().trim();
-						console.log('weixin_id--'+weixin_id);
-						var weixin_name = $($content[4]).find('span').text().trim();
+						var qrcode = 'https://mp.weixin.qq.com'+$($content[1]).find('img').attr('src');
+						console.log('qrcode--'+qrcode);
+						var name = $($content[2]).text().trim();
+						console.log('name--'+name);
+						var weixin_name = $($content[3]).find('span').text().trim();
 						console.log('weixin_name--'+weixin_name);
-						var type = $($content[5]).text().trim();
+						var type = $($content[4]).text().trim();
 						console.log('type--'+type);
+						var desc = $($content[5]).text().trim();
+						console.log('desc--'+desc);
 						var verify = $($content[6]).text().trim();
 						console.log('verify--'+verify);
-						var contractorinfo = $($content[7]).text().trim();
-						console.log('contractorinfo--'+contractorinfo);
-						var desc = $($content[8]).text().trim();
-						console.log('desc--'+desc);
-						var location = $($content[9]).text().trim() || '未设置';
+						var location = $($content[7]).text().trim() || '未设置';
 						console.log('location--'+location);
-						var qrcode = 'https://mp.weixin.qq.com'+$($content[10]).find('img').attr('src');
-						console.log('qrcode--'+qrcode);
+						var contractorinfo = $($content[8]).text().trim();
+						console.log('contractorinfo--'+contractorinfo);
+						var weixin_id = $($content[10]).find('span').text().trim();
+						console.log('weixin_id--'+weixin_id);	
 						if(name){
 							cb(name,pic,weixin_id,weixin_name,type,verify,contractorinfo,desc,location,qrcode);
 						}

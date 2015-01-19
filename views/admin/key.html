@@ -1,0 +1,50 @@
+<% include ../head.html %>
+<% include nav.html %>
+<div class="container-fluid">
+<div class="row">
+	<% include sidebar.html %>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
+		<div class="row">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#postAuto" role="tab" data-toggle="tab">自动回复</a></li>
+				<li role="presentation"><a href="#postFirst" role="tab" data-toggle="tab">首次关注时自动回复</a></li>
+				<li role="presentation"><a href="#postkey" role="tab" data-toggle="tab">关键字回复</a></li>
+			</ul>
+			<%= success%>
+			<%= error%>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="postAuto">
+					<form method="post" action='postAuto'>
+						<textarea name="autoMessage"><%= doc.autoMessage%></textarea>
+						<input type="submit" value="保存">
+					</form>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="postFirst">
+					<form method="post" action='postFirst'>
+						<textarea name="firstMessage"><%= doc.firstMessage%></textarea>
+						<input type="submit" value="保存">
+					</form>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="postkey">
+					<form method="post" action='postkey'>
+						<label>规则名<input type="text" name="keyName" value="<%= keyName%>"></label>
+						<label>关键字<input type="text" name="keyKeys" value="<%= keyKeys%>"></label>
+						<label>回复<textarea name="keyFed"><%= keyFed%></textarea></label>
+						<input type="submit" value="保存">
+					</form>
+					<ul>
+						<% list.forEach(function(v){ %>
+							<li>
+								<a href="?id=<%= v._id%>"><%= v.name%>--<%= v.keys%></a>
+							</li>
+						<% }) %>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+<% include ../foot.html %>

@@ -2,27 +2,27 @@ var util = require('util');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
-var MessageScheme = new Schema({
+var SingleScheme = new Schema({
 	title:String,
 	author:String,
 	img:String,
+	des:String,
 	editor:String,
+	checked:String,
 	user:String,
 	email:String,
-	list:String,
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });
 
-mongoose.model('Message', MessageScheme);
-var Message = mongoose.model('Message');
+mongoose.model('Single', SingleScheme);
+var Single = mongoose.model('Single');
 
 exports.list = function(callback) {
-	Message.find({}, callback);
+	Single.find({}, callback);
 }
-
 exports.findOne = function(id,callback){
-	Message.findOne({_id:id},function(err,doc){
+	Single.findOne({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -31,7 +31,7 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.findAll = function(email, callback){
-	Message.find({email:email}, function(err,doc){
+	Single.find({email:email}, function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -40,14 +40,15 @@ exports.findAll = function(email, callback){
 	});
 }
 exports.add = function(options, callback){
-	var newDb = new Message();
+	var newDb = new Single();
 	newDb.title = options.title;
 	newDb.author = options.author;
 	newDb.img = options.img;
+	newDb.des = options.des || '';
 	newDb.editor = options.editor;
-	newDb.list = options.list || '';
 	newDb.user = options.user;
 	newDb.email = options.email;
+	newDb.checked = '';
 	newDb.save(function(err){
 		if(err){
 				util.log("FATAL"+err);
@@ -58,14 +59,16 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Message.findOne({email:options.email},function(err,doc){
+	Single.findOne({email:options.email},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
 		}
-		doc.name = options.name;
-		doc.keys = options.keys;
-		doc.fed = options.fed;
+		doc.title = options.title;
+		doc.author = options.author;
+		doc.img = options.img;
+		doc.des = options.des || '';
+		doc.editor = options.editor;
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -73,5 +76,14 @@ exports.update = function(options,callback){
 					callback(null, doc);
 				}
 		});
+	});
+}
+exports.del = function(id, callback){
+	Single.remove({_id:id},function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		callback(null, doc);
 	});
 }

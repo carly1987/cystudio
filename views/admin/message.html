@@ -1,0 +1,22 @@
+<% include ../head.html %>
+<%= title%>
+<h1>图文消息</h1>
+<a href="/admin/single">+添加单图文</a><br/>
+<a href="/admin/multi">+添加多图文</a><br/>
+<h1>单图文消息列表</h1>
+<ul>
+<% singles.forEach(function(v){ %>
+	<li>
+		<a href="/admin/single?id=<%= v._id%>"><%= v.title%></a>----<a href="/admin/delSingle?id=<%= v._id%>">删除</a>
+	</li>
+<% }) %>
+</ul>
+<h1>多图文消息列表</h1>
+<ul>
+<% multis.forEach(function(v){ %>
+	<li>
+		<a href="/admin/multi?id=<%= v._id%>"><%= v.title%></a>----<a href="/admin/delMulti?id=<%= v._id%>">删除</a>
+	</li>
+<% }) %>
+</ul>
+<% include ../foot.html %>

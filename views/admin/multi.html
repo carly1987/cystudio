@@ -1,0 +1,29 @@
+<% include ../head.html %>
+<%= title%>
+<%if(multis){%>
+<% multis.forEach(function(v,i){ %>
+	<%if(i==0){%>
+		<h1><%= v.title%></h1>
+		<img src="<%= v.img%>"/>
+	<%}else{%>
+		<p><%= v.title%>---<img src="<%= v.img%>"/></p>
+	<%}%>
+<% }) %>
+<%}%>
+<%if(singles){%>
+<form method="post">
+<ul>
+<% singles.forEach(function(v){ %>
+	<li>
+		<input type="checkbox" class="li-single" data-id="<%=v._id%>" data-title="<%=v.title%>" data-img="<%=v.img%>" <%=v.checked%>/><%=v.title%>
+	</li>
+<% }) %>
+</ul>
+<input type="hidden" name="title" value="<%=doc.title%>" />
+<input type="hidden" name="ids" value="<%=doc.ids%>" />
+<input type="hidden" name="titles" value="<%=doc.titles%>" />
+<input type="hidden" name="imgs" value="<%=doc.imgs%>" />
+<input type="submit" value="保存"/>
+</form>
+<%}%>
+<% include ../foot.html %>

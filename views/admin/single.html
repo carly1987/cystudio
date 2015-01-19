@@ -1,0 +1,13 @@
+<% include ../head.html %>
+<%= title%>
+<%= success%>
+<%= error%>
+<form method="post">
+	<label>标题<input type="text" name="title" value="<%=doc.title%>"></label>
+	<label>作者<input type="text" name="author" value="<%=doc.author%>"></label>
+	<label>封面图<input type="file" name="img" value="上传图片"></label>
+	<label>摘要<textarea name="des"><%=doc.des%></textarea></label>
+	<label>详情<textarea name="editor"><%=doc.editor%></textarea></label>
+	<input type="submit" value="保存">
+</form>
+<% include ../foot.html %>
