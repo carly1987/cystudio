@@ -86,7 +86,6 @@ exports.info = function(req, res){
 };
 //账户密码修改页
 exports.changePass = function(req, res){
-	console.log('------');
 	res.render('main/changePass', {
 		title: '修改密码',
 		page: 'changePass',
@@ -150,7 +149,7 @@ exports.admin = function(req, res, next){
 		if (err) {
 			return next(err);
 		}
-		res.render('admin/stuff/index', {
+		res.render('admin/index', {
 			title: '公众号配置中心',
 			weixin: doc
 		});
