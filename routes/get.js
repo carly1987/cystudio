@@ -151,7 +151,8 @@ exports.admin = function(req, res, next){
 		}
 		res.render('admin/index', {
 			title: '公众号配置中心',
-			weixin: doc
+			weixin: doc,
+			page: 'index'
 		});
 	});
 }
@@ -173,7 +174,7 @@ exports.key = function(req, res){
 					if (err) {
 						return next(err);
 					}
-					res.render('admin/stuff/key', {
+					res.render('admin/key', {
 						title: '自动回复',
 						email: req.session.email,
 						doc: doc,
@@ -182,11 +183,12 @@ exports.key = function(req, res){
 						keyKeys:key.keys,
 						keyFed:key.fed,
 						success:req.flash('success').toString(),
-						error:req.flash('error').toString()
+						error:req.flash('error').toString(),
+						page: 'key'
 					});
 				});
 			}else{
-				res.render('admin/stuff/key', {
+				res.render('admin/key', {
 						title: '自动回复',
 						email: req.session.email,
 						doc: doc,
@@ -195,7 +197,8 @@ exports.key = function(req, res){
 						keyKeys:'',
 						keyFed:'',
 						success:req.flash('success').toString(),
-						error:req.flash('error').toString()
+						error:req.flash('error').toString(),
+						page: 'key'
 					});
 			}
 			
@@ -207,11 +210,12 @@ exports.message = function(req, res){
 	var email = req.session.email;
 	single.findAll(email, function(err, singles){
 		multi.findAll(email, function(err, multis){
-			res.render('admin/stuff/message', {
+			res.render('admin/message', {
 				title: '图文消息',
 				email: email,
 				singles: singles,
-				multis: multis
+				multis: multis,
+				page: 'message'
 			});
 		});
 	});
@@ -260,12 +264,13 @@ exports.single = function(req, res){
 				editor:'',
 			};
 		}
-		res.render('admin/stuff/single', {
+		res.render('admin/single', {
 			title: '单图文消息',
 			email: email,
 			doc: doc,
 			success:req.flash('success').toString(),
-			error:req.flash('error').toString()
+			error:req.flash('error').toString(),
+			page: 'message'
 		});
 	});
 }
@@ -312,20 +317,22 @@ exports.multi = function(req, res){
 					imgs: '',
 				}
 			}
-			res.render('admin/stuff/multi', {
+			res.render('admin/multi', {
 				title: '多图文消息',
 				email: email,
 				multis: multis,
 				doc: doc,
-				singles: singles
+				singles: singles,
+				page: 'message'
 			});
 		});
 	});
 }
 //公众号的资料库
 exports.material = function(req, res){
-	res.render('admin/stuff/material', {
+	res.render('admin/material', {
 		title: '资料库',
-		email: req.session.email
+		email: req.session.email,
+		page: 'material'
 	});
 }

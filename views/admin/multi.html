@@ -1,29 +1,39 @@
 <% include ../head.html %>
-<%= title%>
-<%if(multis){%>
-<% multis.forEach(function(v,i){ %>
-	<%if(i==0){%>
-		<h1><%= v.title%></h1>
-		<img src="<%= v.img%>"/>
-	<%}else{%>
-		<p><%= v.title%>---<img src="<%= v.img%>"/></p>
-	<%}%>
-<% }) %>
-<%}%>
-<%if(singles){%>
-<form method="post">
-<ul>
-<% singles.forEach(function(v){ %>
-	<li>
-		<input type="checkbox" class="li-single" data-id="<%=v._id%>" data-title="<%=v.title%>" data-img="<%=v.img%>" <%=v.checked%>/><%=v.title%>
-	</li>
-<% }) %>
-</ul>
-<input type="hidden" name="title" value="<%=doc.title%>" />
-<input type="hidden" name="ids" value="<%=doc.ids%>" />
-<input type="hidden" name="titles" value="<%=doc.titles%>" />
-<input type="hidden" name="imgs" value="<%=doc.imgs%>" />
-<input type="submit" value="保存"/>
-</form>
-<%}%>
+<% include nav.html %>
+<div class="container-fluid">
+<div class="row">
+	<% include sidebar.html %>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
+		<div class="row">
+			<%if(multis){%>
+				<% multis.forEach(function(v,i){ %>
+					<%if(i==0){%>
+						<h1><%= v.title%></h1>
+						<img src="<%= v.img%>"/>
+					<%}else{%>
+						<p><%= v.title%>---<img src="<%= v.img%>"/></p>
+					<%}%>
+				<% }) %>
+			<%}%>
+			<%if(singles){%>
+				<form class="form-horizontal" role="form" method='post'>
+				<% singles.forEach(function(v){ %>
+					<div class="checkbox">
+				    <label>
+				      <input type="checkbox" class="li-single" data-id="<%=v._id%>" data-title="<%=v.title%>" data-img="<%=v.img%>" <%=v.checked%>> <%=v.title%>
+				    </label>
+				  </div>
+				<% }) %>
+				<input type="hidden" name="title" value="<%=doc.title%>" />
+				<input type="hidden" name="ids" value="<%=doc.ids%>" />
+				<input type="hidden" name="titles" value="<%=doc.titles%>" />
+				<input type="hidden" name="imgs" value="<%=doc.imgs%>" />
+				<input type="submit" value="保存"/>
+				</form>
+			<%}%>
+		</div>
+	</div>
+	</div>
+</div>
 <% include ../foot.html %>
