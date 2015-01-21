@@ -51,7 +51,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 		next(null, 'roger that!')
 // 	}
 // });
+<<<<<<< HEAD
 // webot.watch(app, { token: 'layzer', path: '/wechat' });
+=======
+webot.watch(app, { token: 'layzer', path: '/wechat' });
+>>>>>>> FETCH_HEAD
 
 // development only
 if ('development' == app.get('env')) {

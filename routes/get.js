@@ -1,6 +1,6 @@
 var user = require('../module/user');
 var weixin = require('../module/weixin');
-var key = require('../module/key');
+var Key = require('../module/key');
 var single = require('../module/single');
 var multi = require('../module/multi');
 var date = require('../pluin/date');
@@ -165,12 +165,12 @@ exports.key = function(req, res){
 		if (err) {
 			return next(err);
 		}
-		key.findAll(req.session.email, function(err, list){
+		Key.findAll(req.session.email, function(err, list){
 			if (err) {
 				return next(err);
 			}
 			if(id){
-				key.findOne(id, function(err, key){
+				Key.findOne(id, function(err, key){
 					if (err) {
 						return next(err);
 					}
