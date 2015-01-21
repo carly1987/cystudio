@@ -7,6 +7,7 @@ var multi = require('../module/multi');
 var key = require('../module/key');
 var url = require("url");
 var qs = require("querystring");
+var webot = require('weixin-robot');
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -187,6 +188,14 @@ exports.firstMessage = function(req, res, next){
 	var email = req.session.email;
 	weixin.firstMessage({email:email, firstMessage:firstMessage}, function(err, doc){
 		req.flash('success','添加成功！');
+		webot.set('subscribe', {
+			pattern: function(info) {
+				return info.is('event') && info.param.event === 'subscribe';
+			},
+			handler: function(info) {
+				return firstMessage;
+			}
+		});
 		res.redirect('/admin/key');
 	});
 }
@@ -199,6 +208,12 @@ exports.key = function(req, res, next){
 	var email = req.session.email;
 	key.add({user:user, email:email, name:name, keys:keys, fed:fed}, function(err, doc){
 		req.flash('success','添加成功！');
+		webot.set('test', {
+			pattern: /^test/i,
+			handler: function(info, next) {
+				next(null, 'roger that!')
+			}
+		});
 		res.redirect('/admin/key');
 	});
 }
