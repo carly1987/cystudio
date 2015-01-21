@@ -14,7 +14,7 @@
 			<% list.forEach(function(v){ %>
 				<div class="mod-weixin">
 					<a href="admin?email=<%=v.email%>" class="thumbnail">
-					  <img src="../../public/images/1.jpg" alt="公众号1" width="60" height="60">
+					  <img src="<%= v.pic%>" alt="公众号1" width="60" height="60">
 					  <span><%= v.name %></span>
 					</a>
 					<a href="/weixin/del?email=<%= v.email %>&pass=<%= v.pass %>">删除</a>

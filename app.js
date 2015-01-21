@@ -35,23 +35,23 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 // weixin.watch(app, { token: 'layzer', path: '/wechat' });
 // require('./rules')(weixin);
-webot.set('hi', '你好');
+// webot.set('hi', '你好');
 
-webot.set('subscribe', {
-	pattern: function(info) {
-		return info.is('event') && info.param.event === 'subscribe';
-	},
-	handler: function(info) {
-		return '欢迎订阅微信机器人';
-	}
-});
-webot.set('test', {
-	pattern: /^test/i,
-	handler: function(info, next) {
-		next(null, 'roger that!')
-	}
-});
-webot.watch(app, { token: 'layzer', path: '/wechat' });
+// webot.set('subscribe', {
+// 	pattern: function(info) {
+// 		return info.is('event') && info.param.event === 'subscribe';
+// 	},
+// 	handler: function(info) {
+// 		return '欢迎订阅微信机器人';
+// 	}
+// });
+// webot.set('test', {
+// 	pattern: /^test/i,
+// 	handler: function(info, next) {
+// 		next(null, 'roger that!')
+// 	}
+// });
+// webot.watch(app, { token: 'layzer', path: '/wechat' });
 
 // development only
 if ('development' == app.get('env')) {
