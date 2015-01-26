@@ -19,7 +19,8 @@
 		"urlencode":"*",
 		"moment":"*",
 		"cheerio":"*",
-		"validator":"*"
+		"validator":"*",
+		"qiniu":"*"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.5",

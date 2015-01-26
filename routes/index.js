@@ -32,4 +32,5 @@ module.exports=function(app){
 	app.post('/admin/single', post.single);
 	app.post('/admin/multi', post.multi);
 	app.post('/admin/material', post.material);
+	app.post('/upload/img', post.uploadFile);
 }

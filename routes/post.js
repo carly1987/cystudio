@@ -8,6 +8,14 @@ var key = require('../module/key');
 var url = require("url");
 var qs = require("querystring");
 var webot = require('weixin-robot');
+var qiniu = require('qiniu');
+qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
+qiniu.conf.ACCESS_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
+var bucket = 'cystudio';
+var putPolicy  = new qiniu.rs.PutPolicy(bucket);
+putPolicy.callbackUrl = 'http://carly.notes18.com:4000';
+putPolicy.callbackBody = "name=$(key)";
+var token = putPolicy.token();
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -203,16 +211,21 @@ exports.firstMessage = function(req, res, next){
 exports.key = function(req, res, next){
 	var name = req.body.keyName || '';
 	var keys = req.body.keyKeys || '';
-	var fed = req.body.keyFed || '';
+	var keyFedByTxt = req.body.keyFedByTxt || '';
+	var keyFedBySelect = req.body.keyFedBySelect || '';
 	var user = req.session.user;
 	var email = req.session.email;
+	var fed = keyFedByTxt;
+	if(keyFedBySelect && keyFedBySelect!=''){
+		fed = keyFedBySelect;	
+	}
 	key.add({user:user, email:email, name:name, keys:keys, fed:fed}, function(err, doc){
 		req.flash('success','添加成功！');
-		webot.set('test', {
-			pattern: /^test/i,
-			handler: function(info, next) {
-				next(null, 'roger that!')
-			}
+		webot.set(name, {
+		  pattern: '/'+keys+'/',
+		  handler: function(info) {
+		  	return fed;
+		  },
 		});
 		res.redirect('/admin/key');
 	});
@@ -268,4 +281,26 @@ exports.material = function(req, res, next){
 	var img = req.body.img || '';
 	var editor = req.body.editor || '';
 }
-
+//上传
+exports.uploadFile = function(req, res, next){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var localFile = $url["localFile"];
+	var key = $url["key"];
+	var extra = new qiniu.io.PutExtra();
+	var uptoken = token;
+	qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
+    if(!err) {
+      // 上传成功， 处理返回值
+      res.json({
+      	key:ret.key,
+      	hash:ret.hash
+      });
+      // ret.key & ret.hash
+    } else {
+      // 上传失败， 处理返回代码
+      console.log(err);
+      // http://developer.qiniu.com/docs/v6/api/reference/codes.html
+    }
+  });
+}

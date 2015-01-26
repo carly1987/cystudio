@@ -139,6 +139,7 @@ exports.del = function(req, res){
 		return res.redirect('/weixin');
 	});
 }
+
 //公众号的配置平台
 exports.admin = function(req, res, next){
 	var $url = url.parse(req.url).query;
@@ -208,15 +209,26 @@ exports.key = function(req, res){
 //公众号的图文消息
 exports.message = function(req, res){
 	var email = req.session.email;
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var json = $url["json"] || 1;
 	single.findAll(email, function(err, singles){
 		multi.findAll(email, function(err, multis){
-			res.render('admin/message', {
-				title: '图文消息',
-				email: email,
-				singles: singles,
-				multis: multis,
-				page: 'message'
-			});
+			if(json == 0){
+				res.json({
+					code:0,
+					singles:singles,
+					multis:multis
+				});	
+			}else{
+				res.render('admin/message', {
+					title: '图文消息',
+					email: email,
+					singles: singles,
+					multis: multis,
+					page: 'message'
+				});
+			}
 		});
 	});
 }

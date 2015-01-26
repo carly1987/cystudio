@@ -4,31 +4,16 @@
 <div class="row">
 	<% include sidebar.html %>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	  <h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
-	  <div class="row">
+	  <div class="page-header">
 	  	<div class="mod-weixin">
-			<a href="#" class="thumbnail weixin－add">
-			  + 添加公众号
+			<a href="admin?email=<%=weixin.email%>" class="thumbnail">
+			  <img src="<%= weixin.pic%>" alt="<%= weixin.name%>" width="60" height="60">
+			  <span><%= weixin.name %></span>
 			</a>
-		</div>
-		<div class="mod-weixin">
-			<a href="#" class="thumbnail">
-			  <img src="../../public/images/1.jpg" alt="公众号1" width="60" height="60">
-			  <span>公众号1</span>
-			</a>
-		</div>
-		<div class="mod-weixin">
-			<a href="#" class="thumbnail">
-			  <img src="../../public/images/1.jpg" alt="公众号1" width="60" height="60">
-			  <span>公众号2</span>
-			</a>
-		</div>
-		<div class="mod-weixin">
-			<a href="#" class="thumbnail">
-			  <img src="../../public/images/1.jpg" alt="公众号1" width="60" height="60">
-			  <span>公众号3</span>
-			</a>
-		</div>
+		</div>	 
+	  </div>
+	  <div class="row">
+		222
 	  </div>
 	</div>
   </div>

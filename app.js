@@ -45,17 +45,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 		return '欢迎订阅微信机器人';
 // 	}
 // });
-// webot.set('test', {
-// 	pattern: /^test/i,
-// 	handler: function(info, next) {
-// 		next(null, 'roger that!')
-// 	}
-// });
-<<<<<<< HEAD
-// webot.watch(app, { token: 'layzer', path: '/wechat' });
-=======
+webot.set('test', {
+	pattern: /^test/i,
+	handler: function(info, next) {
+		return 'test----111';
+	}
+});
+webot.set('aa', {
+	pattern: function(info){
+		return info.Content === 'aa';
+	},
+	handler: function(info, next) {
+		return 'aa----111';
+	}
+});
 webot.watch(app, { token: 'layzer', path: '/wechat' });
->>>>>>> FETCH_HEAD
 
 // development only
 if ('development' == app.get('env')) {
