@@ -14,12 +14,14 @@ module.exports=function(app){
 	app.get('/weixin/del', get.del);
 	app.get('/admin', get.admin);
 	app.get('/admin/key', get.key);
+	app.get('/admin/key/del', get.keyDel);
 	app.get('/admin/message', get.message);
 	app.get('/admin/single', get.single);
 	app.get('/admin/multi', get.multi);
 	app.get('/admin/delSingle', get.delSingle);
 	app.get('/admin/delMulti', get.delMulti);
 	app.get('/admin/material', get.material);
+	app.get('/app/article', get.appArticle);
 
 	app.post('/register', post.register);
 	app.post('/login', post.login);

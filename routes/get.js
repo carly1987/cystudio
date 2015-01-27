@@ -206,6 +206,20 @@ exports.key = function(req, res){
 		});
 	});
 }
+//公众号的关键词回复的删除
+exports.keyDel = function(req, res){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	Key.del(id, function(err, doc){
+		if(err){
+		  res.redirect('/admin');
+		}
+		if(doc){
+		  res.redirect('/admin/key');
+		}
+	});
+}
 //公众号的图文消息
 exports.message = function(req, res){
 	var email = req.session.email;
@@ -239,11 +253,11 @@ exports.delSingle = function(req, res, next){
 	var id = $url["id"];
 	single.del(id, function(err, doc){
 		if(err){
-      res.redirect('/admin');
-    }
-    if(doc){
-      res.redirect('/admin/message');
-    }
+		  res.redirect('/admin');
+		}
+		if(doc){
+		  res.redirect('/admin/message');
+		}
 	});
 }
 //删除多图文消息
@@ -253,11 +267,11 @@ exports.delMulti = function(req, res, next){
 	var id = $url["id"];
 	multi.del(id, function(err, doc){
 		if(err){
-      res.redirect('/admin');
-    }
-    if(doc){
-      res.redirect('/admin/message');
-    }
+	  res.redirect('/admin');
+	}
+	if(doc){
+	  res.redirect('/admin/message');
+	}
 	});
 }
 //单图文消息
@@ -346,5 +360,28 @@ exports.material = function(req, res){
 		title: '资料库',
 		email: req.session.email,
 		page: 'material'
+	});
+}
+//文章页面
+exports.appArticle = function(req, res){
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var id = $url["id"];
+	single.findOne(id, function(err, doc){
+		if(!doc){
+			doc = {
+				title:'',
+				author:'',
+				img:'',
+				des:'',
+				editor:'',
+			};
+		}
+		res.render('app/article', {
+			title: '文章页面',
+			email: req.session.email,
+			user: req.session.user,
+			article: doc
+		});
 	});
 }

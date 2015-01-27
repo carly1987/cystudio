@@ -215,11 +215,9 @@ exports.key = function(req, res, next){
 	var keyFedBySelect = req.body.keyFedBySelect || '';
 	var user = req.session.user;
 	var email = req.session.email;
-	var fed = keyFedByTxt;
-	if(keyFedBySelect && keyFedBySelect!=''){
-		fed = keyFedBySelect;	
-	}
-	key.add({user:user, email:email, name:name, keys:keys, fed:fed}, function(err, doc){
+	var fed = keyFedByTxt || '';
+	var article = keyFedBySelect || '';
+	key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
 		req.flash('success','添加成功！');
 		webot.set(name, {
 		  pattern: '/'+keys+'/',
