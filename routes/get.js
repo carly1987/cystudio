@@ -348,3 +348,11 @@ exports.material = function(req, res){
 		page: 'material'
 	});
 }
+//公众号的上传
+exports.upload = function(req, res){
+	res.render('admin/upload', {
+		title: '上传',
+		email: req.session.email,
+		img: ''
+	});
+}

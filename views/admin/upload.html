@@ -1,0 +1,12 @@
+<% include ../head.html %>
+<form class="form-horizontal" role="form" method='post' action="/admin/upload" enctype="multipart/form-data">
+  <div class="form-group">
+		<label for="email" class="col-sm-2 control-label">封面图</label>
+		<div class="col-sm-10">
+			<input type="file" class="form-control" name="imgFile" value="上传图片" id="upload">
+		</div>
+  </div>
+	<input type="submit" value="保存">
+</form>
+<img src="<%= img%>"/>
+<% include ../foot.html %>

@@ -21,9 +21,9 @@ require([
 		}
 	});
 	$('#upload').change(function(e){
-		var filepath = $(this).val();
-		$.post('/upload/img?filepath='+filepath,{filepath:filepath}, function(data){
-			console.log(data);
-		});
+		// var filepath = $(this).val();
+		// $.post('/upload/img',{}, function(data){
+		// 	console.log(data);
+		// });
 	});
 });

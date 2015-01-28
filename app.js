@@ -31,6 +31,7 @@ app.use(express.session({
 		db: config.db
 	})
 }));
+app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 // weixin.watch(app, { token: 'layzer', path: '/wechat' });
