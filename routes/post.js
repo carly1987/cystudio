@@ -8,14 +8,14 @@ var key = require('../module/key');
 var url = require("url");
 var qs = require("querystring");
 var webot = require('weixin-robot');
-var qiniu = require('qiniu');
-qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
-qiniu.conf.ACCESS_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
-var bucket = 'cystudio';
-var putPolicy  = new qiniu.rs.PutPolicy(bucket);
-putPolicy.callbackUrl = 'http://carly.notes18.com:4000';
-putPolicy.callbackBody = "name=$(key)";
-var token = putPolicy.token();
+var qn = require('qn');
+var client = qn.create({
+	accessKey: 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5',
+	secretKey: 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR',
+	bucket: 'carly32fileupload',
+	domain: 'http://{bucket}.u.qiniudn.com'
+});
+
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -222,10 +222,10 @@ exports.key = function(req, res, next){
 	key.add({user:user, email:email, name:name, keys:keys, fed:fed}, function(err, doc){
 		req.flash('success','添加成功！');
 		webot.set(name, {
-		  pattern: '/'+keys+'/',
-		  handler: function(info) {
-		  	return fed;
-		  },
+			pattern: '/'+keys+'/',
+			handler: function(info) {
+				return fed;
+			},
 		});
 		res.redirect('/admin/key');
 	});
@@ -285,22 +285,18 @@ exports.material = function(req, res, next){
 exports.uploadFile = function(req, res, next){
 	var $url = url.parse(req.url).query;
 	$url = qs.parse($url);
-	var localFile = $url["localFile"];
-	var key = $url["key"];
-	var extra = new qiniu.io.PutExtra();
-	var uptoken = token;
-	qiniu.io.putFile(uptoken, key, localFile, extra, function(err, ret) {
-    if(!err) {
-      // 上传成功， 处理返回值
-      res.json({
-      	key:ret.key,
-      	hash:ret.hash
-      });
-      // ret.key & ret.hash
-    } else {
-      // 上传失败， 处理返回代码
-      console.log(err);
-      // http://developer.qiniu.com/docs/v6/api/reference/codes.html
-    }
-  });
+	var filepath = $url["filepath"];
+	client.uploadFile(filepath, {key: '../node_modules/qn/lib/client.js'}, function (err, doc) {
+		if(err){
+			res.json({
+				code:-1
+			});
+		}else{
+			res.json({
+				code:0
+			});
+		}
+		
+	});
+
 }

@@ -21,8 +21,9 @@ require([
 		}
 	});
 	$('#upload').change(function(e){
-		var localFile = $(this).val();
-		var key = '';
-		$.post('/upload/img?localFile='+localFile+'&key='+key,{localFile:localFile, key:key}, function(data){});
+		var filepath = $(this).val();
+		$.post('/upload/img?filepath='+filepath,{filepath:filepath}, function(data){
+			console.log(data);
+		});
 	});
 });
