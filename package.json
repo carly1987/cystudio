@@ -20,6 +20,7 @@
 		"moment":"*",
 		"cheerio":"*",
 		"validator":"*",
+		"qiniu":"*",
 		"qiniu":"*"
 	},
 	"devDependencies": {
