@@ -22,6 +22,7 @@ module.exports=function(app){
 	app.get('/admin/delMulti', get.delMulti);
 	app.get('/admin/material', get.material);
 	app.get('/app/article', get.appArticle);
+	app.get('/admin/upload', get.upload);
 
 	app.post('/register', post.register);
 	app.post('/login', post.login);
@@ -34,5 +35,5 @@ module.exports=function(app){
 	app.post('/admin/single', post.single);
 	app.post('/admin/multi', post.multi);
 	app.post('/admin/material', post.material);
-	app.post('/upload/img', post.uploadFile);
+	app.post('/admin/upload', post.uploadFile);
 }

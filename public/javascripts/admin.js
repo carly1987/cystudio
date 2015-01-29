@@ -1,7 +1,8 @@
 requirejs.config({
-	baseUrl: '/javascripts/'});
+  baseUrl: '/javascripts/'
+});
 require([
-		'multi'
+	'multi'
 ],function(multi){
 	$('#showSelector input[type=radio]').change(function(e){
 		var self = $(this);
@@ -21,8 +22,9 @@ require([
 		}
 	});
 	$('#upload').change(function(e){
-		var localFile = $(this).val();
-		var key = '';
-		$.post('/upload/img?localFile='+localFile+'&key='+key,{localFile:localFile, key:key}, function(data){});
+		// var filepath = $(this).val();
+		// $.post('/upload/img',{}, function(data){
+		// 	console.log(data);
+		// });
 	});
 });
