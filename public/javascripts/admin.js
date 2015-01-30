@@ -21,10 +21,14 @@ require([
 			});
 		}
 	});
-	$('#upload').change(function(e){
-		// var filepath = $(this).val();
-		// $.post('/upload/img',{}, function(data){
-		// 	console.log(data);
-		// });
+	$('#upload').change(function(){
+		var form = $(this).parents('form');
+		form.submit();
+	});
+	$('#uploadFrame').load(function(){
+		// var img = $('form').attr('data-img');
+		// console.log(img);
+		// var uploadFile = window.parent.document.getElementById("uploadFile");
+		// uploadFile.val(img);
 	});
 });

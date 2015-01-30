@@ -56,7 +56,7 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Multi.findOne({email:options.email},function(err,doc){
+	Multi.findOne({_id:options._id},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);

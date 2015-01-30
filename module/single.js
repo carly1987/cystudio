@@ -59,7 +59,7 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Single.findOne({email:options.email},function(err,doc){
+	Single.findOne({_id:options._id},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
@@ -67,7 +67,7 @@ exports.update = function(options,callback){
 		doc.title = options.title;
 		doc.author = options.author;
 		doc.img = options.img;
-		doc.des = options.des || '';
+		doc.des = options.des;
 		doc.editor = options.editor;
 		doc.save(function(err){
 				if(err){

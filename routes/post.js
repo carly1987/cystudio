@@ -236,7 +236,7 @@ exports.single = function(req, res, next){
 	$url = qs.parse($url);
 	var id = $url["id"];
 	if(id){
-		single.update({_id:id, title:title, author:author, img:img, des:des,editor:editor}, function(err, doc){
+			single.update({_id:id, title:title, author:author, img:img, des:des,editor:editor}, function(err, doc){
 			res.redirect('/admin/message');
 		});
 	}else{

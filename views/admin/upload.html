@@ -1,12 +1,25 @@
 <% include ../head.html %>
-<form class="form-horizontal" role="form" method='post' action="/admin/upload" enctype="multipart/form-data">
-  <div class="form-group">
+<style>
+<!--
+body{padding: 0;}
+-->
+</style>
+<form class="form-horizontal" role="form" method='post' action="/admin/upload" enctype="multipart/form-data" data-img="<%= img%>">
 		<label for="email" class="col-sm-2 control-label">封面图</label>
-		<div class="col-sm-10">
-			<input type="file" class="form-control" name="imgFile" value="上传图片" id="upload">
+		<div class="col-sm-10 btn-file">
+			<a class="btn btn-primary">上传图片</a>
+			<input type="file" name="imgFile" value="上传图片" id="upload">
 		</div>
-  </div>
-	<input type="submit" value="保存">
 </form>
 <img src="<%= img%>"/>
 <% include ../foot.html %>
+<script>
+$(function(){
+	var img = $('form').attr('data-img');
+	if(img && img!=''){
+		var uploadFile = $(window.parent.document.getElementById("uploadFile"));
+		console.log(uploadFile);
+		uploadFile.val(img);
+	}
+});
+</script>

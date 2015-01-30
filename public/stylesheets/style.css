@@ -85,3 +85,14 @@ body {
   height: 80px;
 }
 .page-header{overflow: hidden;}
+iframe{border:0; background: transparent; width: 100%; overflow: hidden;}
+.btn-file{position: relative; height: 34px; width: 100px; overflow: hidden;}
+.btn-file input{
+  opacity: 0;
+  width: 200%;
+  position: absolute;
+  height: 200%;
+  top:0;
+  left: 0;
+}
+#upload{background: #ccc;}
