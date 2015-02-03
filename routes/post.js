@@ -297,13 +297,13 @@ exports.uploadFile = function(req, res, next){
 			qiniu.io.put(uptoken, 'img/' + req.files['imgFile'].name, data, extra, function(err, ret) {
 					if(!err) {
 						var imgUrl = 'http://carly32fileupload.qiniudn.com/' + ret.key;
-						res.render('admin/upload', {
+						res.render('mod/upload', {
 							title: '上传',
 							email: req.session.email,
 							img: imgUrl
 						});
 					} else {
-						res.render('admin/upload', {
+						res.render('mod/upload', {
 							title: '上传',
 							email: req.session.email,
 							img: 'imgUrl'

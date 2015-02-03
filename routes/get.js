@@ -387,8 +387,16 @@ exports.appArticle = function(req, res){
 }
 //公众号的上传
 exports.upload = function(req, res){
-	res.render('admin/upload', {
+	res.render('mod/upload', {
 		title: '上传',
+		email: req.session.email,
+		img: ''
+	});
+}
+//公众号的上传
+exports.wysiwyg = function(req, res){
+	res.render('mod/wysiwyg', {
+		title: '富文本编辑',
 		email: req.session.email,
 		img: ''
 	});
