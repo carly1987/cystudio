@@ -10,6 +10,7 @@ var qs = require("querystring");
 var webot = require('weixin-robot');
 var fs = require('fs');
 var qiniu = require('qiniu');
+var material = require('../module/material')
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -301,6 +302,12 @@ exports.uploadFile = function(req, res, next){
 							title: '上传',
 							email: req.session.email,
 							img: imgUrl
+						});
+						material.add({
+							type: 'img',
+							url: imgUrl,
+							user: req.session.user,
+							email: req.session.email
 						});
 					} else {
 						res.render('mod/upload', {
