@@ -25,10 +25,10 @@ require([
 		var form = $(this).parents('form');
 		form.submit();
 	});
-	$('#uploadFrame').load(function(){
-		// var img = $('form').attr('data-img');
-		// console.log(img);
-		// var uploadFile = window.parent.document.getElementById("uploadFile");
-		// uploadFile.val(img);
+	var hash = location.hash;
+	$('a[href=' + hash + ']').tab('show');
+	$('[data-toggle="tab"]').click(function(e){
+		var href = $(this).attr('href');
+		window.location.href = href;
 	});
 });
