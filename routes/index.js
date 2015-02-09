@@ -40,10 +40,8 @@ module.exports=function(app){
 	app.get('/admin/material', get.material);
 	app.get('/app/article', checkLogin);
 	app.get('/app/article', get.appArticle);
-	app.get('/mod/upload', checkLogin);
-	app.get('/mod/upload', get.upload);
-	app.get('/mod/wysiwyg', checkLogin);
-	app.get('/mod/wysiwyg', get.wysiwyg);
+	app.get('/materials', checkLogin);
+	app.get('/materials', get.materials);
 
 	app.post('/register', checkNotLogin);
 	app.post('/register', post.register);
@@ -71,18 +69,18 @@ module.exports=function(app){
 	app.post('/mod/upload', post.uploadFile);
 }
 function checkLogin(req, res, next){
-    if(!req.session.user){
-        req.flash('error','未登录'); 
-        return res.redirect('/login');
-    }
-    next();
+	if(!req.session.user){
+			req.flash('error','未登录'); 
+			return res.redirect('/login');
+	}
+	next();
 }
 
 
 function checkNotLogin(req,res,next){
-    if(req.session.user){
-        req.flash('error','已登录'); 
-        return res.redirect('/');
-    }
-    next();
+	if(req.session.user){
+			req.flash('error','已登录'); 
+			return res.redirect('/');
+	}
+	next();
 }

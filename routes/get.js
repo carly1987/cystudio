@@ -6,6 +6,7 @@ var multi = require('../module/multi');
 var date = require('../pluin/date');
 var url = require("url");
 var qs = require("querystring");
+var material = require('../module/material');
 //首页
 exports.index = function(req, res, next){
 	user.list(function (err, list) {
@@ -367,6 +368,7 @@ exports.appArticle = function(req, res){
 	var $url = url.parse(req.url).query;
 	$url = qs.parse($url);
 	var id = $url["id"];
+	var email = req.session.email;
 	single.findOne(id, function(err, doc){
 		if(!doc){
 			doc = {
@@ -385,19 +387,16 @@ exports.appArticle = function(req, res){
 		});
 	});
 }
-//公众号的上传
-exports.upload = function(req, res){
-	res.render('mod/upload', {
-		title: '上传',
-		email: req.session.email,
-		img: ''
-	});
-}
-//公众号的上传
-exports.wysiwyg = function(req, res){
-	res.render('mod/wysiwyg', {
-		title: '富文本编辑',
-		email: req.session.email,
-		img: ''
+//素材库
+exports.materials = function(req, res){
+	var email = req.session.email;
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var type = $url["type"];
+	var json = $url["json"] || 1;
+	material.findAll(email, type, function(err, doc){
+		res.json({
+			list:doc
+		});
 	});
 }

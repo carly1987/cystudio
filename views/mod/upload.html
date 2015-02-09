@@ -1,25 +1,35 @@
-<% include ../head.html %>
-<style>
-<!--
-body{padding: 0;}
--->
-</style>
-<form class="form-horizontal" role="form" method='post' action="" enctype="multipart/form-data" data-img="<%= img%>">
-		<label for="email" class="col-sm-2 control-label">封面图</label>
-		<div class="col-sm-10 btn-file">
-			<a class="btn btn-primary">上传图片</a>
-			<input type="file" name="imgFile" value="上传图片" id="upload">
+<div role="tabpanel">
+<ul class="nav nav-tabs nav-justified nav-pills" role="tablist">
+	<li role="presentation" class="active"><a href="#materialsImg" aria-controls="materialsImg" role="tab" data-toggle="tab">从图片库选择</a></li>
+	<li role="presentation"><a href="#uploadImg" aria-controls="uploadImg" role="tab" data-toggle="tab">本地上传</a></li>
+</ul>
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="materialsImg">
+		<div class="row">
+			<div class="col-xs-6 col-md-3">
+				<a href="#" class="thumbnail">
+					<img src="..." alt="...">
+				</a>
+			</div>
+			<div class="col-xs-6 col-md-3">
+				<a href="#" class="thumbnail">
+					<img src="..." alt="...">
+				</a>
+			</div>
+			<div class="col-xs-6 col-md-3">
+				<a href="#" class="thumbnail">
+					<img src="..." alt="...">
+				</a>
+			</div>
 		</div>
-</form>
-<img src="<%= img%>"/>
-<% include ../foot.html %>
-<script>
-$(function(){
-	var img = $('form').attr('data-img');
-	if(img && img!=''){
-		var uploadFile = $(window.parent.document.getElementById("uploadFile"));
-		console.log(uploadFile);
-		uploadFile.val(img);
-	}
-});
-</script>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="uploadImg">
+		<form class="form-horizontal" role="form" method='post' action="/mod/upload" enctype="multipart/form-data" data-img="">
+			<div class="btn-file">
+				<a class="btn btn-primary">上传图片</a>
+				<input type="file" name="imgFile" value="上传图片" id="upload">
+			</div>
+		</form>
+	</div>
+</div>
+</div>

@@ -10,7 +10,7 @@ var qs = require("querystring");
 var webot = require('weixin-robot');
 var fs = require('fs');
 var qiniu = require('qiniu');
-var material = require('../module/material')
+var material = require('../module/material');
 //注册
 exports.register = function(req, res, next){
 	var email = validator.trim(req.body.email) || '';
@@ -276,49 +276,46 @@ exports.material = function(req, res, next){
 }
 //上传
 exports.uploadFile = function(req, res, next){
-	console.log(req.files);
-	if(req.files['imgFile'].size == 0){
-				fs.unlinkSync(req.files[i].path);
-				console.log(' Successsfully removed an empty file!');
-	} else {
-		var target_path = '../upload' + req.files['imgFile'].name;
-		//使用同步方式重命名一个文件
-		var readStream = fs.createReadStream(req.files['imgFile'].path);
-		var writeStream = fs.createWriteStream(target_path);
-		readStream.pipe(writeStream, function(){
-				fs.unlinkSync(req.files[i].path);
-		});
-		qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
-		qiniu.conf.SECRET_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
-		var uptoken = new qiniu.rs.PutPolicy('carly32fileupload').token();
-		var extra = new qiniu.io.PutExtra();
-		// console.log( "file is exists ? " + fs.existsSync(target_path));
-		fs.readFile(target_path, function(err, data){
-			console.log("data length is " + data.length);
-			qiniu.io.put(uptoken, 'img/' + req.files['imgFile'].name, data, extra, function(err, ret) {
-					if(!err) {
-						var imgUrl = 'http://carly32fileupload.qiniudn.com/' + ret.key;
-						res.render('mod/upload', {
-							title: '上传',
-							email: req.session.email,
-							img: imgUrl
-						});
-						material.add({
-							type: 'img',
-							url: imgUrl,
-							user: req.session.user,
-							email: req.session.email
-						});
-					} else {
-						res.render('mod/upload', {
-							title: '上传',
-							email: req.session.email,
-							img: 'imgUrl'
-						});					
-					}
-					res.end();
-					fs.unlinkSync(target_path);
-			});
-		});
-	}
+	console.log(req);
+	// if(req.files['imgFile'].size == 0){
+	// 			fs.unlinkSync(req.files[i].path);
+	// 			console.log(' Successsfully removed an empty file!');
+	// } else {
+	// 	var target_path = '../upload' + req.files['imgFile'].name;
+	// 	//使用同步方式重命名一个文件
+	// 	var readStream = fs.createReadStream(req.files['imgFile'].path);
+	// 	var writeStream = fs.createWriteStream(target_path);
+	// 	readStream.pipe(writeStream, function(){
+	// 			fs.unlinkSync(req.files[i].path);
+	// 	});
+	// 	qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
+	// 	qiniu.conf.SECRET_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
+	// 	var uptoken = new qiniu.rs.PutPolicy('carly32fileupload').token();
+	// 	var extra = new qiniu.io.PutExtra();
+	// 	// console.log( "file is exists ? " + fs.existsSync(target_path));
+	// 	fs.readFile(target_path, function(err, data){
+	// 		console.log("data length is " + data.length);
+	// 		qiniu.io.put(uptoken, 'img/' + req.files['imgFile'].name, data, extra, function(err, ret) {
+	// 				if(!err) {
+	// 					var imgUrl = 'http://carly32fileupload.qiniudn.com/' + ret.key;
+	// 					material.add({
+	// 						type: 'img',
+	// 						url: imgUrl,
+	// 						user: req.session.user,
+	// 						email: req.session.email
+	// 					}, function(err){
+	// 						res.json({
+	// 							img: imgUrl
+	// 						});
+	// 					});
+	// 				} else {
+	// 					res.json({
+	// 						img: ''
+	// 					});				
+	// 				}
+	// 				res.end();
+	// 				fs.unlinkSync(target_path);
+	// 		});
+	// 	});
+	// }
 }

@@ -18,7 +18,7 @@ exports.list = function(callback) {
 	Material.find({}, callback);
 }
 
-exports.findOne = function(id,callback){
+exports.findOne = function(id, callback){
 	Material.findOne({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
@@ -27,8 +27,8 @@ exports.findOne = function(id,callback){
 		callback(null, doc);
 	});
 }
-exports.findAll = function(email, callback){
-	Material.find({email:email}, function(err,doc){
+exports.findAll = function(email, type, callback){
+	Material.find({email:email, type:type}, function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);

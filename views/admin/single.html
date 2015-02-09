@@ -25,7 +25,7 @@
 					<input name="img" type="hidden" id="uploadFile" value="<%=doc.img%>"/>
 					<label for="email" class="col-sm-2 control-label">封面图</label>
 					<div class="col-sm-10">
-						<a class="btn btn-primary" data-toggle="modal" data-target="#myModal">选择图片</a>
+						<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#myModal">选择图片</a>
 					</div>
 					<!-- <iframe src="/mod/upload" height="50" id="uploadFrame"></iframe> -->
 				</div>
@@ -39,7 +39,7 @@
 					<label for="email" class="col-sm-2 control-label">详情</label>
 					<div class="col-sm-10">
 						<textarea class="form-control hide" name="editor"><%=doc.editor%></textarea>
-						<iframe src="/mod/wysiwyg" height="400" id="uploadFrame"></iframe>
+						
 					</div>
 				</div>
 				<input type="submit" value="保存">
@@ -52,41 +52,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
-				<div role="tabpanel">
-					<ul class="nav nav-tabs nav-justified nav-pills" role="tablist" id="myModalLabel">
-						<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">从图片库选择</a></li>
-						<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">本地上传</a></li>
-					</ul>
-					<div class="tab-content">
-					  <div role="tabpanel" class="tab-pane active" id="home">
-					  	<div class="row">
-								<div class="col-xs-6 col-md-3">
-									<a href="#" class="thumbnail">
-										<img src="..." alt="...">
-									</a>
-								</div>
-								<div class="col-xs-6 col-md-3">
-									<a href="#" class="thumbnail">
-										<img src="..." alt="...">
-									</a>
-								</div>
-								<div class="col-xs-6 col-md-3">
-									<a href="#" class="thumbnail">
-										<img src="..." alt="...">
-									</a>
-								</div>
-							</div>
-					  </div>
-					  <div role="tabpanel" class="tab-pane" id="profile">
-					  	<form class="form-horizontal" role="form" method='post' action="/admin/upload" enctype="multipart/form-data">
-								<div class="btn-file">
-									<a class="btn btn-primary">上传图片</a>
-									<input type="file" name="imgFile" value="上传图片" id="upload">
-								</div>
-						</form>
-					  </div>
-				</div>
-				</div>
+				<% include ../mod/upload.html %>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
