@@ -276,9 +276,10 @@ exports.material = function(req, res, next){
 }
 //上传
 exports.uploadFile = function(req, res, next){
-	var files = res.req['body'];
-	// files = JSON.parse(files);
-	console.log('--json--');
+	var files = req.body;
+	console.log('--jsonss--');
+	console.log(files);
+	files = JSON.stringify(files);
 	console.log(files);
 	res.end();
 	// if(req.files['imgFile'].size == 0){

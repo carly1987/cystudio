@@ -69,9 +69,10 @@ require([
 		});
 	});
 	$('#upload').change(function(){
-		var files = $(this)[0].files;
+		var files = $(this)[0].files[0];
 		var data = {files:files};
 		data = JSON.stringify(data);
+		console.log(data);
 		$.post('/mod/upload',data,function(r){
 			// console.log(r);
 		})
