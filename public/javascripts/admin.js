@@ -70,8 +70,10 @@ require([
 	});
 	$('#upload').change(function(){
 		var files = $(this)[0].files;
-		$.post('/mod/upload',{files:files},function(data){
-			console.log(data);
+		var data = {files:files};
+		data = JSON.stringify(data);
+		$.post('/mod/upload',data,function(r){
+			// console.log(r);
 		})
 	});
 });

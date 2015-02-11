@@ -276,7 +276,11 @@ exports.material = function(req, res, next){
 }
 //上传
 exports.uploadFile = function(req, res, next){
-	console.log(req);
+	var files = res.req['body'];
+	// files = JSON.parse(files);
+	console.log('--json--');
+	console.log(files);
+	res.end();
 	// if(req.files['imgFile'].size == 0){
 	// 			fs.unlinkSync(req.files[i].path);
 	// 			console.log(' Successsfully removed an empty file!');
