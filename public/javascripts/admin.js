@@ -60,20 +60,48 @@ require([
 		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
 		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
 	};
-	//initToolbarBootstrapBindings();  
-	//$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
-	//window.prettyPrint && prettyPrint();
+	initToolbarBootstrapBindings();  
+	$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+	window.prettyPrint && prettyPrint();
 	$('.ajax-img').click(function(){
 		$.get('/materials?json=0&type=img', function(data){
 			$('#materialsImg').html(data);
 		});
 	});
-	$('#upload').change(function(){
-		var files = $(this)[0].files;
-		var data = {files:files};
-		data = JSON.stringify(data);
-		$.post('/mod/upload',data,function(r){
-			// console.log(r);
-		})
+	$('#uploadImgBtn').change(function(){
+		var form = $(this).parents('form');
+		form.submit();
+		// var files = $(this)[0].files[0];
+		// var data = {
+		// 	name:files.name,
+		// 	size:files.size,
+		// 	path:$(this).val()
+		// };
+		// $.post('/mod/upload',data,function(r){
+		// 	console.log(r);
+		// });
+	});
+	$('#uploadImgConfirm').click(function(e){
+		var img = document.getElementById('uploadImgIframe').contentWindow.document.getElementById('uploadImgTag').src;
+		$('#myModal').modal('hide');
+		var self = $(this);
+		var stage = self.attr('data-stage');
+		if(stage == 1){
+			$('#uploadImgValue').val(img);
+		}else{
+			document.execCommand('insertimage',false, img);
+		}	
+	});
+	$('#myModal').on('show.bs.modal', function (e) {
+	  var button = $(e.relatedTarget);
+	  var stage = button.data('stage');
+	  var modal = $(this);
+	  $('#uploadImgConfirm').attr('data-stage',stage);
+	});
+	$('#editor').blur(function(e){
+		var self = $(this);
+		var html = self.html();
+		$('#uploadImgText').val(html);
+		console.log($('#uploadImgText').val());
 	});
 });

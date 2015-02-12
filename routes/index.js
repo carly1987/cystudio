@@ -42,6 +42,8 @@ module.exports=function(app){
 	app.get('/app/article', get.appArticle);
 	app.get('/materials', checkLogin);
 	app.get('/materials', get.materials);
+	app.get('/mod/uploadImg', checkLogin);
+	app.get('/mod/uploadImg', get.uploadImg);
 
 	app.post('/register', checkNotLogin);
 	app.post('/register', post.register);
@@ -65,8 +67,8 @@ module.exports=function(app){
 	app.post('/admin/multi', post.multi);
 	app.post('/admin/material', checkLogin);
 	app.post('/admin/material', post.material);
-	app.post('/mod/upload', checkLogin);
-	app.post('/mod/upload', post.uploadFile);
+	app.post('/mod/uploadImg', checkLogin);
+	app.post('/mod/uploadImg', post.uploadImg);
 }
 function checkLogin(req, res, next){
 	if(!req.session.user){
@@ -79,8 +81,8 @@ function checkLogin(req, res, next){
 
 function checkNotLogin(req,res,next){
 	if(req.session.user){
-			req.flash('error','已登录'); 
-			return res.redirect('/');
+		req.flash('error','已登录'); 
+		return res.redirect('/main');
 	}
 	next();
 }

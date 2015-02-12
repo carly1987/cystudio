@@ -1,0 +1,26 @@
+<% include ../head.html %>
+<style>
+<!--
+body{padding: 0;}
+-->
+</style>
+<%= success%>
+<%= error%>
+<form class="form-horizontal" role="form" method='post' action="/mod/uploadImg" enctype="multipart/form-data" data-img="">
+	<div class="btn-file col-xs-6 col-md-3">
+		<a class="btn btn-primary">上传图片</a>
+		<input type="file" name="imgFile" value="上传图片" id="uploadImgBtn">
+	</div>
+	<div class="col-xs-6 col-md-3">
+		<%if(img!=''){%>
+		<a href="#" class="thumbnail">
+			<img src="<%= img%>" id="uploadImgTag">
+		</a>
+		<%}%>
+	</div>
+</form>
+
+<% include ../foot.html %>
+<script>
+
+</script>

@@ -400,3 +400,12 @@ exports.materials = function(req, res){
 		});
 	});
 }
+//上传图片
+exports.uploadImg = function(req, res){
+	res.render('mod/uploadImg', {
+		title: '上传图片',
+		img: '',
+		success:'',
+		error:'',
+	});
+}
