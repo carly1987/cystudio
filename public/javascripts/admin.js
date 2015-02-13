@@ -102,6 +102,5 @@ require([
 		var self = $(this);
 		var html = self.html();
 		$('#uploadImgText').val(html);
-		console.log($('#uploadImgText').val());
 	});
 });
