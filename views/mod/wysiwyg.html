@@ -94,8 +94,12 @@ div[data-role="editor-toolbar"] {
 			<a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
 			<a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
 		</div>
+		<div class="btn-group">
+			<a class="btn" data-edit="source" title="view source code"><i class="icon-eye-open"></i></a>
+		</div>
 		<input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
 </div>
+<textarea class="form-control hide" name="editor" id="uploadImgText"><%=doc.editor%></textarea>
 <div id="editor">
 		Go ahead&hellip;
 </div>

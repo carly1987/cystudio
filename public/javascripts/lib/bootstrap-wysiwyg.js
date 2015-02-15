@@ -140,6 +140,12 @@
 					saveSelection();
 					this.value = '';
 				});
+				//view socure code
+				toolbar.find('a[data-'+options.commandRole+'=source]').click(function(e){
+					var html = editor.html();
+					$('#uploadImgText').removeClass('hide').html(html);
+					editor.hide();
+				});
 			},
 			initFileDrops = function () {
 				editor.on('dragenter dragover', false)
