@@ -142,9 +142,20 @@
 				});
 				//view socure code
 				toolbar.find('a[data-'+options.commandRole+'=source]').click(function(e){
-					var html = editor.html();
-					$('#uploadImgText').removeClass('hide').html(html);
-					editor.hide();
+					var self = $(e.target);
+					var textarea = $('#uploadImgText');
+					self.toggleClass('icon-eye-close');
+					if(self.hasClass('icon-eye-close')){
+						var html = editor.html();
+						textarea.removeClass('hide').html(html);
+						editor.hide();
+					}else{
+						var html = textarea.val();
+						console.log(html);
+						textarea.addClass('hide');
+						editor.html(html).show();
+					}
+					
 				});
 			},
 			initFileDrops = function () {
