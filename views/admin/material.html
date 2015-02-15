@@ -14,7 +14,15 @@
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="pic">
-					000
+					<div class="row">
+						<% multis.forEach(function(v,i){ %>
+						<div class="col-xs-6 col-md-3">
+							<a href="#" class="thumbnail">
+								<img src="..." alt="...">
+							</a>
+						</div>
+						<%}%>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="audio">
 					000

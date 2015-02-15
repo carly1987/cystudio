@@ -357,10 +357,28 @@ exports.multi = function(req, res){
 }
 //公众号的资料库
 exports.material = function(req, res){
-	res.render('admin/material', {
-		title: '资料库',
-		email: req.session.email,
-		page: 'material'
+	var email = req.session.email;
+	material.findAll(email, 'img', function(err, doc){
+		res.render('admin/material', {
+			title: '资料库',
+			email: email,
+			page: 'material',
+			list: doc.list
+		});
+	});
+	
+}
+//素材库
+exports.materials = function(req, res){
+	var email = req.session.email;
+	var $url = url.parse(req.url).query;
+	$url = qs.parse($url);
+	var type = $url["type"];
+	var json = $url["json"] || 1;
+	material.findAll(email, type, function(err, doc){
+		res.json({
+			list:doc
+		});
 	});
 }
 //文章页面
@@ -387,19 +405,7 @@ exports.appArticle = function(req, res){
 		});
 	});
 }
-//素材库
-exports.materials = function(req, res){
-	var email = req.session.email;
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
-	var type = $url["type"];
-	var json = $url["json"] || 1;
-	material.findAll(email, type, function(err, doc){
-		res.json({
-			list:doc
-		});
-	});
-}
+
 //上传图片
 exports.uploadImg = function(req, res){
 	res.render('mod/uploadImg', {

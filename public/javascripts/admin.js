@@ -27,6 +27,9 @@ require([
 		var href = $(this).attr('href');
 		window.location.href = href;
 	});
+	$('#myModal a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	  $('#uploadImgConfirm').attr('data-img', '');
+	})
 	function initToolbarBootstrapBindings() {
 			var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
 						'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
@@ -65,8 +68,17 @@ require([
 	window.prettyPrint && prettyPrint();
 	$('.ajax-img').click(function(){
 		$.get('/materials?json=0&type=img', function(data){
-			$('#materialsImg').html(data);
+			var html = '';
+			$.each(data.list, function(i,v){
+				html += '<div class="col-xs-6 col-md-3 li-img"><a href="javascript:;" class="thumbnail"><img src="'+v.url+'"></a></div>';
+			});
+			$('#materialsImg .row').html(html);
 		});
+	});
+	$('#materialsImg').on('click', '.li-img', function(e){
+		var self = $(this);
+		var img = self.find('img').attr('src');
+		$('#uploadImgConfirm').attr('data-img', img);
 	});
 	$('#uploadImgBtn').change(function(){
 		var form = $(this).parents('form');
@@ -82,7 +94,10 @@ require([
 		// });
 	});
 	$('#uploadImgConfirm').click(function(e){
-		var img = document.getElementById('uploadImgIframe').contentWindow.document.getElementById('uploadImgTag').src;
+		var img = $(this).attr('data-img');
+		if(!img || img == ''){
+			img = document.getElementById('uploadImgIframe').contentWindow.document.getElementById('uploadImgTag').src;
+		}
 		$('#myModal').modal('hide');
 		var self = $(this);
 		var stage = self.attr('data-stage');
