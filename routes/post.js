@@ -274,6 +274,7 @@ exports.material = function(req, res, next){
 	var img = req.body.img || '';
 	var editor = req.body.editor || '';
 }
+
 //上传
 exports.uploadImg = function(req, res, next){
 	// var files = res.req['body'];
