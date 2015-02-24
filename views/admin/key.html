@@ -42,9 +42,12 @@
 								<tbody>
 									<% list.forEach(function(v){ %>
 									<tr>
-										<td><a href="/admin/key#postkey?id=<%= v._id%>"><%= v.name%></a></td>
+										<td><a href="/admin/key?id=<%= v._id%>#postkey"><%= v.name%></a></td>
 										<td><%= v.keys%></td>
-										<td><%= v.fed%></td>
+										<td>
+											<%= v.fed%>
+											<%= v.article%>
+										</td>
 										<td><a href="/admin/key/del?id=<%= v._id%>">删除</a></td>
 									</tr>
 									<% }) %>

@@ -176,6 +176,7 @@ exports.key = function(req, res){
 					if (err) {
 						return next(err);
 					}
+					list.article = 
 					res.render('admin/key', {
 						title: '自动回复',
 						email: req.session.email,
@@ -358,28 +359,26 @@ exports.multi = function(req, res){
 //公众号的资料库
 exports.material = function(req, res){
 	var email = req.session.email;
-	material.findAll(email, 'img', function(err, doc){
-		res.render('admin/material', {
-			title: '资料库',
-			email: email,
-			page: 'material',
-			list: doc.list
-		});
-	});
-	
-}
-//素材库
-exports.materials = function(req, res){
-	var email = req.session.email;
 	var $url = url.parse(req.url).query;
 	$url = qs.parse($url);
-	var type = $url["type"];
 	var json = $url["json"] || 1;
-	material.findAll(email, type, function(err, doc){
-		res.json({
-			list:doc
+	var type = $url["type"];
+	if(json == 0){
+		material.findAll(email, type, function(err, doc){
+			res.json({
+				list:doc
+			});
 		});
-	});
+	}else{
+		material.findAll(email, 'img', function(err, doc){
+			res.render('admin/material', {
+				title: '资料库',
+				email: email,
+				page: 'material',
+				list: doc.list
+			});
+		});
+	}	
 }
 //文章页面
 exports.appArticle = function(req, res){
@@ -388,6 +387,7 @@ exports.appArticle = function(req, res){
 	var id = $url["id"];
 	var email = req.session.email;
 	single.findOne(id, function(err, doc){
+		console.log(doc);
 		if(!doc){
 			doc = {
 				title:'',

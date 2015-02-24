@@ -40,10 +40,6 @@ module.exports=function(app){
 	app.get('/admin/material', get.material);
 	app.get('/app/article', checkLogin);
 	app.get('/app/article', get.appArticle);
-	app.get('/materials', checkLogin);
-	app.get('/materials', get.materials);
-	// app.get('/mod/uploadImg', checkLogin);
-	// app.get('/mod/uploadImg', get.uploadImg);
 
 	app.post('/register', checkNotLogin);
 	app.post('/register', post.register);
