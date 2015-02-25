@@ -157,7 +157,6 @@ exports.list = function(user,callback){
 		}
 		callback(null, doc);
 	});
-
 }
 exports.findOne = function(email,callback){
 	Weixin.findOne({email:email},function(err,doc){
@@ -168,7 +167,7 @@ exports.findOne = function(email,callback){
 		callback(null, doc);
 	});
 }
-exports.deleteOne = function(email, pass, request,fcb,callback){
+exports.deleteOne = function(email, pass, request,fcb,callback, safecb){
 	exports.login(email, pass, request, function(){
 		Weixin.findOne({email:email},function(err,doc){
 			if (err) {
@@ -182,7 +181,7 @@ exports.deleteOne = function(email, pass, request,fcb,callback){
 		});
 	}, fcb, function(){
 		console.log('验证码成功！');
-	},1, function(){return false;});
+	},1, function(){return false;}, safecb);
 }
 exports.openLogin = function(){
 	https.get('https://mp.weixin.qq.com/', function(res) {
@@ -194,7 +193,7 @@ exports.openLogin = function(){
 	});
 }
 //type==0,添加
-exports.login = function(email,pass, request, scb, fcb, vcb, type, cb){
+exports.login = function(email,pass, request, scb, fcb, vcb, type, cb, safecb){
 	console.log('cb1----'+cb);
 	var cookies = '';
 	var options = { 
@@ -227,12 +226,14 @@ exports.login = function(email,pass, request, scb, fcb, vcb, type, cb){
 		// console.log("headers: ", res.headers);
 		if(res.headers["set-cookie"]){
 			res.headers["set-cookie"].forEach(function(cookie){
-					cookies += cookie.replace(/ Path=\/; Secure; HttpOnly/g, '');
+				cookies += cookie.replace(/ Path=\/; Secure; HttpOnly/g, '');
 			});
 		}
 		request.session.weixin = cookies;
+		console.log('发出请求了');
 		res.on('data', function (d) {
 			if(res.statusCode == 200){
+				console.log('发出请求了－200');
 				var data = JSON.parse(d);
 				var ret = data.base_resp.ret;
 				var ss = '';
@@ -240,29 +241,34 @@ exports.login = function(email,pass, request, scb, fcb, vcb, type, cb){
 				var tk = '';
 				var token = '';
 				if(ret == 0){
+					console.log('发出请求了－200-0');
 					var redirect_url = data.redirect_url;
 					if(redirect_url && redirect_url.trim().length>0){
-						ss = redirect_url.split('?');
-						if(ss.length == 2){
-							if(ss[1].trim().length>0 && ss[1].indexOf('&')!=-1){
-								ps = ss[1].split('&');
-							}
-						}else if(ss.length == 1){
-							if(ss[0].trim().length>0 && ss[0].indexOf('&')!=-1){
-								ps = ss[0].split('&');
-							}
-						}
-						if(ps){
-							ps.forEach(function(v){
-								if(v.trim().length>0){
-									tk =v.split('=');
-									if(tk[0]!='' && tk[0] == 'token'){
-										token = tk[1];
-										request.session.token = token;
-										exports.beDev(request, scb, fcb, type, cb);
-									}
+						if(redirect_url.indexOf('readtemplate?')>=0){
+							safecb();
+						}else{
+							ss = redirect_url.split('?');
+							if(ss.length == 2){
+								if(ss[1].trim().length>0 && ss[1].indexOf('&')!=-1){
+									ps = ss[1].split('&');
 								}
-							});
+							}else if(ss.length == 1){
+								if(ss[0].trim().length>0 && ss[0].indexOf('&')!=-1){
+									ps = ss[0].split('&');
+								}
+							}
+							if(ps){
+								ps.forEach(function(v){
+									if(v.trim().length>0){
+										tk =v.split('=');
+										if(tk[0]!='' && tk[0] == 'token'){
+											token = tk[1];
+											request.session.token = token;
+											exports.beDev(request, scb, fcb, type, cb);
+										}
+									}
+								});
+							}
 						}
 					}
 				}else if(ret == -8){
@@ -367,21 +373,20 @@ exports.getInfo = function(request, scb, fcb, type, cb){
 			if(res.statusCode == 200){
 				var data;
 				res.on('readable', function() {
-						data = res.read(res.headers['content-length']);
-						zlib.gunzip(data, function(err, d) {
-							if(err) throw err;
-							var $ = cheerio.load(d);
-							var openBt = $('#openBt');
-							var closeBt = $('#closeBt');
-							if(openBt.length>0){
-								exports.updateInterface(request, scb, fcb, cb);
-								//exports.advancedswitchform(token, request, 1);
-							}
-							if(closeBt.length>0){
-								exports.advancedswitchform(request, 0, scb, fcb, type,cb);
-							};
-						});
-				})
+					data = res.read(res.headers['content-length']);
+					zlib.gunzip(data, function(err, d) {
+						if(err) throw err;
+						var $ = cheerio.load(d);
+						var openBt = $('#openBt');
+						var closeBt = $('#closeBt');
+						if(openBt.length>0){
+							exports.updateInterface(request, scb, fcb, cb);
+						}
+						if(closeBt.length>0){
+							exports.advancedswitchform(request, 0, scb, fcb, type,cb);
+						};
+					});
+				});
 			}else{
 				fcb('网络连接错误！');
 			}
@@ -395,7 +400,6 @@ exports.getInfo = function(request, scb, fcb, type, cb){
 		exports.advancedswitchform(request, 0, scb, fcb, 1, cb);
 	}
 }
-
 exports.advancedswitchform=function(request, flag, scb, fcb, type, cb){
 	console.log('cb4----'+cb);
 	var options = { 

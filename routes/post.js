@@ -169,8 +169,9 @@ exports.add = function(req, res, next){
 						weixin.update({email:email, name:name, pic:pic, weixin_id:weixin_id, weixin_name:weixin_name, type:type, verify:verify, contractorinfo:contractorinfo, desc:desc, location:location, qrcode:qrcode}, function(){
 							return false;
 						});
+					}, function(){
+						res.redirect('/weixin/weixinSafe');
 					});
-					
 				}
 			}
 		}); 
@@ -182,7 +183,7 @@ exports.autoMessage = function(req, res, next){
 	var email = req.session.email;
 	weixin.autoMessage({email:email, autoMessage:autoMessage}, function(err, doc){
 		req.flash('success','添加成功！');
-		res.redirect('/admin/key');
+		res.redirect('/admin/key#postAuto');
 	});
 }
 //首次关注回复
@@ -199,7 +200,7 @@ exports.firstMessage = function(req, res, next){
 				return firstMessage;
 			}
 		});
-		res.redirect('/admin/key');
+		res.redirect('/admin/key#postFirst');
 	});
 }
 //关键字回复-添加
@@ -214,13 +215,22 @@ exports.key = function(req, res, next){
 	var article = keyFedBySelect || '';
 	key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
 		req.flash('success','添加成功！');
+		article = article.split(',');
+		var host = 'http://carly.notes18.com/'
+		var html = '<a href="'+host+'app/article?id='+article[0]+'">'+article[1]+'</a>';
+		console.log(html);
 		webot.set(name, {
 			pattern: '/'+keys+'/',
 			handler: function(info) {
-				return fed;
+				if(fed!=''){
+					return fed;
+				}else{
+					return html;
+				}
+				
 			},
 		});
-		res.redirect('/admin/key');
+		res.redirect('/admin/key#postkey');
 	});
 }
 

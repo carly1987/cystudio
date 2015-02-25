@@ -132,12 +132,14 @@ exports.del = function(req, res){
 	$url = qs.parse($url);
 	var email = $url["email"];
 	var pass = $url["pass"];
-	weixin.deleteOne(email,pass, req, function(msg){
+	weixin.deleteOne(email, pass, req, function(msg){
 		req.flash('error',msg);
 		return res.redirect('/weixin');
 	}, function(err){
 		if(err){res.redirect('/');}
 		return res.redirect('/weixin');
+	}, function(){
+		return res.redirect('/weixin/weixinSafe');
 	});
 }
 
@@ -171,12 +173,20 @@ exports.key = function(req, res){
 			if (err) {
 				return next(err);
 			}
+			list.forEach(function(v,i){
+				if(v.article && v.article!=''){
+					var article = v.article;
+					article = article.split(',');
+					v.article_id = article[0];
+					v.article_title = article[1];				
+				}				
+			});
+			console.log(list);
 			if(id){
 				Key.findOne(id, function(err, key){
 					if (err) {
 						return next(err);
 					}
-					list.article = 
 					res.render('admin/key', {
 						title: '自动回复',
 						email: req.session.email,
@@ -413,5 +423,11 @@ exports.uploadImg = function(req, res){
 		img: '',
 		success:'',
 		error:'',
+	});
+}
+//添加公众号时的安全保护提示
+exports.weixinSafe = function(req, res){
+	res.render('mod/safe', {
+		title: '出错了'						
 	});
 }

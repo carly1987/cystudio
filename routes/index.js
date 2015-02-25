@@ -20,6 +20,8 @@ module.exports=function(app){
 	app.get('/weixin/add', get.add);
 	app.get('/weixin/del', checkLogin);
 	app.get('/weixin/del', get.del);
+	app.get('/weixin/weixinSafe', checkLogin);
+	app.get('/weixin/weixinSafe', get.weixinSafe);
 	app.get('/admin', checkLogin);
 	app.get('/admin', get.admin);
 	app.get('/admin/key', checkLogin);
@@ -38,7 +40,8 @@ module.exports=function(app){
 	app.get('/admin/delMulti', get.delMulti);
 	app.get('/admin/material', checkLogin);
 	app.get('/admin/material', get.material);
-	app.get('/app/article', checkLogin);
+	app.get('/mod/uploadImg', checkLogin);
+	app.get('/mod/uploadImg', get.uploadImg);
 	app.get('/app/article', get.appArticle);
 
 	app.post('/register', checkNotLogin);
@@ -63,8 +66,8 @@ module.exports=function(app){
 	app.post('/admin/multi', post.multi);
 	app.post('/admin/material', checkLogin);
 	app.post('/admin/material', post.material);
-	// app.post('/mod/uploadImg', checkLogin);
-	// app.post('/mod/uploadImg', post.uploadImg);
+	app.post('/mod/uploadImg', checkLogin);
+	app.post('/mod/uploadImg', post.uploadImg);
 }
 function checkLogin(req, res, next){
 	if(!req.session.user){

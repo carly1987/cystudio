@@ -12,7 +12,7 @@ require([
 				var multis = data.multis;
 				var html = '';
 				$.each(singles, function(i,v){
-					html+= '<option value="'+v._id+'">'+v.title+'</option>';
+					html+= '<option value="'+v._id+','+v.title+'">'+v.title+'</option>';
 				});
 				$.each(multis, function(i,v){
 					html+= '<option value="'+v._id+'">'+v.title+'</option>';
