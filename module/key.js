@@ -1,4 +1,5 @@
 var util = require('util');
+var Single = require('./single');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
@@ -8,7 +9,7 @@ var KeyScheme = new Schema({
 	fed:String,
 	user:String,
 	email:String,
-	article:String,
+	article:{type:Schema.Types.ObjectId, ref:'Single'},
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });
@@ -21,7 +22,7 @@ exports.list = function(callback) {
 }
 
 exports.findOne = function(id,callback){
-	Key.findOne({_id:id},function(err,doc){
+	Key.findOne({_id:id}).exec(function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -30,13 +31,21 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.findAll = function(email, callback){
-	Key.find({email:email}, function(err,doc){
+	// Key.find({email:email}, function(err,doc){
+	// 	if (err) {
+	// 		util.log('FATAL '+ err);
+	// 		callback(err, null);
+	// 	}
+	// 	callback(null, doc);
+	// });
+	Key.find({email:email}).populate('article', '_id title img des').exec(function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
 		}
 		callback(null, doc);
 	});
+	// .populate('article')
 }
 exports.add = function(options, callback){
 	var newDb = new Key();

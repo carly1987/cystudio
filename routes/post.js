@@ -215,22 +215,31 @@ exports.key = function(req, res, next){
 	var article = keyFedBySelect || '';
 	key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
 		req.flash('success','添加成功！');
-		article = article.split(',');
-		var host = 'http://carly.notes18.com/'
-		var html = '<a href="'+host+'app/article?id='+article[0]+'">'+article[1]+'</a>';
-		console.log(html);
-		webot.set(name, {
-			pattern: '/'+keys+'/',
-			handler: function(info) {
-				if(fed!=''){
+		if(article && article!=''){
+			single.findOne(article, function(err, articleDoc){
+				webot.set(name, {
+					pattern: '/'+keys+'/',
+					handler: function(info) {
+						return {
+							title: articleDoc.title,
+							url: 'http://carly.notes18.com/app/article?id='+article,
+							picUrl: articleDoc.img,
+							description: articleDoc.des
+						};
+					}
+				});
+				res.redirect('/admin/key#postkey');
+			});
+		}else{
+			webot.set(name, {
+				pattern: '/'+keys+'/',
+				handler: function(info) {
 					return fed;
-				}else{
-					return html;
 				}
-				
-			},
-		});
-		res.redirect('/admin/key#postkey');
+			});
+			res.redirect('/admin/key#postkey');
+		}
+		
 	});
 }
 
