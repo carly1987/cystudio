@@ -3,7 +3,7 @@ var weixin = require('../module/weixin');
 var Key = require('../module/key');
 var single = require('../module/single');
 var multi = require('../module/multi');
-var date = require('../pluin/date');
+var format = require('../pluin/format');
 var url = require("url");
 var qs = require("querystring");
 var material = require('../module/material');
@@ -110,8 +110,8 @@ exports.weixin = function(req, res, next){
 			page: 'weixin',
 			list: list,
 			user: req.session.user,
-			format: date.dateFormat,
-			endDate: date.endDate
+			format: format.dateFormat,
+			endDate: format.endDate
 		});
 	});
 };
@@ -177,6 +177,9 @@ exports.key = function(req, res, next){
 			if (err) {
 				return next(err);
 			}
+			if(!list){
+				list = [];
+			}
 			if(id){
 				Key.findOne(id, function(err, key){
 					if (err) {
@@ -197,17 +200,17 @@ exports.key = function(req, res, next){
 				});
 			}else{
 				res.render('admin/key', {
-						title: '自动回复',
-						email: req.session.email,
-						doc: doc,
-						list:list,
-						keyName:'',
-						keyKeys:'',
-						keyFed:'',
-						success:req.flash('success').toString(),
-						error:req.flash('error').toString(),
-						page: 'key'
-					});
+					title: '自动回复',
+					email: req.session.email,
+					doc: doc,
+					list:list,
+					keyName:'',
+					keyKeys:'',
+					keyFed:'',
+					success:req.flash('success').toString(),
+					error:req.flash('error').toString(),
+					page: 'key'
+				});
 			}
 			
 		});
@@ -406,7 +409,9 @@ exports.appArticle = function(req, res){
 			title: '文章页面',
 			email: req.session.email,
 			user: req.session.user,
-			article: doc
+			article: doc,
+			formatDate: format.dateFormat,
+			formatHtml: format.htmldecode
 		});
 	});
 }
