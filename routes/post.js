@@ -217,17 +217,19 @@ exports.key = function(req, res, next){
 		req.flash('success','添加成功！');
 		article = article.split(',');
 		var host = 'http://carly.notes18.com/'
-		var html = '<a href="'+host+'app/article?id='+article[0]+'">'+article[1]+'</a>';
-		console.log(html);
 		webot.set(name, {
 			pattern: '/'+keys+'/',
 			handler: function(info) {
 				if(fed!=''){
 					return fed;
 				}else{
-					return html;
+					return {
+						title: article[1],
+	  					url: host+'app/article?id='+article[0],
+	  					picUrl: 'http://example.com/....a.jpg',
+	  					description: article[1]
+					};
 				}
-				
 			},
 		});
 		res.redirect('/admin/key#postkey');
