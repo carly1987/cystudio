@@ -161,10 +161,14 @@ exports.admin = function(req, res, next){
 	});
 }
 //公众号的自动回复
-exports.key = function(req, res){
+exports.key = function(req, res, next){
 	var $url = url.parse(req.url).query;
 	$url = qs.parse($url);
 	var id = $url["id"];
+	// Key.findAll(req.session.email, function(err, list){
+	// 	console.log('-----list-----');
+	// 	console.log(list);
+	// });
 	weixin.getKey(req.session.email, function(err, doc){
 		if (err) {
 			return next(err);
@@ -173,15 +177,6 @@ exports.key = function(req, res){
 			if (err) {
 				return next(err);
 			}
-			list.forEach(function(v,i){
-				if(v.article && v.article!=''){
-					var article = v.article;
-					article = article.split(',');
-					v.article_id = article[0];
-					v.article_title = article[1];				
-				}				
-			});
-			console.log(list);
 			if(id){
 				Key.findOne(id, function(err, key){
 					if (err) {

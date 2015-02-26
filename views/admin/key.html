@@ -47,7 +47,7 @@
 										<td>
 											<%= v.fed%>
 											<%if(v.article){%>
-												<a href="/app/article?id=<%=v.article_id%>"><%= v.article_title%></a>
+												<a href="/app/article?id=<%= v.article['_id']%>"><%= v.article['title']%></a>
 											<%}%>
 										</td>
 										<td><a href="/admin/key/del?id=<%= v._id%>#postkey">删除</a></td>
