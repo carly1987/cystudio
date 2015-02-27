@@ -1,22 +1,21 @@
-var user = require('../module/user');
-var weixin = require('../module/weixin');
-var crypto = require('crypto');
-var validator = require('validator');
-var single = require('../module/single');
-var multi = require('../module/multi');
-var key = require('../module/key');
-var url = require("url");
-var qs = require("querystring");
-var webot = require('weixin-robot');
-var fs = require('fs');
-var qiniu = require('qiniu');
-var material = require('../module/material');
+var User = require('../module/user');
+var Weixin = require('../module/weixin');
+var Crypto = require('crypto');
+var Validator = require('validator');
+var Key = require('../module/key');
+var Url = require("url");
+var QS = require("querystring");
+var Webot = require('weixin-robot');
+var FS = require('fs');
+var Qiniu = require('qiniu');
+var Material = require('../module/material');
+var Message = require('../module/message');
 //注册
 exports.register = function(req, res, next){
-	var email = validator.trim(req.body.email) || '';
-	var pass = validator.trim(req.body.pass) || '';
-	var repass = validator.trim(req.body.repass) || '';
-	if (!email || !validator.isEmail(email)) {
+	var email = Validator.trim(req.body.email) || '';
+	var pass = Validator.trim(req.body.pass) || '';
+	var repass = Validator.trim(req.body.repass) || '';
+	if (!email || !Validator.isEmail(email)) {
 		req.flash('error','必须要输入邮箱，请注意格式正确！');
 		res.redirect('/register');
 	}else if(!pass || !repass){
@@ -26,9 +25,9 @@ exports.register = function(req, res, next){
 		req.flash('error','两次输入必须一致！');
 		res.redirect('/register');
 	}else{
-		var md5 = crypto.createHash('md5');
+		var md5 = Crypto.createHash('md5');
 		pass = md5.update(req.body.pass).digest('hex');
-		user.findOne(email, function(err, doc){
+		User.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
 				res.redirect('/register');
@@ -37,7 +36,7 @@ exports.register = function(req, res, next){
 					req.flash('error','用户已经存在');
 					res.redirect('/register');
 				}else{
-					user.register({email:email, pass:pass}, function(){
+					User.register({email:email, pass:pass}, function(){
 						req.session.user=email;
 						res.redirect('/main');
 					});
@@ -48,8 +47,8 @@ exports.register = function(req, res, next){
 }
 //登录
 exports.login = function(req, res, next) {
-	var email = validator.trim(req.body.email) || '';
-	var pass = validator.trim(req.body.pass) || '';
+	var email = Validator.trim(req.body.email) || '';
+	var pass = Validator.trim(req.body.pass) || '';
 	if (!email) {
 		req.flash('error','必须要输入邮箱，请注意格式正确！');
 		res.redirect('/login');
@@ -57,13 +56,13 @@ exports.login = function(req, res, next) {
 		req.flash('error','必须要输入密码！');
 		res.redirect('/login');
 	}else{
-		user.findOne(email, function(err, doc){
+		User.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
 				res.redirect('/register');
 			}else{
 				if(doc){
-					var md5 = crypto.createHash('md5');
+					var md5 = Crypto.createHash('md5');
 					pass = md5.update(req.body.pass).digest('hex');
 					if(doc.pass == pass){
 						req.flash('success','登录成功');
@@ -85,15 +84,15 @@ exports.login = function(req, res, next) {
 //账户密码修改
 exports.changePass = function(req,res,next){
 	console.log('changePass');
-	var email = validator.trim(req.body.email) || '';
-	var pass = validator.trim(req.body.pass) || '';
+	var email = Validator.trim(req.body.email) || '';
+	var pass = Validator.trim(req.body.pass) || '';
 	if(!pass){
 		req.flash('error','必须要输入密码！');
 		res.redirect('/changePass');
 	}else{
-		var md5 = crypto.createHash('md5');
+		var md5 = Crypto.createHash('md5');
 		pass = md5.update(req.body.pass).digest('hex');
-		user.changePass({email:email, pass:pass},function(err,doc){
+		User.changePass({email:email, pass:pass},function(err,doc){
 			console.log('doc');
 			console.log(doc);
 			if(err){
@@ -108,18 +107,18 @@ exports.changePass = function(req,res,next){
 }
 //账户信息修改
 exports.changeUser = function(req,res,next){
-	var email = validator.trim(req.body.email) || '';
-	var name = validator.trim(req.body.name) || '';
-	var qq = validator.trim(req.body.qq) || '';
-	var phone = validator.trim(req.body.phone) || '';
-	if(phone && validator.isMobilePhone(phone)){
+	var email = Validator.trim(req.body.email) || '';
+	var name = Validator.trim(req.body.name) || '';
+	var qq = Validator.trim(req.body.qq) || '';
+	var phone = Validator.trim(req.body.phone) || '';
+	if(phone && Validator.isMobilePhone(phone)){
 		req.flash('error','请注意手机号码格式正确！');
 		res.redirect('/info');
-	}else if(qq && validator.isNumeric(qq)){
+	}else if(qq && Validator.isNumeric(qq)){
 		req.flash('error','请注意qq号码格式正确！');
 		res.redirect('/info');
 	}else{
-		user.changeUser({email:email, name:name, phone:phone, qq:qq},function(err,doc){
+		User.changeUser({email:email, name:name, phone:phone, qq:qq},function(err,doc){
 			if(err){
 				res.redirect('/');
 			}
@@ -142,9 +141,9 @@ exports.add = function(req, res, next){
 		req.flash('error','必须要输入密码！');
 		res.redirect('/weixin');
 	}else{
-		var md5 = crypto.createHash('md5')
+		var md5 = Crypto.createHash('md5')
 		pass = md5.update(req.body.pass).digest('hex');
-		weixin.findOne(email, function(err, doc){
+		Weixin.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
 				res.redirect('/weixin/add');	
@@ -153,8 +152,8 @@ exports.add = function(req, res, next){
 					req.flash('error','公众号已经存在');
 					res.redirect('/weixin/add');
 				}else{
-					weixin.login(email,pass,req, function(){
-						weixin.add({user:user, email:email, pass:pass}, function(){
+					Weixin.login(email,pass,req, function(){
+						Weixin.add({user:user, email:email, pass:pass}, function(){
 							res.redirect('/weixin');
 						});
 					}, function(msg){
@@ -166,7 +165,7 @@ exports.add = function(req, res, next){
 						req.flash('error','需要输入验证码');
 						res.redirect('/weixin/add');
 					}, 0, function(name,pic,weixin_id,weixin_name,type,verify,contractorinfo,desc,location,qrcode){
-						weixin.update({email:email, name:name, pic:pic, weixin_id:weixin_id, weixin_name:weixin_name, type:type, verify:verify, contractorinfo:contractorinfo, desc:desc, location:location, qrcode:qrcode}, function(){
+						Weixin.update({email:email, name:name, pic:pic, weixin_id:weixin_id, weixin_name:weixin_name, type:type, verify:verify, contractorinfo:contractorinfo, desc:desc, location:location, qrcode:qrcode}, function(){
 							return false;
 						});
 					}, function(){
@@ -181,7 +180,7 @@ exports.add = function(req, res, next){
 exports.autoMessage = function(req, res, next){
 	var autoMessage = req.body.autoMessage || '';
 	var email = req.session.email;
-	weixin.autoMessage({email:email, autoMessage:autoMessage}, function(err, doc){
+	Weixin.autoMessage({email:email, autoMessage:autoMessage}, function(err, doc){
 		req.flash('success','添加成功！');
 		res.redirect('/admin/key#postAuto');
 	});
@@ -190,9 +189,9 @@ exports.autoMessage = function(req, res, next){
 exports.firstMessage = function(req, res, next){
 	var firstMessage = req.body.firstMessage || '';
 	var email = req.session.email;
-	weixin.firstMessage({email:email, firstMessage:firstMessage}, function(err, doc){
+	Weixin.firstMessage({email:email, firstMessage:firstMessage}, function(err, doc){
 		req.flash('success','添加成功！');
-		webot.set('subscribe', {
+		Webot.set('subscribe', {
 			pattern: function(info) {
 				return info.is('event') && info.param.event === 'subscribe';
 			},
@@ -213,11 +212,11 @@ exports.key = function(req, res, next){
 	var email = req.session.email;
 	var fed = keyFedByTxt || '';
 	var article = keyFedBySelect || '';
-	key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
+	Key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
 		req.flash('success','添加成功！');
 		if(article && article!=''){
 			single.findOne(article, function(err, articleDoc){
-				webot.set(name, {
+				Webot.set(name, {
 					pattern: '/'+keys+'/',
 					handler: function(info) {
 						return {
@@ -231,7 +230,7 @@ exports.key = function(req, res, next){
 				res.redirect('/admin/key#postkey');
 			});
 		}else{
-			webot.set(name, {
+			Webot.set(name, {
 				pattern: '/'+keys+'/',
 				handler: function(info) {
 					return fed;
@@ -245,21 +244,20 @@ exports.key = function(req, res, next){
 //添加单图文
 exports.single = function(req, res, next){
 	var title = req.body.title || '';
-	var author = req.body.author || '';
 	var img = req.body.img || '';
-	var editor = req.body.editor || '';
 	var user = req.session.user;
 	var email = req.session.email;
-	var des = req.body.des || ''
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var des = req.body.des || '';
+	var editor = req.body.editor || '';
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	if(id){
-			single.update({_id:id, title:title, author:author, img:img, des:des,editor:editor}, function(err, doc){
+			Message.update({_id:id, title:title, img:img, des:des,editor:editor}, function(err, doc){
 			res.redirect('/admin/message');
 		});
 	}else{
-		single.add({title:title, author:author, img:img, des:des, editor:editor, user:user, email:email}, function(err, doc){
+		Message.add({title:title, img:img, des:des, editor:editor, user:user, email:email}, function(err, doc){
 			res.redirect('/admin/message');
 		});
 	}
@@ -272,8 +270,8 @@ exports.multi = function(req, res, next){
 	var user = req.session.user;
 	var email = req.session.email;
 	var title = req.body.title || '';
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	if(id){
 		multi.update({_id:id, ids:ids, titles:titles, imgs:imgs, title:title}, function(err, doc){
@@ -297,25 +295,25 @@ exports.material = function(req, res, next){
 exports.uploadImg = function(req, res, next){
 	// var files = res.req['body'];
 	if(req.files['imgFile'].size == 0){
-				fs.unlinkSync(req.files['imgFile'].path);
+				FS.unlinkSync(req.files['imgFile'].path);
 				console.log(' Successsfully removed an empty file!');
 	} else {
 		var target_path = '../upload' + req.files['imgFile'].name;
 		//使用同步方式重命名一个文件
 		console.log(req.files['imgFile']);
-		var readStream = fs.createReadStream(req.files['imgFile'].path);
-		var writeStream = fs.createWriteStream(target_path);
+		var readStream = FS.createReadStream(req.files['imgFile'].path);
+		var writeStream = FS.createWriteStream(target_path);
 		readStream.pipe(writeStream, function(){
-				fs.unlinkSync(req.files['imgFile'].path);
+				FS.unlinkSync(req.files['imgFile'].path);
 		});
-		qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
-		qiniu.conf.SECRET_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
-		var uptoken = new qiniu.rs.PutPolicy('carly32fileupload').token();
-		var extra = new qiniu.io.PutExtra();
+		Qiniu.conf.ACCESS_KEY = 'lJ5tagD530-rgDG6OkI3SZwkC7Xv5ByfHWfr1Bv5';
+		Qiniu.conf.SECRET_KEY = 'J-nK8ZcNrRs4Nw7UVsI7N_ELPN7is2krQ8pqySTR';
+		var uptoken = new Qiniu.rs.PutPolicy('carly32fileupload').token();
+		var extra = new Qiniu.io.PutExtra();
 		// console.log( "file is exists ? " + fs.existsSync(target_path));
-		fs.readFile(target_path, function(err, data){
+		FS.readFile(target_path, function(err, data){
 			console.log("data length is " + data.length);
-			qiniu.io.put(uptoken, 'img/' + req.files['imgFile'].name, data, extra, function(err, ret) {
+			Qiniu.io.put(uptoken, 'img/' + req.files['imgFile'].name, data, extra, function(err, ret) {
 					if(!err) {
 						var imgUrl = 'http://carly32fileupload.qiniudn.com/' + ret.key;
 						res.render('mod/uploadImg', {
@@ -324,7 +322,7 @@ exports.uploadImg = function(req, res, next){
 							success:req.flash('success').toString(),
 							error:'',
 						});
-						material.add({
+						Material.add({
 							type: 'img',
 							url: imgUrl,
 							user: req.session.user,
@@ -341,7 +339,7 @@ exports.uploadImg = function(req, res, next){
 						});			
 					}
 					res.end();
-					fs.unlinkSync(target_path);
+					FS.unlinkSync(target_path);
 			});
 		});
 	}

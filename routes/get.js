@@ -1,15 +1,14 @@
-var user = require('../module/user');
-var weixin = require('../module/weixin');
+var User = require('../module/user');
+var Weixin = require('../module/weixin');
 var Key = require('../module/key');
-var single = require('../module/single');
-var multi = require('../module/multi');
-var format = require('../pluin/format');
-var url = require("url");
-var qs = require("querystring");
-var material = require('../module/material');
+var Message = require('../module/message');
+var Format = require('../pluin/format');
+var Url = require("url");
+var QS = require("querystring");
+var Material = require('../module/material');
 //首页
 exports.index = function(req, res, next){
-	user.list(function (err, list) {
+	User.list(function (err, list) {
 		if (err) {
 				return next(err);
 		}
@@ -52,7 +51,7 @@ exports.help = function(req, res){
 }
 //账户管理
 exports.main = function(req, res, next){
-	user.findMain(req.session.user,function(err,doc){
+	User.findMain(req.session.user,function(err,doc){
 		if (err) {
 			return next(err);
 		}
@@ -61,14 +60,14 @@ exports.main = function(req, res, next){
 			page: 'index',
 			user: doc,
 			list: doc.weixin,
-			format: date.dateFormat,
-			endDate: date.endDate
+			format: Format.dateFormat,
+			endDate: Format.endDate
 		});
 	});
 };
 //账户信息页
 exports.info = function(req, res){
-	user.findOne(req.session.user, function(err, doc){
+	User.findOne(req.session.user, function(err, doc){
 		if(err){
 			req.flash('error',err);
 			return res.redirect('/main');
@@ -97,7 +96,7 @@ exports.changePass = function(req, res){
 };
 //微信公众号管理
 exports.weixin = function(req, res, next){
-	weixin.list(req.session.user, function (err, list) {
+	Weixin.list(req.session.user, function (err, list) {
 		if (err) {
 			return next(err);
 		}
@@ -110,8 +109,8 @@ exports.weixin = function(req, res, next){
 			page: 'weixin',
 			list: list,
 			user: req.session.user,
-			format: format.dateFormat,
-			endDate: format.endDate
+			format: Format.dateFormat,
+			endDate: Format.endDate
 		});
 	});
 };
@@ -128,11 +127,11 @@ exports.add = function(req, res){
 };
 //微信公众号删除
 exports.del = function(req, res){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var email = $url["email"];
 	var pass = $url["pass"];
-	weixin.deleteOne(email, pass, req, function(msg){
+	Weixin.deleteOne(email, pass, req, function(msg){
 		req.flash('error',msg);
 		return res.redirect('/weixin');
 	}, function(err){
@@ -145,11 +144,11 @@ exports.del = function(req, res){
 
 //公众号的配置平台
 exports.admin = function(req, res, next){
-	var $url = url.parse(req.url).query;
+	var $url = Url.parse(req.url).query;
 	$url = qs.parse($url);
 	var email = $url["email"];
 	req.session.email = email;
-	weixin.findOne(email, function(err, doc){
+	Weixin.findOne(email, function(err, doc){
 		if (err) {
 			return next(err);
 		}
@@ -162,14 +161,14 @@ exports.admin = function(req, res, next){
 }
 //公众号的自动回复
 exports.key = function(req, res, next){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	// Key.findAll(req.session.email, function(err, list){
 	// 	console.log('-----list-----');
 	// 	console.log(list);
 	// });
-	weixin.getKey(req.session.email, function(err, doc){
+	Weixin.getKey(req.session.email, function(err, doc){
 		if (err) {
 			return next(err);
 		}
@@ -218,8 +217,8 @@ exports.key = function(req, res, next){
 }
 //公众号的关键词回复的删除
 exports.keyDel = function(req, res){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	Key.del(id, function(err, doc){
 		if(err){
@@ -233,64 +232,52 @@ exports.keyDel = function(req, res){
 //公众号的图文消息
 exports.message = function(req, res){
 	var email = req.session.email;
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var json = $url["json"] || 1;
-	single.findAll(email, function(err, singles){
-		multi.findAll(email, function(err, multis){
-			if(json == 0){
-				res.json({
-					code:0,
-					singles:singles,
-					multis:multis
-				});	
-			}else{
-				res.render('admin/message', {
-					title: '图文消息',
-					email: email,
-					singles: singles,
-					multis: multis,
-					page: 'message'
-				});
-			}
-		});
+	res.render('admin/message', {
+		title: '图文消息',
+		email: email,
+		singles: [],
+		multis: [],
+		page: 'message'
 	});
 }
 //删除单图文消息
 exports.delSingle = function(req, res, next){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
-	single.del(id, function(err, doc){
-		if(err){
-		  res.redirect('/admin');
-		}
-		if(doc){
-		  res.redirect('/admin/message');
-		}
-	});
+	// single.del(id, function(err, doc){
+	// 	if(err){
+	// 	  res.redirect('/admin');
+	// 	}
+	// 	if(doc){
+	// 	  res.redirect('/admin/message');
+	// 	}
+	// });
 }
 //删除多图文消息
 exports.delMulti = function(req, res, next){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
-	multi.del(id, function(err, doc){
-		if(err){
-	  res.redirect('/admin');
-	}
-	if(doc){
-	  res.redirect('/admin/message');
-	}
-	});
+	// multi.del(id, function(err, doc){
+	// 	if(err){
+	//   res.redirect('/admin');
+	// }
+	// if(doc){
+	//   res.redirect('/admin/message');
+	// }
+	// });
 }
 //单图文消息
 exports.single = function(req, res){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	var email = req.session.email;
-	single.findOne(id, function(err, doc){
+	Message.findOne(id, function(err, doc){
 		if(!doc){
 			doc = {
 				title:'',
@@ -298,87 +285,41 @@ exports.single = function(req, res){
 				img:'',
 				des:'',
 				editor:'',
-			};
+			};		
 		}
 		res.render('admin/single', {
 			title: '单图文消息',
 			email: email,
 			doc: doc,
-			success:req.flash('success').toString(),
-			error:req.flash('error').toString(),
+			// success:req.flash('success').toString(),
+			// error:req.flash('error').toString(),
 			page: 'message'
 		});
 	});
 }
 //多图文消息
 exports.multi = function(req, res){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	var email = req.session.email;
-	single.findAll(email, function(err, singles){
-		multi.findOne(id, function(err, doc){
-			if(doc){
-				var multis = [];
-				var ids = doc.ids;
-				ids = ids.split(',');
-				var titles = doc.titles;
-				titles = titles.split(',');
-				var imgs = doc.imgs;
-				imgs = imgs.split(',');
-				var size = ids.length;
-				for(var i = 0; i<size;i++){
-					multis[i] = {
-						id:ids[i],
-						title:titles[i],
-						img:imgs[i]
-					};
-				}
-				singles.forEach(function(v,i){
-					ids.forEach(function(value,index){
-						if(value == v._id){
-							console.log('checked');
-							v.checked='checked';
-						}else{
-							console.log('unchecked');
-						}
-					});
-				});
-				console.log(multis);
-			}else{
-				doc = {
-					ids: '',
-					title: '',
-					titles: '',
-					imgs: '',
-				}
-			}
-			res.render('admin/multi', {
-				title: '多图文消息',
-				email: email,
-				multis: multis,
-				doc: doc,
-				singles: singles,
-				page: 'message'
-			});
-		});
-	});
+	
 }
 //公众号的资料库
 exports.material = function(req, res){
 	var email = req.session.email;
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var json = $url["json"] || 1;
 	var type = $url["type"];
 	if(json == 0){
-		material.findAll(email, type, function(err, doc){
+		Material.findAll(email, type, function(err, doc){
 			res.json({
 				list:doc
 			});
 		});
 	}else{
-		material.findAll(email, 'img', function(err, doc){
+		Material.findAll(email, 'img', function(err, doc){
 			res.render('admin/material', {
 				title: '资料库',
 				email: email,
@@ -390,8 +331,8 @@ exports.material = function(req, res){
 }
 //文章页面
 exports.appArticle = function(req, res){
-	var $url = url.parse(req.url).query;
-	$url = qs.parse($url);
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
 	var id = $url["id"];
 	var email = req.session.email;
 	single.findOne(id, function(err, doc){

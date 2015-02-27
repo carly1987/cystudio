@@ -2,26 +2,26 @@ var util = require('util');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
-var SingleScheme = new Schema({
+var MessageScheme = new Schema({
 	title:String,
 	img:String,
 	des:String,
 	editor:String,
-	checked:String,
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
-	post_date:{type:Date,default:Date.now}
+	post_date:{type:Date,default:Date.now},
+	list:[]
 });
 
-mongoose.model('Single', SingleScheme);
-var Single = mongoose.model('Single');
+mongoose.model('Message', MessageScheme);
+var Message = mongoose.model('Message');
 
 exports.list = function(callback) {
-	Single.find({}, callback);
+	Message.find({}, callback);
 }
 exports.findOne = function(id,callback){
-	Single.findOne({_id:id},function(err,doc){
+	Message.findOne({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -30,7 +30,7 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.findAll = function(email, callback){
-	Single.find({email:email}, function(err,doc){
+	Message.find({email:email}, function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -39,14 +39,14 @@ exports.findAll = function(email, callback){
 	});
 }
 exports.add = function(options, callback){
-	var newDb = new Single();
+	var newDb = new Message();
 	newDb.title = options.title;
 	newDb.img = options.img;
 	newDb.des = options.des || '';
 	newDb.editor = options.editor;
 	newDb.user = options.user;
 	newDb.email = options.email;
-	newDb.checked = '';
+	newDb.list = options.list;
 	newDb.save(function(err){
 		if(err){
 				util.log("FATAL"+err);
@@ -57,7 +57,7 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Single.findOne({_id:options._id},function(err,doc){
+	Message.findOne({_id:options._id},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
@@ -66,6 +66,7 @@ exports.update = function(options,callback){
 		doc.img = options.img;
 		doc.des = options.des;
 		doc.editor = options.editor;
+		doc.list = options.list || [];
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -76,7 +77,7 @@ exports.update = function(options,callback){
 	});
 }
 exports.del = function(id, callback){
-	Single.remove({_id:id},function(err,doc){
+	Message.remove({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
