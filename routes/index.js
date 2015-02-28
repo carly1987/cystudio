@@ -40,6 +40,8 @@ module.exports=function(app){
 	app.get('/admin/delMulti', get.delMulti);
 	app.get('/admin/material', checkLogin);
 	app.get('/admin/material', get.material);
+	app.get('/admin/wsite', checkLogin);
+	app.get('/admin/wsite', get.wsite);
 	app.get('/mod/uploadImg', checkLogin);
 	app.get('/mod/uploadImg', get.uploadImg);
 	app.get('/app/article', get.appArticle);

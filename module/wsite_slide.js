@@ -2,26 +2,26 @@ var util = require('util');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
-var MultiScheme = new Schema({
-	ids:String,
+var WsiteScheme = new Schema({
 	title:String,
-	titles:String,
-	imgs:String,
+	template:String,
+	url:String,
+	copyright:String,
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });
 
-mongoose.model('Multi', MultiScheme);
-var Multi = mongoose.model('Multi');
+mongoose.model('Wsite', WsiteScheme);
+var Wsite = mongoose.model('Wsite');
 
 exports.list = function(callback) {
-	Multi.find({}, callback);
+	Wsite.find({}, callback);
 }
 
 exports.findOne = function(id,callback){
-	Multi.findOne({_id:id},function(err,doc){
+	Wsite.findOne({_id:id}).exec(function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -30,7 +30,7 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.findAll = function(email, callback){
-	Multi.find({email:email}, function(err,doc){
+	Wsite.find({email:email}, function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -39,11 +39,11 @@ exports.findAll = function(email, callback){
 	});
 }
 exports.add = function(options, callback){
-	var newDb = new Multi();
-	newDb.ids = options.ids;
+	var newDb = new Wsite();
 	newDb.title = options.title;
-	newDb.titles = options.titles;
-	newDb.imgs = options.imgs;
+	newDb.template = options.template;
+	newDb.url = options.url;
+	newDb.copyright = options.copyright;
 	newDb.user = options.user;
 	newDb.email = options.email;
 	newDb.save(function(err){
@@ -56,15 +56,15 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Multi.findOne({_id:options._id},function(err,doc){
+	Wsite.findOne({email:options.email},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
 		}
-		doc.ids = options.ids;
 		doc.title = options.title;
-		doc.titles = options.titles;
-		doc.imgs = options.imgs;
+		doc.template = options.template;
+		doc.copyright = options.copyright;
+		doc.url = options.url;
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
@@ -75,7 +75,7 @@ exports.update = function(options,callback){
 	});
 }
 exports.del = function(id, callback){
-	Multi.remove({_id:id},function(err,doc){
+	Wsite.remove({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);

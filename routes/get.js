@@ -329,6 +329,10 @@ exports.material = function(req, res){
 		});
 	}	
 }
+exports.wsite = function(req, res){
+	var email = req.session.email;
+	var user = req.session.user;
+}
 //文章页面
 exports.appArticle = function(req, res){
 	var $url = Url.parse(req.url).query;
