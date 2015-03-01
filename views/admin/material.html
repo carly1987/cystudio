@@ -14,7 +14,15 @@
 			</ul>
 			<div class="tab-content" id="tab-material-tabpanel">
 				<div role="tabpanel" class="tab-pane active" id="img">
-					<div class="row"></div>
+					<div class="row">
+						<% list.forEach(function(v){ %>
+						<div class="col-sm-6 col-md-4">
+							<div class="thumbnail">
+							  <img src="<%= v.url%>" height="50">
+							</div>
+						</div>
+						<%})%>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="audio">
 					<div class="row"></div>

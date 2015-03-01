@@ -10,6 +10,7 @@ var FS = require('fs');
 var Qiniu = require('qiniu');
 var Material = require('../module/material');
 var Message = require('../module/message');
+var Wsite = require('../module/wsite');
 //注册
 exports.register = function(req, res, next){
 	var email = Validator.trim(req.body.email) || '';
@@ -215,7 +216,7 @@ exports.key = function(req, res, next){
 	Key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
 		req.flash('success','添加成功！');
 		if(article && article!=''){
-			single.findOne(article, function(err, articleDoc){
+			Message.findOne(article, function(err, articleDoc){
 				Webot.set(name, {
 					pattern: '/'+keys+'/',
 					handler: function(info) {
@@ -341,6 +342,30 @@ exports.uploadImg = function(req, res, next){
 					res.end();
 					FS.unlinkSync(target_path);
 			});
+		});
+	}
+}
+//添加or更新微官网
+exports.wsite = function(req, res){
+	var user = req.session.user;
+	var email = req.session.email;
+	var title = req.body.title || '';
+	var template = req.body.template || '';
+	var url = req.body.url || '';
+	var copyright = req.body.copyright || '';
+	var id = req.body.id || '';
+	console.log('=======id=======');
+	console.log(id);
+	console.log(req.body.id);
+	if(id && id !=''){
+		console.log('更新');
+		Wsite.update({email:email, title:title, template:template, copyright:copyright}, function(){
+			res.redirect('/admin/wsite#base');
+		});
+	}else{
+		console.log('添加');
+		Wsite.add({title:title, template:template, url:url, copyright:copyright, user:user, email:email}, function(){
+			res.redirect('/admin/wsite#base');
 		});
 	}
 }

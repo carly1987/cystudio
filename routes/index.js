@@ -66,6 +66,8 @@ module.exports=function(app){
 	app.post('/admin/multi', post.multi);
 	app.post('/admin/material', checkLogin);
 	app.post('/admin/material', post.material);
+	app.post('/admin/wsite', checkLogin);
+	app.post('/admin/wsite', post.wsite);
 	app.post('/mod/uploadImg', checkLogin);
 	app.post('/mod/uploadImg', post.uploadImg);
 }

@@ -1,5 +1,5 @@
 var util = require('util');
-var Single = require('./single');
+var Message = require('./message');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
@@ -9,7 +9,7 @@ var KeyScheme = new Schema({
 	fed:String,
 	user:String,
 	email:String,
-	article:{type:Schema.Types.ObjectId, ref:'Single'},
+	article:{type:Schema.Types.ObjectId, ref:'Message'},
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now}
 });

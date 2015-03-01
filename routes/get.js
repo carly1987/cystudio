@@ -6,6 +6,7 @@ var Format = require('../pluin/format');
 var Url = require("url");
 var QS = require("querystring");
 var Material = require('../module/material');
+var Wsite = require('../module/wsite');
 //首页
 exports.index = function(req, res, next){
 	User.list(function (err, list) {
@@ -145,7 +146,7 @@ exports.del = function(req, res){
 //公众号的配置平台
 exports.admin = function(req, res, next){
 	var $url = Url.parse(req.url).query;
-	$url = qs.parse($url);
+	$url = QS.parse($url);
 	var email = $url["email"];
 	req.session.email = email;
 	Weixin.findOne(email, function(err, doc){
@@ -236,24 +237,29 @@ exports.message = function(req, res){
 	$url = QS.parse($url);
 	var json = $url["json"] || 1;
 	Message.findAll(email, function(err, doc){
-		var singles = [];
-		var multis = [];
-		doc.forEach(function(v,i){
-			if(v.list.length<=0){
-				singles.push(v);
-			}else{
-				multis.push(v);
-			}
-		});
-		console.log('=========multis列表==========');
-		console.log(multis);
-		res.render('admin/message', {
-			title: '图文消息',
-			email: email,
-			singles: singles,
-			multis: multis,
-			page: 'message'
-		});
+		if(json == 1){
+			var singles = [];
+			var multis = [];
+			doc.forEach(function(v,i){
+				if(v.list.length<=0){
+					singles.push(v);
+				}else{
+					multis.push(v);
+				}
+			});
+			res.render('admin/message', {
+				title: '图文消息',
+				email: email,
+				singles: singles,
+				multis: multis,
+				page: 'message'
+			});
+		}else{
+			res.json({
+				code:0,
+				list:doc
+			});
+		}
 	});
 }
 //删除图文消息
@@ -302,8 +308,6 @@ exports.multi = function(req, res){
 	var id = $url["id"];
 	var email = req.session.email;
 	Message.findSingle(email,function(err, singles){
-		console.log('=========singles==========');
-		console.log(singles);
 		Message.findOne(id, function(err, doc){
 			if(!doc){
 				doc = {
@@ -346,7 +350,7 @@ exports.material = function(req, res){
 				title: '资料库',
 				email: email,
 				page: 'material',
-				list: doc.list
+				list: doc
 			});
 		});
 	}	
@@ -354,6 +358,25 @@ exports.material = function(req, res){
 exports.wsite = function(req, res){
 	var email = req.session.email;
 	var user = req.session.user;
+	Wsite.findOne(email, function(err, doc){
+		if(!doc){
+			doc = {
+				title:'',
+				template:'',
+				url:'',
+				copyright:''
+			}
+		}else{
+			doc.url = 'http://carly.notes18.com/app/wsite?id='+doc._id;
+		}
+		res.render('admin/wsite/index', {
+			title: '微官网',
+			email: email,
+			page: 'wsite',
+			wsite: doc
+		});
+
+	});
 }
 //文章页面
 exports.appArticle = function(req, res){
@@ -361,8 +384,7 @@ exports.appArticle = function(req, res){
 	$url = QS.parse($url);
 	var id = $url["id"];
 	var email = req.session.email;
-	single.findOne(id, function(err, doc){
-		console.log(doc);
+	Message.findOne(id, function(err, doc){
 		if(!doc){
 			doc = {
 				title:'',
@@ -377,8 +399,8 @@ exports.appArticle = function(req, res){
 			email: req.session.email,
 			user: req.session.user,
 			article: doc,
-			formatDate: format.dateFormat,
-			formatHtml: format.htmldecode
+			formatDate: Format.dateFormat,
+			formatHtml: Format.htmldecode
 		});
 	});
 }

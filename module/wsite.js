@@ -20,8 +20,8 @@ exports.list = function(callback) {
 	Wsite.find({}, callback);
 }
 
-exports.findOne = function(id,callback){
-	Wsite.findOne({_id:id}).exec(function(err,doc){
+exports.findOne = function(email,callback){
+	Wsite.findOne({email:email}).exec(function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
