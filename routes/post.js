@@ -253,7 +253,7 @@ exports.single = function(req, res, next){
 	$url = QS.parse($url);
 	var id = $url["id"];
 	if(id){
-			Message.update({_id:id, title:title, img:img, des:des,editor:editor}, function(err, doc){
+		Message.update({_id:id, title:title, img:img, des:des,editor:editor}, function(err, doc){
 			res.redirect('/admin/message');
 		});
 	}else{
@@ -264,22 +264,22 @@ exports.single = function(req, res, next){
 }
 //添加多图文
 exports.multi = function(req, res, next){
-	var ids = req.body.ids || '';
-	var titles = req.body.titles || '';
-	var imgs = req.body.imgs || '';
+	var id = req.body.id || '';
+	var title = req.body.title || '';
+	var img = req.body.img || '';
+	var list = req.body.list || '';
 	var user = req.session.user;
 	var email = req.session.email;
-	var title = req.body.title || '';
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
-	var id = $url["id"];
-	if(id){
-		multi.update({_id:id, ids:ids, titles:titles, imgs:imgs, title:title}, function(err, doc){
-			res.redirect('/admin/multi?id='+id);
+	var _id = $url["id"];
+	if(_id){
+		Message.update({_id:_id, id:id, title:title, img:img, list:list, user:user, email:email}, function(err, doc){
+			res.redirect('/admin/multi?id='+_id);
 		});
 	}else{
-		multi.add({ids:ids, titles:titles, imgs:imgs, user:user, email:email, title:title}, function(err, doc){
-			res.redirect('/admin/message');
+		Message.add({id:id, title:title, img:img, list:list, user:user, email:email}, function(err, doc){
+			res.redirect('/admin/message#multis');
 		});
 	}
 }
@@ -295,8 +295,8 @@ exports.material = function(req, res, next){
 exports.uploadImg = function(req, res, next){
 	// var files = res.req['body'];
 	if(req.files['imgFile'].size == 0){
-				FS.unlinkSync(req.files['imgFile'].path);
-				console.log(' Successsfully removed an empty file!');
+		FS.unlinkSync(req.files['imgFile'].path);
+		console.log(' Successsfully removed an empty file!');
 	} else {
 		var target_path = '../upload' + req.files['imgFile'].name;
 		//使用同步方式重命名一个文件

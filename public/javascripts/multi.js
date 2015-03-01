@@ -1,49 +1,22 @@
 define('multi',[],function(){
-	var $single = $('.li-single');
-	$single.change(function(){
-		var self = $(this);
-		var $ids = $("input[name='ids']");
-		var $titles = $("input[name='titles']");
-		var $imgs = $("input[name='imgs']");
-		var ids = $ids.val();
-		var titles = $titles.val();
-		var imgs = $imgs.val();
-		if(ids == ''){
-			ids = [];
+	var Multi = $('#data-multi tbody');
+	var Single = $('#data-single tbody');
+	Single.find('td').click(function(){
+		var td = $(this);
+		var tr = td.parent();
+		var id = tr.attr('data-id');
+		var title = tr.attr('data-title');
+		var img = tr.attr('data-img');
+		var list = [];
+		var html = '<tr data-id="'+id+'"><td>'+title+'</td><td><img src="'+img+'" width="100"/></td></tr>';
+		if(Multi.find('tr').length>0){
+			list.push(id);
 		}else{
-			ids = ids.split(',');
+			$('[type="hidden"][name="id"]').val(id);
+			$('[type="hidden"][name="title"]').val(title);
+			$('[type="hidden"][name="img"]').val(img);
 		}
-		if(titles == ''){
-			titles = [];
-		}else{
-			titles = titles.split(',');
-		}
-		if(imgs == ''){
-			imgs = [];
-		}else{
-			imgs = imgs.split(',');
-		}
-		$("input[name='title']").val(titles[0]);
-		var idsv = self.attr('data-id');
-		var titlesv = self.attr('data-title');
-		var imgsv = self.attr('data-img');
-		if(self.is(':checked')){
-			ids.push(idsv);
-			titles.push(titlesv);
-			imgs.push(imgsv);
-		}else{
-			var a = idsv.indexOf(ids);
-			var b = titlesv.indexOf(titles);
-			var c = imgsv.indexOf(imgs);
-			ids.splice(a,1);
-			titles.splice(b,1);
-			imgs.splice(c,1);
-		}
-		ids = ids.join(',');
-		titles = titles.join(',');
-		imgs = imgs.join(',');
-		$ids.val(ids);
-		$titles.val(titles);
-		$imgs.val(imgs);
+		Multi.append(html);
+		$('[type="hidden"][name="list"]').val(list);
 	});
 });

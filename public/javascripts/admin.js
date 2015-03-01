@@ -104,15 +104,6 @@ require([
 	$('#uploadImgBtn').change(function(){
 		var form = $(this).parents('form');
 		form.submit();
-		// var files = $(this)[0].files[0];
-		// var data = {
-		// 	name:files.name,
-		// 	size:files.size,
-		// 	path:$(this).val()
-		// };
-		// $.post('/mod/upload',data,function(r){
-		// 	console.log(r);
-		// });
 	});
 	$('#uploadImgConfirm').click(function(e){
 		var img = $(this).attr('data-img');

@@ -235,41 +235,40 @@ exports.message = function(req, res){
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
 	var json = $url["json"] || 1;
-	res.render('admin/message', {
-		title: '图文消息',
-		email: email,
-		singles: [],
-		multis: [],
-		page: 'message'
+	Message.findAll(email, function(err, doc){
+		var singles = [];
+		var multis = [];
+		doc.forEach(function(v,i){
+			if(v.list.length<=0){
+				singles.push(v);
+			}else{
+				multis.push(v);
+			}
+		});
+		console.log('=========multis列表==========');
+		console.log(multis);
+		res.render('admin/message', {
+			title: '图文消息',
+			email: email,
+			singles: singles,
+			multis: multis,
+			page: 'message'
+		});
 	});
 }
-//删除单图文消息
-exports.delSingle = function(req, res, next){
+//删除图文消息
+exports.delMessage = function(req, res, next){
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
 	var id = $url["id"];
-	// single.del(id, function(err, doc){
-	// 	if(err){
-	// 	  res.redirect('/admin');
-	// 	}
-	// 	if(doc){
-	// 	  res.redirect('/admin/message');
-	// 	}
-	// });
-}
-//删除多图文消息
-exports.delMulti = function(req, res, next){
-	var $url = Url.parse(req.url).query;
-	$url = QS.parse($url);
-	var id = $url["id"];
-	// multi.del(id, function(err, doc){
-	// 	if(err){
-	//   res.redirect('/admin');
-	// }
-	// if(doc){
-	//   res.redirect('/admin/message');
-	// }
-	// });
+	Message.del(id, function(err, doc){
+		if(err){
+		  res.redirect('/admin');
+		}
+		if(doc){
+		  res.redirect('/admin/message');
+		}
+	});
 }
 //单图文消息
 exports.single = function(req, res){
@@ -285,14 +284,13 @@ exports.single = function(req, res){
 				img:'',
 				des:'',
 				editor:'',
+				list:[]
 			};		
 		}
 		res.render('admin/single', {
 			title: '单图文消息',
 			email: email,
 			doc: doc,
-			// success:req.flash('success').toString(),
-			// error:req.flash('error').toString(),
 			page: 'message'
 		});
 	});
@@ -303,7 +301,31 @@ exports.multi = function(req, res){
 	$url = QS.parse($url);
 	var id = $url["id"];
 	var email = req.session.email;
-	
+	Message.findSingle(email,function(err, singles){
+		console.log('=========singles==========');
+		console.log(singles);
+		Message.findOne(id, function(err, doc){
+			if(!doc){
+				doc = {
+					id:'',
+					title:'',
+					author:'',
+					img:'',
+					des:'',
+					editor:'',
+					list:[]
+				};			
+			}
+			res.render('admin/multi', {
+				title: '多图文消息',
+				email: email,
+				doc: doc,
+				list:doc.list,
+				singles: singles,
+				page: 'message'
+			});
+		});
+	});
 }
 //公众号的资料库
 exports.material = function(req, res){

@@ -3,6 +3,7 @@ var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
 var MessageScheme = new Schema({
+	id:String,
 	title:String,
 	img:String,
 	des:String,
@@ -38,21 +39,31 @@ exports.findAll = function(email, callback){
 		callback(null, doc);
 	});
 }
+exports.findSingle = function(email, callback){
+	Message.find({email:email, list:[]}, function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		callback(null, doc);
+	});
+}
 exports.add = function(options, callback){
 	var newDb = new Message();
+	newDb.id = options.id || '';
 	newDb.title = options.title;
 	newDb.img = options.img;
 	newDb.des = options.des || '';
-	newDb.editor = options.editor;
+	newDb.editor = options.editor || '';
 	newDb.user = options.user;
 	newDb.email = options.email;
-	newDb.list = options.list;
+	newDb.list = options.list || [];
 	newDb.save(function(err){
 		if(err){
-				util.log("FATAL"+err);
-				callback(err);
+			util.log("FATAL"+err);
+			callback(err);
 		}else{
-				callback(null);
+			callback(null);
 		}
 	});
 }
@@ -62,17 +73,18 @@ exports.update = function(options,callback){
 				util.log('FATAL '+ err);
 				callback(err, null);
 		}
+		doc.id = options.title || doc.id;
 		doc.title = options.title;
 		doc.img = options.img;
-		doc.des = options.des;
-		doc.editor = options.editor;
+		doc.des = options.des || doc.des;
+		doc.editor = options.editor || doc.editor;
 		doc.list = options.list || [];
 		doc.save(function(err){
-				if(err){
-					util.log("FATAL"+err);
-				}else{
-					callback(null, doc);
-				}
+			if(err){
+				util.log("FATAL"+err);
+			}else{
+				callback(null, doc);
+			}
 		});
 	});
 }

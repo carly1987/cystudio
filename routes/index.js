@@ -34,10 +34,8 @@ module.exports=function(app){
 	app.get('/admin/single', get.single);
 	app.get('/admin/multi', checkLogin);
 	app.get('/admin/multi', get.multi);
-	app.get('/admin/delSingle', checkLogin);
-	app.get('/admin/delSingle', get.delSingle);
-	app.get('/admin/delMulti', checkLogin);
-	app.get('/admin/delMulti', get.delMulti);
+	app.get('/admin/delMessage', checkLogin);
+	app.get('/admin/delMessage', get.delMessage);
 	app.get('/admin/material', checkLogin);
 	app.get('/admin/material', get.material);
 	app.get('/admin/wsite', checkLogin);

@@ -13,24 +13,56 @@
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="singles">
-					<a href="/admin/single">+添加单图文</a>
-					<ul>
-					<% singles.forEach(function(v){ %>
-						<li>
-							<a href="/admin/single?id=<%= v._id%>"><%= v.title%></a>----<a href="/admin/delSingle?id=<%= v._id%>">删除</a>
-						</li>
-					<% }) %>
-					</ul>
+					<div class="row">
+						<a href="/admin/single" class="btn btn-primary">+添加单图文</a>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>标题</th>
+									<th>封面图</th>
+									<th>摘要</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% singles.forEach(function(v){ %>
+								<tr>
+									<td><a href="/admin/single?id=<%= v._id%>"><%= v.title%></a></td>
+									<td><img src="<%= v.img%>" width="100"/></td>
+									<td><%= v.des%></td>
+									<td><a href="/admin/delMessage?id=<%= v._id%>#singles">删除</a></td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="multis">
-					<a href="/admin/multi">+添加多图文</a>
-					<ul>
-					<% multis.forEach(function(v){ %>
-						<li>
-							<a href="/admin/multi?id=<%= v._id%>"><%= v.title%></a>----<a href="/admin/delMulti?id=<%= v._id%>">删除</a>
-						</li>
-					<% }) %>
-					</ul>
+					<div class="row">
+						<a href="/admin/multi" class="btn btn-primary">+添加多图文</a>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>标题</th>
+									<th>封面图</th>
+									<th>子图文</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% multis.forEach(function(v){ %>
+								<tr>
+									<td><a href="/admin/multi?id=<%= v._id%>"><%= v.title%></a></td>
+									<td><img src="<%= v.img%>" width="100"/></td>
+									<td>
+										<%= v.list%>
+									</td>
+									<td><a href="/admin/delMessage?id=<%= v._id%>#multis">删除</a></td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
