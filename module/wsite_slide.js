@@ -2,7 +2,7 @@ var util = require('util');
 var db = require('./db');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
-var WsiteScheme = new Schema({
+var Wsite_slideScheme = new Schema({
 	title:String,
 	template:String,
 	url:String,
@@ -13,15 +13,15 @@ var WsiteScheme = new Schema({
 	post_date:{type:Date,default:Date.now}
 });
 
-mongoose.model('Wsite', WsiteScheme);
-var Wsite = mongoose.model('Wsite');
+mongoose.model('Wsite_slide', Wsite_slideScheme);
+var Wsite_slide = mongoose.model('Wsite_slide');
 
 exports.list = function(callback) {
-	Wsite.find({}, callback);
+	Wsite_slide.find({}, callback);
 }
 
 exports.findOne = function(id,callback){
-	Wsite.findOne({_id:id}).exec(function(err,doc){
+	Wsite_slide.findOne({_id:id}).exec(function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -30,7 +30,7 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.findAll = function(email, callback){
-	Wsite.find({email:email}, function(err,doc){
+	Wsite_slide.find({email:email}, function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -39,7 +39,7 @@ exports.findAll = function(email, callback){
 	});
 }
 exports.add = function(options, callback){
-	var newDb = new Wsite();
+	var newDb = new Wsite_slide();
 	newDb.title = options.title;
 	newDb.template = options.template;
 	newDb.url = options.url;
@@ -56,7 +56,7 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Wsite.findOne({email:options.email},function(err,doc){
+	Wsite_slide.findOne({email:options.email},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
@@ -75,7 +75,7 @@ exports.update = function(options,callback){
 	});
 }
 exports.del = function(id, callback){
-	Wsite.remove({_id:id},function(err,doc){
+	Wsite_slide.remove({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);

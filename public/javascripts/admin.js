@@ -4,45 +4,18 @@ requirejs.config({
 require([
 	'multi'
 ],function(multi){
-	$('#showSelector input[type=radio]').change(function(e){
-		var self = $(this);
-		if(self.is(':checked')){
-			$.get('/admin/message?json=0', function(data){
-				var html = '';
-				var list = data.list
-				$.each(list, function(i,v){
-					html+= '<option value="'+v._id+'">'+v.title+'</option>';
-				});
-				$('#keyFedBySelect').removeClass('hide').append(html);
-			});
-		}
-	});
+	$('#accordionFed').on('hide.bs.collapse', function () {
+  	$(this).find('textarea').html('');
+  	$(this).find('select').val('');
+	})
 	var hash = location.hash;
 	$('a[href=' + hash + ']').tab('show');
-	$.get('/admin/material?json=0&type='+hash, function(data){
-		console.log(data);
-		var html = '';
-		$.each(data.list, function(i,v){
-			html += '<div class="col-xs-6 col-md-3 li-img"><a href="javascript:;" class="thumbnail"><img src="'+v.url+'"></a></div>';
-		});
-		$('#tab-material-tabpanel').find(hash).find('.row').html(html);
-	});
+
 	$('[data-toggle="tab"]').click(function(e){
 		var href = $(this).attr('href');
 		window.location.href = href;
 	});
-	$('#tab-material a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		var href = $(this).attr('href');
-		var type = href.replace('#');
-		$.get('/admin/material?json=0&type='+type, function(data){
-			console.log(data);
-			var html = '';
-			$.each(data.list, function(i,v){
-				html += '<div class="col-xs-6 col-md-3 li-img"><a href="javascript:;" class="thumbnail"><img src="'+v.url+'"></a></div>';
-			});
-			$(href).find('.row').html(html);
-		});
-	});
+	
 	$('#myModal a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	  $('#uploadImgConfirm').attr('data-img', '');
 	});

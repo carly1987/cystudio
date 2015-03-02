@@ -165,54 +165,42 @@ exports.key = function(req, res, next){
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
 	var id = $url["id"];
-	// Key.findAll(req.session.email, function(err, list){
-	// 	console.log('-----list-----');
-	// 	console.log(list);
-	// });
-	Weixin.getKey(req.session.email, function(err, doc){
+	var email = req.session.email;
+	Weixin.getKey(email, function(err, doc){
 		if (err) {
 			return next(err);
 		}
-		Key.findAll(req.session.email, function(err, list){
+		Key.findAll(email, function(err, list){
 			if (err) {
 				return next(err);
 			}
 			if(!list){
 				list = [];
 			}
-			if(id){
-				Key.findOne(id, function(err, key){
-					if (err) {
-						return next(err);
+			Key.findOne(id, function(err, key){
+				if (err) {
+					return next(err);
+				}
+				if(!key){
+					key = {
+						name:'',
+						keys:'',
+						fed:'',
+						article:'',
+						fn:''
 					}
-					res.render('admin/key', {
-						title: '自动回复',
-						email: req.session.email,
-						doc: doc,
-						list:list,
-						keyName:key.name,
-						keyKeys:key.keys,
-						keyFed:key.fed,
-						success:req.flash('success').toString(),
-						error:req.flash('error').toString(),
-						page: 'key'
-					});
-				});
-			}else{
+				}
 				res.render('admin/key', {
 					title: '自动回复',
 					email: req.session.email,
 					doc: doc,
 					list:list,
-					keyName:'',
-					keyKeys:'',
-					keyFed:'',
+					key: key,
 					success:req.flash('success').toString(),
 					error:req.flash('error').toString(),
 					page: 'key'
 				});
-			}
-			
+			});	
 		});
 	});
 }

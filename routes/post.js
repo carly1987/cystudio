@@ -207,13 +207,12 @@ exports.firstMessage = function(req, res, next){
 exports.key = function(req, res, next){
 	var name = req.body.keyName || '';
 	var keys = req.body.keyKeys || '';
-	var keyFedByTxt = req.body.keyFedByTxt || '';
-	var keyFedBySelect = req.body.keyFedBySelect || '';
+	var fed = req.body.fed || '';
+	var article = req.body.article || '';
+	var fn = req.body.fn || '';
 	var user = req.session.user;
 	var email = req.session.email;
-	var fed = keyFedByTxt || '';
-	var article = keyFedBySelect || '';
-	Key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article}, function(err, doc){
+	Key.add({user:user, email:email, name:name, keys:keys, fed:fed, article:article, fn:fn}, function(err, doc){
 		req.flash('success','添加成功！');
 		if(article && article!=''){
 			Message.findOne(article, function(err, articleDoc){
@@ -230,6 +229,19 @@ exports.key = function(req, res, next){
 				});
 				res.redirect('/admin/key#postkey');
 			});
+		}else if(fn && fn!=''){
+			Webot.set(name, {
+				pattern: '/'+keys+'/',
+				handler: function(info) {
+					return {
+						title: ,
+						url: 'http://carly.notes18.com/app/article?id='+article,
+						picUrl: articleDoc.img,
+						description: articleDoc.des
+					};
+				}
+			});
+			res.redirect('/admin/key#postkey');
 		}else{
 			Webot.set(name, {
 				pattern: '/'+keys+'/',

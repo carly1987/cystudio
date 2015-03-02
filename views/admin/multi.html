@@ -5,65 +5,77 @@
 	<% include sidebar.html %>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
+		<div class="alert alert-info" role="alert">
+			请在右侧的单图文列表中选择图文添加到左侧的多图文
+		</div>
 		<div class="row">
-			<div class="alert alert-info" role="alert">
-				请在右侧的单图文列表中选择图文添加到左侧的多图文
-			</div>
 			<div class="col-md-6">
-				<h5>多图文</h5>
-				<form method='post'>
-					<table class="table table-striped" id="data-multi">
-						<thead>
-							<tr>
-								<th>标题</th>
-								<th>封面图</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%if(doc.id){%>
-							<tr data-id="<%= doc.id%>">
-								<td><%= doc.title%></td>
-								<td><img src="<%= doc.img%>" width="100"/></td>
-							</tr>
-							<%}%>
-							<% list.forEach(function(v){ %>
-							<tr data-id="<%= v._id%>">
-								<td><%= v.title%></td>
-								<td><img src="<%= v.img%>" width="100"/></td>
-							</tr>
-							<% }) %>
-						</tbody>
-					</table>
-					<div class="form-group">
-						<input type="hidden" name="id" value="<%= doc.id%>"/>
-						<input type="hidden" name="title" value="<%= doc.title%>"/>
-						<input type="hidden" name="img" value="<%= doc.img%>"/>
-						<input type="hidden" name="list" value="<%= list%>"/>
-						<input type="submit" value="保存" class="btn btn-primary">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">多图文</h3>
 					</div>
-				</form>
+					<div class="panel-body">
+						<form method='post'>
+							<table class="table table-striped" id="data-multi">
+								<thead>
+									<tr>
+										<th>标题</th>
+										<th>封面图</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%if(doc.id){%>
+									<tr data-id="<%= doc.id%>">
+										<td><%= doc.title%></td>
+										<td><img src="<%= doc.img%>" width="100"/></td>
+									</tr>
+									<%}%>
+									<% list.forEach(function(v){ %>
+									<tr data-id="<%= v._id%>">
+										<td><%= v.title%></td>
+										<td><img src="<%= v.img%>" width="100"/></td>
+									</tr>
+									<% }) %>
+								</tbody>
+							</table>
+							<div class="form-group">
+								<input type="hidden" name="id" value="<%= doc.id%>"/>
+								<input type="hidden" name="title" value="<%= doc.title%>"/>
+								<input type="hidden" name="img" value="<%= doc.img%>"/>
+								<input type="hidden" name="list" value="<%= list%>"/>
+								<input type="submit" value="保存" class="btn btn-primary">
+							</div>
+						</form>
+					</div>
+				</div>	
 			</div>
 			<div class="col-md-6">
-				<h5>单图文列表</h5>
-				<table class="table table-striped" id="data-single">
-					<thead>
-						<tr>
-							<th>标题</th>
-							<th>封面图</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% singles.forEach(function(v){ %>
-						<tr data-id="<%= v._id%>" data-title="<%= v.title%>" data-img="<%= v.img%>">
-							<td><%= v.title%></td>
-							<td><img src="<%= v.img%>" width="100"/></td>
-						</tr>
-						<% }) %>
-					</tbody>
-				</table>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">单图文列表</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table table-striped" id="data-single">
+							<thead>
+								<tr>
+									<th>标题</th>
+									<th>封面图</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% singles.forEach(function(v){ %>
+								<tr data-id="<%= v._id%>" data-title="<%= v.title%>" data-img="<%= v.img%>">
+									<td><%= v.title%></td>
+									<td><img src="<%= v.img%>" width="100"/></td>
+								</tr>
+								<% }) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+</div>
 </div>
 <% include ../foot.html %>

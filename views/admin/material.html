@@ -6,33 +6,50 @@
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		<h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
 		<div class="row">
-			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist" id="tab-material">
 				<li role="presentation" class="active"><a href="#img" role="tab" data-toggle="tab">图片</a></li>
 				<li role="presentation"><a href="#audio" role="tab" data-toggle="tab">语音</a></li>
 				<li role="presentation"><a href="#video" role="tab" data-toggle="tab">视频</a></li>
 			</ul>
-			<div class="tab-content" id="tab-material-tabpanel">
+			<div class="tab-content tab-padding" id="tab-material-tabpanel">
 				<div role="tabpanel" class="tab-pane active" id="img">
-					<div class="row">
-						<% list.forEach(function(v){ %>
-						<div class="col-sm-6 col-md-4">
-							<div class="thumbnail">
-							  <img src="<%= v.url%>" height="50">
-							</div>
+					<p class="col-sm-12">
+						<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#myModal" data-stage="1">添加图片</a>
+					</p>
+					<% list.forEach(function(v){ %>
+					<div class="col-md-2">
+						<div class="thumbnail">
+						  <img src="<%= v.url%>" width="100">
 						</div>
-						<%})%>
 					</div>
+					<%})%>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="audio">
-					<div class="row"></div>
+					<p class="col-sm-12">
+						<a class="btn btn-primary">添加语音</a>
+					</p>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="video">
-					<div class="row"></div>
+					<p class="col-sm-12">
+						<a class="btn btn-primary">添加视频</a>
+					</p>
 				</div>
 			</div>
 		</div>
 	</div>
+	</div>
+</div>
+<div class="modal fade modal-tab" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<% include ../mod/upload.html %>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" id="uploadImgConfirm">确定</button>
+			</div>
+		</div>
 	</div>
 </div>
 <% include ../foot.html %>
