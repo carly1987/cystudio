@@ -83,3 +83,12 @@ exports.del = function(id, callback){
 		callback(null, doc);
 	});
 }
+exports.delByemail = function(email, callback){
+	Wsite_slide.remove({email:email}, function(err, doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		callback(null, doc);
+	});
+}

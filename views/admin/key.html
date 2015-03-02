@@ -127,7 +127,15 @@
 													</div>
 													<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 														<div class="panel-body">
-															<select multiple class="form-control" name="article" id="keyFedBySelect"></select>
+															<%if(message.length>0){%>
+															<select multiple class="form-control" name="article" id="keyFedBySelect">
+																<% message.forEach(function(v){ %>
+																	<option value="<%= v._id%>"><%= v.title%></option>
+																<%})%>
+															</select>
+															<%}else{%>
+																你还没有添加图文消息哦，快去<a href="/admin/single">+添加多图文</a> 吧
+															<%}%>
 														</div>
 													</div>
 												</div>
@@ -142,7 +150,9 @@
 													<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 														<div class="panel-body">
 															<select multiple class="form-control" name="fn" id="keyFedByFN">
-																<option value="/app/wsite">微官网</option>
+																<% fns.forEach(function(v){ %>
+																	<option value="<%= v._id%>"><%= v.title%></option>
+																<%})%>
 															</select>
 														</div>
 													</div>

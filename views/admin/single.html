@@ -4,7 +4,7 @@
 <div class="row">
 	<% include sidebar.html %>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		<h1 class="page-header">欢迎：carly，你已经有 5 个公众号，所属套餐：基础套餐！</h1>
+		<h1 class="page-header"><a href="/admin/multi" class="btn btn-primary">+添加多图文</a></h1>
 		<form class="form-horizontal" role="form" method='post'>
 			<div class="form-group">
 				<label for="email" class="col-sm-2 control-label">标题</label>
@@ -17,6 +17,7 @@
 				<label for="email" class="col-sm-2 control-label">封面图</label>
 				<div class="col-sm-7">
 					<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#myModal" data-stage="1">选择图片</a>
+					<img src="<%=doc.img%>"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -29,6 +30,11 @@
 				<label for="email" class="col-sm-2 control-label">详情</label>
 				<div class="col-sm-7">
 					<% include ../mod/wysiwyg.html %>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button type="submit" class="btn btn-primary">保存</button>
 				</div>
 			</div>
 		</form>

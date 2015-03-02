@@ -10,6 +10,7 @@ var MessageScheme = new Schema({
 	editor:String,
 	user:String,
 	email:String,
+	type:String,
 	finished:{type:Boolean,default:false},
 	post_date:{type:Date,default:Date.now},
 	list:[]
@@ -55,6 +56,7 @@ exports.add = function(options, callback){
 	newDb.img = options.img;
 	newDb.des = options.des || '';
 	newDb.editor = options.editor || '';
+	newDb.type = options.type || '';
 	newDb.user = options.user;
 	newDb.email = options.email;
 	newDb.list = options.list || [];
@@ -90,6 +92,15 @@ exports.update = function(options,callback){
 }
 exports.del = function(id, callback){
 	Message.remove({_id:id},function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		callback(null, doc);
+	});
+}
+exports.delByemail = function(email, callback){
+	Message.remove({email:email}, function(err, doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);

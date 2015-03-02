@@ -22,6 +22,14 @@
 						</tr>
 					</thead>
 					<tbody>
+						<% fns.forEach(function(v){ %>
+						<tr>
+							<td><a href="/admin/single?id=<%= v._id%>"><%= v.title%></a></td>
+							<td><img src="<%= v.img%>" width="100"/></td>
+							<td><%= v.des%></td>
+							<td><a href="/admin/single?id=<%= v._id%>">编辑</a></td>
+						</tr>
+						<% }) %>
 						<% singles.forEach(function(v){ %>
 						<tr>
 							<td><a href="/admin/single?id=<%= v._id%>"><%= v.title%></a></td>

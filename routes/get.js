@@ -7,6 +7,7 @@ var Url = require("url");
 var QS = require("querystring");
 var Material = require('../module/material');
 var Wsite = require('../module/wsite');
+var Wsite_slide = require('../module/Wsite_slide');
 //首页
 exports.index = function(req, res, next){
 	User.list(function (err, list) {
@@ -133,11 +134,21 @@ exports.del = function(req, res){
 	var email = $url["email"];
 	var pass = $url["pass"];
 	Weixin.deleteOne(email, pass, req, function(msg){
-		req.flash('error',msg);
+		req.flash('success',msg);
 		return res.redirect('/weixin');
 	}, function(err){
 		if(err){res.redirect('/');}
-		return res.redirect('/weixin');
+		Key.delByemail(email, function(){
+			Material.delByemail(email, function(){
+				Message.delByemail(email, function(){
+					Wsite.delByemail(email, function(){
+						Wsite_slide.delByemail(email, function(){
+							return res.redirect('/weixin');
+						});
+					});
+				});
+			});
+		});
 	}, function(){
 		return res.redirect('/weixin/weixinSafe');
 	});
@@ -190,15 +201,28 @@ exports.key = function(req, res, next){
 						fn:''
 					}
 				}
-				res.render('admin/key', {
-					title: '自动回复',
-					email: req.session.email,
-					doc: doc,
-					list:list,
-					key: key,
-					success:req.flash('success').toString(),
-					error:req.flash('error').toString(),
-					page: 'key'
+				Message.findAll(email, function(err, messages){
+					var message = [];
+					var fns = [];
+					messages.forEach(function(v,i){
+						if(v.type == 'wsite'){
+							fns.push(v);
+						}else{
+							message.push(v);
+						}
+						res.render('admin/key', {
+							title: '自动回复',
+							email: req.session.email,
+							doc: doc,
+							list:list,
+							key: key,
+							message: message,
+							fns: fns,
+							success:req.flash('success').toString(),
+							error:req.flash('error').toString(),
+							page: 'key'
+						});
+					});
 				});
 			});	
 		});
@@ -228,8 +252,11 @@ exports.message = function(req, res){
 		if(json == 1){
 			var singles = [];
 			var multis = [];
+			var fns = [];
 			doc.forEach(function(v,i){
-				if(v.list.length<=0){
+				if(v.type == 'wsite'){
+					fns.push(v);
+				}else if(v.list.length<=0){
 					singles.push(v);
 				}else{
 					multis.push(v);
@@ -238,6 +265,7 @@ exports.message = function(req, res){
 			res.render('admin/message', {
 				title: '图文消息',
 				email: email,
+				fns: fns,
 				singles: singles,
 				multis: multis,
 				page: 'message'

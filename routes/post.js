@@ -167,7 +167,11 @@ exports.add = function(req, res, next){
 						res.redirect('/weixin/add');
 					}, 0, function(name,pic,weixin_id,weixin_name,type,verify,contractorinfo,desc,location,qrcode){
 						Weixin.update({email:email, name:name, pic:pic, weixin_id:weixin_id, weixin_name:weixin_name, type:type, verify:verify, contractorinfo:contractorinfo, desc:desc, location:location, qrcode:qrcode}, function(){
-							return false;
+							Message.add({title:weixin_name+'微官网', img:pic,user:user, email:email, type:'wsite'}, function(err, doc){
+								Wsite.add({email:email, title:'', template:'', copyright:''}, function(){
+									return false;
+								});
+							});
 						});
 					}, function(){
 						res.redirect('/weixin/weixinSafe');
@@ -234,10 +238,10 @@ exports.key = function(req, res, next){
 				pattern: '/'+keys+'/',
 				handler: function(info) {
 					return {
-						title: ,
-						url: 'http://carly.notes18.com/app/article?id='+article,
-						picUrl: articleDoc.img,
-						description: articleDoc.des
+						title: '',
+						url: 'http://carly.notes18.com'+fn+'?email='+email,
+						picUrl: '',
+						description: ''
 					};
 				}
 			});
@@ -365,19 +369,7 @@ exports.wsite = function(req, res){
 	var template = req.body.template || '';
 	var url = req.body.url || '';
 	var copyright = req.body.copyright || '';
-	var id = req.body.id || '';
-	console.log('=======id=======');
-	console.log(id);
-	console.log(req.body.id);
-	if(id && id !=''){
-		console.log('更新');
-		Wsite.update({email:email, title:title, template:template, copyright:copyright}, function(){
-			res.redirect('/admin/wsite#base');
-		});
-	}else{
-		console.log('添加');
-		Wsite.add({title:title, template:template, url:url, copyright:copyright, user:user, email:email}, function(){
-			res.redirect('/admin/wsite#base');
-		});
-	}
+	Wsite.update({email:email, title:title, template:template, copyright:copyright}, function(){
+		res.redirect('/admin/wsite#base');
+	});
 }
