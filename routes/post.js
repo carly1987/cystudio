@@ -11,6 +11,7 @@ var Qiniu = require('qiniu');
 var Material = require('../module/material');
 var Message = require('../module/message');
 var Wsite = require('../module/wsite');
+var Wsite_slide = require('../module/Wsite_slide');
 //注册
 exports.register = function(req, res, next){
 	var email = Validator.trim(req.body.email) || '';
@@ -372,4 +373,27 @@ exports.wsite = function(req, res){
 	Wsite.update({email:email, title:title, template:template, copyright:copyright}, function(){
 		res.redirect('/admin/wsite#base');
 	});
+}
+exports.slide = function(req, res){
+	var user = req.session.user;
+	var email = req.session.email;
+	var title = req.body.title || '';
+	var img = req.body.img || '';
+	var order = req.body.order || 0;
+	var location = req.body.location || 'index';
+	var show = req.body.show || false;
+	var url = req.body.url || '';
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
+	var id = $url["id"];
+	if(id){
+		Wsite_slide.update({_id:id, title:title, img:img, order:order, location:location, show:show}, function(){
+			return false;
+		});
+	}else{
+		Wsite_slide.add({title:title, img:img, order:order, location:location, show:show}, function(){
+			res.redirect('/admin/wsite#slide');
+		});
+	}
+	
 }

@@ -380,7 +380,8 @@ exports.wsite = function(req, res){
 				title:'',
 				template:'',
 				url:'',
-				copyright:''
+				copyright:'',
+				slide:[]
 			}
 		}else{
 			doc.url = 'http://carly.notes18.com/app/wsite?id='+doc._id;
@@ -392,6 +393,31 @@ exports.wsite = function(req, res){
 			wsite: doc
 		});
 
+	});
+}
+exports.slide = function(req, res){
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
+	var id = $url["id"];
+	var email = req.session.email;
+	var user = req.session.user;
+	Wsite_slide.findOne(id, function(err, doc){
+		if(!doc){
+			doc = {
+				title:'',
+				order:'',
+				show:false,
+				url:'',
+				img: '',
+				location:'',
+			}
+		}
+		res.render('admin/wsite/slide', {
+			title: '微官网－幻灯片管理',
+			email: email,
+			page: 'wsite',
+			slide: doc
+		});
 	});
 }
 //文章页面

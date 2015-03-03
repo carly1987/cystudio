@@ -7,7 +7,7 @@
 		<h1 class="page-header"></h1>
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#base" aria-controls=="base" role="tab" data-toggle="tab">基础设置</a></li>
-			<li role="presentation"><a href="#slide" aria-controls=="slide" role="tab" data-toggle="tab">首页幻灯片</a></li>
+			<li role="presentation"><a href="#slide" aria-controls=="slide" role="tab" data-toggle="tab">幻灯片管理</a></li>
 			<li role="presentation"><a href="#category" aria-controls=="category" role="tab" data-toggle="tab">分类管理</a></li>
 		</ul>
 		<div class="tab-content tab-padding">
@@ -44,10 +44,25 @@
 					</div>
 				</form>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="slide"></div>
+			<div role="tabpanel" class="tab-pane" id="slide">
+				<p><a href="/admin/wsite/slide" class="btn btn-primary">+添加幻灯片</a></p>
+				<div class="row">
+					<% wsite.slide.forEach(function(v){ %>
+					<div class="col-md-2">
+						<div class="thumbnail">
+							<img src="..." alt="...">
+							<div class="caption">
+								<h3>Thumbnail label</h3>
+								<p>...</p>
+							</div>
+						</div>
+					</div>
+					<%})%>
+				</div>
+			</div>
 			<div role="tabpanel" class="tab-pane" id="category"></div>
 		</div>
 	</div>
-  </div>
+	</div>
 </div>
 <% include ../../foot.html %>

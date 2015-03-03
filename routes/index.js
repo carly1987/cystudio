@@ -40,6 +40,8 @@ module.exports=function(app){
 	app.get('/admin/material', get.material);
 	app.get('/admin/wsite', checkLogin);
 	app.get('/admin/wsite', get.wsite);
+	app.get('/admin/wsite/slide', checkLogin);
+	app.get('/admin/wsite/slide', get.slide);
 	app.get('/mod/uploadImg', checkLogin);
 	app.get('/mod/uploadImg', get.uploadImg);
 	app.get('/app/article', get.appArticle);
@@ -68,6 +70,8 @@ module.exports=function(app){
 	app.post('/admin/material', post.material);
 	app.post('/admin/wsite', checkLogin);
 	app.post('/admin/wsite', post.wsite);
+	app.post('/admin/wsite/slide', checkLogin);
+	app.post('/admin/wsite/slide', post.slide);
 	app.post('/mod/uploadImg', checkLogin);
 	app.post('/mod/uploadImg', post.uploadImg);
 }

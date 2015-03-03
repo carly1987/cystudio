@@ -4,9 +4,11 @@ var mongoose = db.mongoose;
 var Schema = db.Schema;
 var Wsite_slideScheme = new Schema({
 	title:String,
-	template:String,
+	order:String,
+	show:Boolean,
 	url:String,
-	copyright:String,
+	img: String,
+	location:String,
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
@@ -41,9 +43,11 @@ exports.findAll = function(email, callback){
 exports.add = function(options, callback){
 	var newDb = new Wsite_slide();
 	newDb.title = options.title;
-	newDb.template = options.template;
+	newDb.order = options.order;
+	newDb.show = options.show;
 	newDb.url = options.url;
-	newDb.copyright = options.copyright;
+	newDb.img = options.img;
+	newDb.location = options.location;
 	newDb.user = options.user;
 	newDb.email = options.email;
 	newDb.save(function(err){
@@ -56,15 +60,17 @@ exports.add = function(options, callback){
 	});
 }
 exports.update = function(options,callback){
-	Wsite_slide.findOne({email:options.email},function(err,doc){
+	Wsite_slide.findOne({_id:options._id},function(err,doc){
 		if (err) {
 				util.log('FATAL '+ err);
 				callback(err, null);
 		}
 		doc.title = options.title;
-		doc.template = options.template;
-		doc.copyright = options.copyright;
+		doc.order = options.order;
+		doc.show = options.show;
 		doc.url = options.url;
+		doc.img = options.img;
+		doc.location = options.location;
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);

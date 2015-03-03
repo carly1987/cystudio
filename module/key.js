@@ -9,7 +9,7 @@ var KeyScheme = new Schema({
 	keys:String,
 	fed:String,
 	article:{type:Schema.Types.ObjectId, ref:'Message'},
-	fn:{type:Schema.Types.ObjectId, ref:'Wsite'},
+	fn:String,
 	user:String,
 	email:String,
 	finished:String,

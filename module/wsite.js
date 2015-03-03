@@ -1,5 +1,6 @@
 var util = require('util');
 var db = require('./db');
+var Slide = require('./Wsite_slide');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
 var WsiteScheme = new Schema({
@@ -7,6 +8,7 @@ var WsiteScheme = new Schema({
 	template:String,
 	url:String,
 	copyright:String,
+	slide:[],
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
@@ -40,10 +42,11 @@ exports.findAll = function(email, callback){
 }
 exports.add = function(options, callback){
 	var newDb = new Wsite();
-	newDb.title = options.title;
-	newDb.template = options.template;
-	newDb.url = options.url;
-	newDb.copyright = options.copyright;
+	newDb.title = options.title || '';
+	newDb.template = options.template || '';
+	newDb.url = options.url || '';
+	newDb.copyright = options.copyright || '';
+	newDb.slide = options.slide || [];
 	newDb.user = options.user;
 	newDb.email = options.email;
 	newDb.save(function(err){
@@ -65,6 +68,7 @@ exports.update = function(options,callback){
 		doc.template = options.template;
 		doc.copyright = options.copyright;
 		doc.url = options.url;
+		doc.slide = options.slide || doc.slide; 
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);
