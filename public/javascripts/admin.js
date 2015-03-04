@@ -83,7 +83,8 @@ require([
 		var self = $(this);
 		var stage = self.attr('data-stage');
 		if(stage == 1){
-			$('#uploadImgValue').val(img);
+			$('#uploadImgValueInput').val(img);
+			$('#uploadImgValueImg').attr('src', img);
 		}else{
 			document.execCommand('insertimage',false, img);
 		}	

@@ -8,7 +8,6 @@ var WsiteScheme = new Schema({
 	template:String,
 	url:String,
 	copyright:String,
-	slide:[],
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
@@ -46,7 +45,6 @@ exports.add = function(options, callback){
 	newDb.template = options.template || '';
 	newDb.url = options.url || '';
 	newDb.copyright = options.copyright || '';
-	newDb.slide = options.slide || [];
 	newDb.user = options.user;
 	newDb.email = options.email;
 	newDb.save(function(err){
@@ -68,7 +66,6 @@ exports.update = function(options,callback){
 		doc.template = options.template;
 		doc.copyright = options.copyright;
 		doc.url = options.url;
-		doc.slide = options.slide || doc.slide; 
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);

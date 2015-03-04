@@ -7,7 +7,7 @@ var Url = require("url");
 var QS = require("querystring");
 var Material = require('../module/material');
 var Wsite = require('../module/wsite');
-var Wsite_slide = require('../module/Wsite_slide');
+var Wsite_slide = require('../module/wsite_slide');
 //首页
 exports.index = function(req, res, next){
 	User.list(function (err, list) {
@@ -380,19 +380,31 @@ exports.wsite = function(req, res){
 				title:'',
 				template:'',
 				url:'',
-				copyright:'',
-				slide:[]
+				copyright:''
 			}
 		}else{
 			doc.url = 'http://carly.notes18.com/app/wsite?id='+doc._id;
 		}
-		res.render('admin/wsite/index', {
-			title: '微官网',
-			email: email,
-			page: 'wsite',
-			wsite: doc
+		Wsite_slide.findAll(email, function(err, slides){
+			console.log('======slides-------');
+			console.log(slides);
+			var $index = [];
+			var $slides = [];
+			slides.forEach(function(v,i){
+				if(v.location == 'index'){
+					$index.push(v);
+				}
+			});
+			$slides.push(['首页幻灯片',$index]);
+			console.log($slides);
+			res.render('admin/wsite/index', {
+				title: '微官网',
+				email: email,
+				page: 'wsite',
+				wsite: doc,
+				slides:$slides
+			});
 		});
-
 	});
 }
 exports.slide = function(req, res){

@@ -391,7 +391,7 @@ exports.slide = function(req, res){
 			return false;
 		});
 	}else{
-		Wsite_slide.add({title:title, img:img, order:order, location:location, show:show}, function(){
+		Wsite_slide.add({title:title, img:img, order:order, location:location, show:show, user:user, email:email}, function(){
 			res.redirect('/admin/wsite#slide');
 		});
 	}

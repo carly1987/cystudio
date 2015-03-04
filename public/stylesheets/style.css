@@ -103,3 +103,14 @@ iframe{border:0; background: transparent; width: 100%; overflow: hidden;}
 .modal-tab .tab-content .row{margin: 0; min-height: 1px;}
 
 .tab-content.tab-padding{ padding: 20px 0;}
+
+.bleak{
+  opacity:0.3;
+  cursor: pointer;
+}
+.bleak:hover,
+.bleak.in{
+  opacity:1;
+}
+.interhover .btn{display: none;}
+.interhover:hover .btn{display: inline-block;}
