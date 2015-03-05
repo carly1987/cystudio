@@ -7,7 +7,7 @@ var Url = require("url");
 var QS = require("querystring");
 var Material = require('../module/material');
 var Wsite = require('../module/wsite');
-var Wsite_slide = require('../module/wsite_slide');
+var Slide = require('../module/slide');
 //首页
 exports.index = function(req, res, next){
 	User.list(function (err, list) {
@@ -142,7 +142,7 @@ exports.del = function(req, res){
 			Material.delByemail(email, function(){
 				Message.delByemail(email, function(){
 					Wsite.delByemail(email, function(){
-						Wsite_slide.delByemail(email, function(){
+						Slide.delByemail(email, function(){
 							return res.redirect('/weixin');
 						});
 					});
@@ -385,7 +385,7 @@ exports.wsite = function(req, res){
 		}else{
 			doc.url = 'http://carly.notes18.com/app/wsite?id='+doc._id;
 		}
-		Wsite_slide.findAll(email, function(err, slides){
+		Slide.findAll(email, function(err, slides){
 			console.log('======slides-------');
 			console.log(slides);
 			var $index = [];
@@ -413,7 +413,7 @@ exports.slide = function(req, res){
 	var id = $url["id"];
 	var email = req.session.email;
 	var user = req.session.user;
-	Wsite_slide.findOne(id, function(err, doc){
+	Slide.findOne(id, function(err, doc){
 		if(!doc){
 			doc = {
 				title:'',

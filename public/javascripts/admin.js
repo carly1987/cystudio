@@ -85,9 +85,11 @@ require([
 		if(stage == 1){
 			$('#uploadImgValueInput').val(img);
 			$('#uploadImgValueImg').attr('src', img);
-		}else{
+		}else if(stage == 2){
 			document.execCommand('insertimage',false, img);
-		}	
+		}else{
+
+		}
 	});
 	$('#myModal').on('show.bs.modal', function (e) {
 	  var button = $(e.relatedTarget);
@@ -99,5 +101,13 @@ require([
 		var self = $(this);
 		var html = self.html();
 		$('#uploadImgText').val(html);
+	});
+	$('.table-edit td').mouseenter(function(){
+		var tr = $(this).parent();
+		tr.find('.table-edit-hide').addClass('in');
+	});
+	$('.table-edit td').mouseout(function(){
+		var tr = $(this).parent();
+		tr.find('.table-edit-hide').removeClass('in');
 	});
 });

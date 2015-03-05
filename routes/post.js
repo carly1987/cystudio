@@ -11,7 +11,7 @@ var Qiniu = require('qiniu');
 var Material = require('../module/material');
 var Message = require('../module/message');
 var Wsite = require('../module/wsite');
-var Wsite_slide = require('../module/Wsite_slide');
+var Slide = require('../module/slide');
 //注册
 exports.register = function(req, res, next){
 	var email = Validator.trim(req.body.email) || '';
@@ -387,11 +387,11 @@ exports.slide = function(req, res){
 	$url = QS.parse($url);
 	var id = $url["id"];
 	if(id){
-		Wsite_slide.update({_id:id, title:title, img:img, order:order, location:location, show:show}, function(){
+		Slide.update({_id:id, title:title, img:img, order:order, location:location, show:show}, function(){
 			return false;
 		});
 	}else{
-		Wsite_slide.add({title:title, img:img, order:order, location:location, show:show, user:user, email:email}, function(){
+		Slide.add({title:title, img:img, order:order, location:location, show:show, user:user, email:email}, function(){
 			res.redirect('/admin/wsite#slide');
 		});
 	}

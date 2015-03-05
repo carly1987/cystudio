@@ -114,3 +114,6 @@ iframe{border:0; background: transparent; width: 100%; overflow: hidden;}
 }
 .interhover .btn{display: none;}
 .interhover:hover .btn{display: inline-block;}
+
+.table-edit .table-edit-hide{display: none;}
+.table-edit .table-edit-hide.in{display: inline-block;}

@@ -1,6 +1,5 @@
 var util = require('util');
 var db = require('./db');
-var Slide = require('./Wsite_slide');
 var mongoose = db.mongoose;
 var Schema = db.Schema;
 var WsiteScheme = new Schema({
