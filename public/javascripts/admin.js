@@ -102,12 +102,19 @@ require([
 		var html = self.html();
 		$('#uploadImgText').val(html);
 	});
-	$('.table-edit td').mouseenter(function(){
-		var tr = $(this).parent();
-		tr.find('.table-edit-hide').addClass('in');
+	$('.table-edit-btn').click(function(){
+		var self = $(this);
+		var tr = self.parents('tr');
+		tr.find('.table-edit-hide').toggleClass('in');
 	});
-	$('.table-edit td').mouseout(function(){
-		var tr = $(this).parent();
-		tr.find('.table-edit-hide').removeClass('in');
+	$('.table-edit-add-tr').click(function(){
+		var self = $(this);
+		var tr = self.parents('tr');
+		var tbody = tr.parent();
+		var size = tbody.find('tr').length;
+		if(size<=5){
+			var html = '<tr><td><input type="text" class="form-control table-edit-hide in table-edit-text" name="title" value=""></td><td><a class="btn btn-primary ajax-img table-edit-hide in" data-toggle="modal" data-target="#myModal" data-stage="3">选择图片</a></td><td>-</td></tr>';
+			tr.before(html);
+		}
 	});
 });
