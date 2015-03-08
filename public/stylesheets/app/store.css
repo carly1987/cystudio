@@ -1,0 +1,48 @@
+body{background: #fff;}
+a{color: #09bb07;}
+header > h3{color: #000;}
+.mod-navLine{}
+.mod-navLine ul {
+position: fixed;
+z-index: 200;
+bottom: 0;
+left: 0;
+right: -1px;
+margin: auto;
+width: 100%;
+display: -webkit-box;
+display: box;
+-webkit-box-orient: horizontal;
+overflow: hidden;
+height: 51px;
+border-top: 1px solid #ccc;
+background: #f8f8f8;
+}
+.mod-navLine li>a{display: block;
+height: 100%;
+line-height: 20px; text-align: center; padding: 10px 0;}
+.mod-navLine .fa {
+display: block;
+font-size: 20px;
+}
+
+.mod-box{border-bottom: 1px solid #ccc;}
+.mod-box .hd{line-height: 30px; padding: 10px;}
+.mod-box .hd a.fr{color: #666;}
+.mod-box .bd{overflow-y: hidden; overflow-x: scroll;}
+.mod-box .bd .cont{white-space:nowrap; min-height: 60px;}
+.mod-box .bd>a{text-align: center; padding: 10px; border-top: 1px solid #ccc; display: block;}
+
+.mod-p{width: 80px; display: inline-block; overflow: hidden; color: #000; text-align: center;}
+.mod-p>*{display: block; padding:0 10px 5px 10px;}
+.mod-p>i{height: 80px;}
+.mod-p>i>img{width: 100%; min-height: 100%; border-radius: 10px;}
+.mod-p small{color: #666;}
+
+.mod-ad{border-radius: 10px; border: 1px solid #ccc; margin: 10px; display: inline-block; overflow: hidden; width:130px; height: 64px;}
+.mod-ad img{width: 100%; min-height: 100%;}
+
+.mod-block{display: block; margin: 10px; text-align: center; color: #666;}
+
+.btn{border-radius: 10px; text-align: center; padding: 10px;}
+.btn-default{border:1px solid #686868; background: #fff; color: #666;}

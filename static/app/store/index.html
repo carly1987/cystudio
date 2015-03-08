@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta name="format-detection" content="telephone=no">
+<meta content="telephone=no" name="format-detection">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>精品推荐</title>
+<link rel="stylesheet" type="text/css" href="../../../public/stylesheets/app/cy.css">
+<link rel="stylesheet" type="text/css" href="../../../public/stylesheets/app/store.css">
+<link rel="stylesheet" type="text/css" href="../../../public/font/font-awesome.min.css">
+</head>
+<body>
+<div class="html" id="html">
+<div class="stage">
+  	<section id="index">
+  		<div class="body">
+			<header>
+				<a class="fl">类别</a>
+				<a class="fr">清单</a>
+				<h3>精品推荐</h3>
+			</header>
+			<div class="mod-slider slider-hor" id="indexSlide">
+				<ul class="slider-list">
+					<li><a><img src="../../../public/images/1.jpg"/></a></li>
+					<li><a><img src="../../../public/images/1.jpg"/></a></li>
+					<li><a><img src="../../../public/images/1.jpg"/></a></li>
+					<li><a><img src="../../../public/images/1.jpg"/></a></li>
+					<li><a><img src="../../../public/images/1.jpg"/></a></li>
+				</ul>
+				<div class="slider-text">
+					<span class="fl slider-span" id="slider-span">标题1</span>
+					<div id="pagenavi" class="fr slider-page">
+						<a href="#" class="active">1</a>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">4</a>
+						<a href="#">5</a>
+					</div>
+				</div>
+			</div><!--#indexSlide-->
+			<div class="mod-box">
+				<div class="hd">
+					<b>标题</b>
+					<a class="fr">显示全部< </a>
+				</div>
+				<div class="bd">
+					<div class="cont">
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+						<a class="mod-p" href="product.html">
+							<i><img src="../../../public/images/1.jpg"/></i>
+							<b>大标题</b>
+							<small>小标题</small>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="mod-box">
+				<div class="bd">
+					<div class="cont">
+						<a class="mod-ad" href=""><img src="../../../public/images/1.jpg"/></a>
+						<a class="mod-ad" href=""><img src="../../../public/images/1.jpg"/></a>
+						<a class="mod-ad" href=""><img src="../../../public/images/1.jpg"/></a>
+						<a class="mod-ad" href=""><img src="../../../public/images/1.jpg"/></a>
+						<a class="mod-ad" href=""><img src="../../../public/images/1.jpg"/></a>
+					</div>
+				</div>
+			</div>
+			<div class="mod-box">
+				<div class="hd"><b>快速链接</b></div>
+				<div class="bd">
+					<a>进一步了解微信公众号</a>
+					<a>推荐微信公众号</a>
+					<a>按类别浏览</a>
+					<a>微信新手？</a>
+					<a>关于儿童类微信公众号</a>
+				</div>
+			</div>
+			<div class="btn btn-default mod-block">打赏给程序猿</div>
+			<div class="btn btn-default mod-block">微信号：骚桃粉32</div>
+			<a class="mod-block">条款与条件> </a>
+		</div>
+  	</section><!--#index-->
+  	<section class="mod-navLine">
+        <ul class="navLine-ul">
+            <li>
+                <a class="active"><i class="fa fa-star"></i>精品推荐</a>
+            </li>
+            <li>
+                <a class=""><i class="fa fa-list"></i>排行榜</a>
+            </li>
+            <li>
+                <a class=""><i class="fa fa-compass"></i>探索</a>
+            </li>
+            <li>
+                <a class=""><i class="fa fa-search"></i>搜索</a>
+            </li>
+            <li>
+                <a class=""><i class="fa fa-user"></i>我</a>
+            </li>
+        </ul>
+    </section>
+    <section class="mod-transition transition-left" id="category">
+        我在左边
+    </section>
+</div>
+</div>
+<footer>@ vcooline</footer>
+<script src="../../../public/javascripts/lib/jquery.js"></script>
+<script data-main="../../../public/javascripts/main" src="../../../public/javascripts/lib/require.js"></script>
+<script src="../../../public/javascripts/lib/swipe.js"></script>
+<script>
+function indexSwipe(idNmane,texts){
+    new Swipe(document.getElementById(idNmane), {
+        speed:500,
+        auto:3000,
+        callback: function(){
+            if(texts){
+                var lis = $(this.element).next("div").find("#pagenavi").children();
+                lis.removeClass("active").eq(this.index).addClass("active");
+                $("#slider-span").html(texts[this.index]);
+            }
+        }
+    })
+}
+function divSwipe(idNmane){
+	var swipe=new Swipe(document.getElementById(idNmane), {
+		speed:500,
+		callback: function(){
+		}
+	});
+	return swipe;
+}
+divSwipe('indexList');
+indexSwipe("indexSlide",['标题1','标题2','标题3','标题4','标题5']);
+</script>
+</body>
+</html>

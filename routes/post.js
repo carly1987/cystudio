@@ -377,21 +377,30 @@ exports.wsite = function(req, res){
 exports.slide = function(req, res){
 	var user = req.session.user;
 	var email = req.session.email;
-	var title = req.body.title || '';
-	var img = req.body.img || '';
-	var order = req.body.order || 0;
-	var location = req.body.location || 'index';
-	var show = req.body.show || false;
+	var titles = req.body.titles || '';
+	var imgs = req.body.imgs || '';
+	var hrefs = req.body.hrefs || '';
+	var $titles = titles.split(',');
+	var $imgs = imgs.split(',');
+	var $hrefs = hrefs.split(',');
+	var list = [];
+	$titles.forEach(function(v,i){
+		list[i]={
+			title:v,
+			img:$imgs[i],
+			href:$hrefs[i] || '' 
+		}
+	});
 	var url = req.body.url || '';
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
 	var id = $url["id"];
 	if(id){
-		Slide.update({_id:id, title:title, img:img, order:order, location:location, show:show}, function(){
+		Slide.update({_id:id, list:list}, function(){
 			return false;
 		});
 	}else{
-		Slide.add({title:title, img:img, order:order, location:location, show:show, user:user, email:email}, function(){
+		Slide.add({list:list, email:email, user:user}, function(){
 			res.redirect('/admin/wsite#slide');
 		});
 	}

@@ -47,41 +47,40 @@
 			<div role="tabpanel" class="tab-pane" id="slide">
 				<p><a class="btn btn-primary" href="/admin/wsite/slide">添加幻灯片</a></p>
 				<div class="row">
-					<div class="col-sm-4">
-						<div class="carousel slide" data-ride="carousel">
-							<ol class="carousel-indicators">
-								<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-								<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-							</ol>
-							<div class="carousel-inner" role="listbox">
-								<div class="item active">
-									<img src="..." alt="...">
-									<div class="carousel-caption">
-										...
+					<% slides.forEach(function(v, i){ %>
+						<div class="col-sm-4">
+							<div class="carousel slide" data-ride="carousel" id="carousel-example-generic<%= i%>" href="/admin/wsite/slide?id=<%=v._id%>">
+								<ol class="carousel-indicators">
+									<% v.list.forEach(function(m, n){ %>
+									<li data-target="#carousel-example-generic<%= i%>" data-slide-to="<%= n%>" <%if(n==0){%>class="active"<%}%>></li>
+									<%})%>
+								</ol>
+								<div class="carousel-inner" role="listbox">
+									<% v.list.forEach(function(m, n){ %>
+									<div class="item <%if(n==0){%>active"<%}%>>
+										<img src="<%= m.img%>" alt="...">
+										<div class="carousel-caption">
+											<%= m.title%>
+										</div>
 									</div>
+									<%})%>
 								</div>
-								<div class="item">
-									<img src="..." alt="...">
-									<div class="carousel-caption">
-										...
-									</div>
-								</div>
-								...
+								<a class="left carousel-control" href="#carousel-example-generic<%= i%>" role="button" data-slide="prev">
+									<span class="icon-angle-left icon-prev" aria-hidden="true"></span>
+									<span class="sr-only">上一页</span>
+								</a>
+								<a class="right carousel-control" href="#carousel-example-generic<%= i%>" role="button" data-slide="next">
+									<span class="icon-angle-right icon-next" aria-hidden="true"></span>
+									<span class="sr-only">下一页</span>
+								</a>
 							</div>
-							<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-								<span class="icon-angle-left icon-prev" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-								<span class="icon-angle-right icon-next" aria-hidden="true"></span>
-								<span class="sr-only">Next</span>
-							</a>
 						</div>
-					</div>
+					<%})%>
 				</div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="category"></div>
+			<div role="tabpanel" class="tab-pane" id="category">
+				<p><a class="btn btn-primary" href="/admin/wsite/category">添加分类</a></p>
+			</div>
 		</div>
 	</div>
 	</div>

@@ -88,24 +88,48 @@ require([
 		}else if(stage == 2){
 			document.execCommand('insertimage',false, img);
 		}else{
-
+			var i = self.attr('data-index');
+			$('img[name="img'+i+'"]').attr('src', img);
 		}
 	});
 	$('#myModal').on('show.bs.modal', function (e) {
 	  var button = $(e.relatedTarget);
 	  var stage = button.data('stage');
+	  var index = button.data('index');
 	  var modal = $(this);
 	  $('#uploadImgConfirm').attr('data-stage',stage);
+	  $('#uploadImgConfirm').attr('data-index',index);
 	});
 	$('#editor').blur(function(e){
 		var self = $(this);
 		var html = self.html();
 		$('#uploadImgText').val(html);
 	});
-	$('.table-edit-btn').click(function(){
+	$('.table-edit').on('click', '.table-edit-btn', function(){
 		var self = $(this);
 		var tr = self.parents('tr');
-		tr.find('.table-edit-hide').toggleClass('in');
+		var i = parseInt(tr.attr('data-index'));
+		var $editor = tr.find('.table-edit-hide');
+		$editor.toggleClass('in');
+		if($editor.hasClass('in')){
+			self.text('保存');
+		}else{
+			self.text('编辑');
+			var title = tr.find('input[name="title"]').val();
+			tr.find('p[name="title"]').html(title);
+			var img = tr.find('img').attr('src');
+			var titles = $('input[name="titles"]');
+			var $titles = titles.val().split(',');
+			$titles[i] = title;
+			titles.val($titles);
+			var imgs = $('input[name="imgs"]');
+			var $imgs = imgs.val().split(',');
+			$imgs[i] = img;
+			imgs.val($imgs);
+			var hrefs = $('input[name="hrefs"]');
+			var $hrefs = hrefs.val().split(',');
+			hrefs.val($hrefs);
+		}
 	});
 	$('.table-edit-add-tr').click(function(){
 		var self = $(this);
@@ -113,8 +137,15 @@ require([
 		var tbody = tr.parent();
 		var size = tbody.find('tr').length;
 		if(size<=5){
-			var html = '<tr><td><input type="text" class="form-control table-edit-hide in table-edit-text" name="title" value=""></td><td><a class="btn btn-primary ajax-img table-edit-hide in" data-toggle="modal" data-target="#myModal" data-stage="3">选择图片</a></td><td>-</td></tr>';
+			var html = '<tr data-index="'+(size-1)+'"><td><p name="title"></p><div class="table-edit-hide in"><input type="text" class="form-control" value="" name="title"></div></td><td><p><img src="" name="img'+(size-1)+'" width="100"/></p><div class="table-edit-hide in"><a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#myModal" data-stage="3" data-index="'+(size-1)+'">选择图片</a></div></td><td>-</td><td><a href="javascript:;" class="table-edit-btn">保存</a></td></tr>';
 			tr.before(html);
+		}else{
+			self.remove();
 		}
+	});
+	$('.slide').click(function(){
+		var self = $(this);
+		var href = self.attr('href');
+		window.location.href=href;
 	});
 });

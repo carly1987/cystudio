@@ -8,6 +8,7 @@ var QS = require("querystring");
 var Material = require('../module/material');
 var Wsite = require('../module/wsite');
 var Slide = require('../module/slide');
+var Category = require('../module/category');
 //首页
 exports.index = function(req, res, next){
 	User.list(function (err, list) {
@@ -143,7 +144,9 @@ exports.del = function(req, res){
 				Message.delByemail(email, function(){
 					Wsite.delByemail(email, function(){
 						Slide.delByemail(email, function(){
-							return res.redirect('/weixin');
+							Category.delByemail(email, function(){
+								return res.redirect('/weixin');
+							});
 						});
 					});
 				});
@@ -388,21 +391,12 @@ exports.wsite = function(req, res){
 		Slide.findAll(email, function(err, slides){
 			console.log('======slides-------');
 			console.log(slides);
-			var $index = [];
-			var $slides = [];
-			slides.forEach(function(v,i){
-				if(v.location == 'index'){
-					$index.push(v);
-				}
-			});
-			$slides.push(['首页幻灯片',$index]);
-			console.log($slides);
 			res.render('admin/wsite/index', {
 				title: '微官网',
 				email: email,
 				page: 'wsite',
 				wsite: doc,
-				slides:$slides
+				slides:slides
 			});
 		});
 	});
