@@ -4,10 +4,11 @@ var mongoose = db.mongoose;
 var Schema = db.Schema;
 var CategoryScheme = new Schema({
 	name:String,
+	parent:String,
 	des:String,
 	pic:String,
 	icon:String,
-	href:String,
+	type:String,
 	user:String,
 	email:String,
 	finished:{type:Boolean,default:false},
@@ -42,10 +43,10 @@ exports.findAll = function(email, callback){
 exports.add = function(options, callback){
 	var newDb = new Category();
 	newDb.name = options.name;
+	newDb.parent = options.parent;
 	newDb.des = options.des;
 	newDb.pic = options.pic;
 	newDb.icon = options.icon;
-	newDb.href = options.href;
 	newDb.email = options.email;
 	newDb.save(function(err){
 		if(err){
@@ -63,10 +64,11 @@ exports.update = function(options,callback){
 				callback(err, null);
 		}
 		doc.name = options.name;
+		doc.parent = options.parent;
 		doc.des = options.des;
 		doc.pic = options.pic;
 		doc.icon = options.icon;
-		doc.href = options.href;
+		doc.type = options.type;
 		doc.save(function(err){
 				if(err){
 					util.log("FATAL"+err);

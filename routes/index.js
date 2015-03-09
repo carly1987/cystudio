@@ -42,6 +42,12 @@ module.exports=function(app){
 	app.get('/admin/wsite', get.wsite);
 	app.get('/admin/wsite/slide', checkLogin);
 	app.get('/admin/wsite/slide', get.slide);
+	app.get('/admin/wsite/slide/del', checkLogin);
+	app.get('/admin/wsite/slide/del', get.slideDel);
+	app.get('/admin/wsite/category', checkLogin);
+	app.get('/admin/wsite/category', get.category);
+	app.get('/admin/wsite/category/del', checkLogin);
+	app.get('/admin/wsite/category/del', get.categoryDel);
 	app.get('/mod/uploadImg', checkLogin);
 	app.get('/mod/uploadImg', get.uploadImg);
 	app.get('/app/article', get.appArticle);
@@ -72,6 +78,8 @@ module.exports=function(app){
 	app.post('/admin/wsite', post.wsite);
 	app.post('/admin/wsite/slide', checkLogin);
 	app.post('/admin/wsite/slide', post.slide);
+	app.post('/admin/wsite/category', checkLogin);
+	app.post('/admin/wsite/category', post.category);
 	app.post('/mod/uploadImg', checkLogin);
 	app.post('/mod/uploadImg', post.uploadImg);
 }

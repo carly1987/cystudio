@@ -391,16 +391,20 @@ exports.wsite = function(req, res){
 		Slide.findAll(email, function(err, slides){
 			console.log('======slides-------');
 			console.log(slides);
-			res.render('admin/wsite/index', {
-				title: '微官网',
-				email: email,
-				page: 'wsite',
-				wsite: doc,
-				slides:slides
+			Category.findAll(email, function(err, categorys){
+				res.render('admin/wsite/index', {
+					title: '微官网',
+					email: email,
+					page: 'wsite',
+					wsite: doc,
+					slides:slides,
+					categorys:categorys
+				});
 			});
 		});
 	});
 }
+//添加／编辑幻灯片
 exports.slide = function(req, res){
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
@@ -424,6 +428,50 @@ exports.slide = function(req, res){
 			page: 'wsite',
 			slide: doc
 		});
+	});
+}
+//删除幻灯片
+exports.slideDel = function(req, res){
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
+	var id = $url["id"];
+	Slide.del(id, function(){
+		res.redirect('/admin/wsite#slide');
+	});
+}
+//添加／编辑分类
+exports.category = function(req, res){
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
+	var id = $url["id"];
+	var email = req.session.email;
+	var user = req.session.user;
+	Category.findOne(id, function(err, doc){
+		if(!doc){
+			doc = {
+				name:'',
+				parent:'',
+				des:'',
+				pic:'',
+				icon: '',
+				type:''
+			}
+		}
+		res.render('admin/wsite/category', {
+			title: '微官网－分类管理',
+			email: email,
+			page: 'wsite',
+			doc: doc
+		});
+	});
+}
+//删除分类
+exports.categoryDel = function(req, res){
+	var $url = Url.parse(req.url).query;
+	$url = QS.parse($url);
+	var id = $url["id"];
+	Category.del(id, function(){
+		res.redirect('/admin/wsite#category');
 	});
 }
 //文章页面
