@@ -42,24 +42,56 @@
 	<div class="row">
 		<div class="col-sm-2 col-md-1 sidebar">
 			<ul class="nav nav-sidebar">
-		<li class="active"><a href="#">公众号 <span class="sr-only">(current)</span></a></li>
-		<li><a href="#">账户</a></li>
-	  </ul>
+				<li class="active"><a href="#">公众号 <span class="sr-only">(current)</span></a></li>
+				<li><a href="#">账户</a></li>
+		  </ul>
 		</div>
 		<div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1 main">
 			<h3>我的公众号<small>（10个）</small></h3>
 			<div class="row">
 				<div class="col-sm-3 col-md-2">
-					<a class="thumbnail weixin-add mod-weixin">
+					<a href="javascript:;" class="thumbnail weixin-add mod-weixin" data-toggle="modal" data-target="#addWeixinModal">
 					  <i class="fa fa-plus"></i>
 					</a>
-			  	</div>
+			  </div>
 				<div class="col-sm-3 col-md-2">
 					<a class="thumbnail mod-weixin">
 					  <img src="..." alt="...">
 					  <div class="caption">粉丝：300</div>
 					</a>
-			  	</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade modal-tab" id="addWeixinModal" tabindex="-1" role="dialog" aria-labelledby="addWeixinModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addWeixinModalLabel">添加公众号</h4>
+      </div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="" class="col-sm-3 control-label">邮箱／微信号</label>
+				    <div class="col-sm-9">
+				      <input type="email" class="form-control" name="" placeholder="Email">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-3 control-label">密码</label>
+				    <div class="col-sm-9">
+				      <input type="password" class="form-control" name="" placeholder="Password">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-3 col-sm-9">
+				      <!-- <button type="submit" class="btn btn-default">添加</button> -->
+				      <a href="wsite.html" class="btn btn-default">添加</a>
+				    </div>
+				  </div>
+				</form>
 			</div>
 		</div>
 	</div>

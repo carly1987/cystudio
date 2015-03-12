@@ -40,11 +40,30 @@
 </nav>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
+		<div class="col-sm-3 col-md-2 sidebar sidebar-page">
 			<a href="javascript:;" class="fa fa-bars btn-icon"></a>
+			<h4>页面列表</h4>
+			<ul class="nav nav-sidebar">
+				<li class="active"><a href="#"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
+				<li><a href="#"><i class="fa fa-bookmark"></i> channel</a></li>
+				<li><a href="#"><i class="fa fa-bookmark"></i> list</a></li>
+		  </ul>
 		</div>
 		<div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2 main">
-			main
+			<div class="mod-preview" style="width: 268.8px; height: 525px;">
+				<div class="preview-wrapper preview-iphone" style="width: 500%; position: absolute; margin-left: 0px; -webkit-transform: scale(0.2); transform: scale(0.2);">
+					<div class="buttons top"></div>
+					<div class="detail-top"></div>
+					<div class="web-search"></div>
+					<div class="buttons left"></div>
+					<div class="body_generic_inner" style="background-image: none;">
+						<canvas id="pio-printercanvas" style="display: none;"></canvas>
+						<iframe id="pio-playerframe" src="" scrolling="NO" width="1242" height="2208" style="width:1242px; height: 2208px; overflow: hidden;"></iframe>
+					</div>
+					<div class="buttons right"></div>
+					<div class="detail-bottom"></div>
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-3 col-md-2 toolbar">
 			<a href="javascript:;" class="fa fa-cog btn-icon"></a>
