@@ -1,0 +1,33 @@
+body {
+	background: #0F0E0C;
+}
+.btn {
+	background: #2f2f2f;
+	color: #fff;
+}
+.mod-list{
+	background: #2f2f2f;
+	margin: 0 0 8px 0;
+	padding: 10px;
+  display: block;
+  color: #fff;
+}
+.mod-list>*{height: 50px; vertical-align: middle; display: table-cell;}
+.mod-list>*:last-child{width: 100%;}
+.mod-list .list-img{vertical-align: top;}
+.mod-list .list-img b{ width: 50px; height: 50px; overflow: hidden;text-align: center; display: block;}
+.mod-list .list-img .fa{ font-size: 40px; width: 50px; height: 50px; line-height: 50px; color: #fff;}
+.mod-list .list-text>*{padding-right: 10px;font-weight: 100;  line-height: 20px; }
+.mod-list h1,
+.mod-list h2{text-indent: 10px;overflow:hidden;height: 20px;}
+.mod-list .list-text b,
+.mod-list .list-text small{ padding-left: 10px; display: block;}
+.mod-list >*:first-child h1,
+.mod-list >*:first-child h2{text-indent: 0;}
+.mod-list >*:first-child b,
+.mod-list >*:first-child small{ padding-left: 0;}
+.mod-list h1,
+.mod-list .list-text b{ font-size: 14px; color: #fff;word-spacing:normal; word-break:normal; word-break:break-all;}
+.mod-list h2,
+.mod-list .list-text small{ font-size: 12px; color: #666;}
+.mod-list img{ width: 100%; min-height: 100%;}

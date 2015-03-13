@@ -1,0 +1,70 @@
+body {
+	background: #0F0E0C;
+}
+.btn {
+	background: #2f2f2f;
+	color: #fff;
+}
+.mod-wrap a:nth-child(2n) {
+	margin-left: 0;
+}
+.mod-index {
+	width: 47.2%;
+	display: inline-block;
+	float: left;
+	border-radius: 0.5em;
+	background: #2f2f2f;
+	padding: 1em;
+	overflow: hidden;
+	margin: 1em 2% 0 2%;
+	text-align: center;
+	color: #fff;
+}
+.mod-index > * {
+	vertical-align: middle;
+	display: table-cell;
+	width: 100%;
+	text-align: center;
+	overflow: hidden;
+}
+.mod-index small {
+	font-size: 1.4em;
+	padding: 0.5em 0;
+	line-height: 2em;
+	display: block;
+	height: 3em;
+}
+.mod-index i {
+	height: 5em;
+	line-height: 5em;
+	overflow: hidden;
+	text-align: center;
+	display: block;
+}
+.mod-index img {
+	max-height: 100%;
+	vertical-align: top;
+}
+.mod-index .fa,
+.mod-index .fa:before {
+	font-size: 5em;
+}
+@media only screen and (max-width:1080px) {
+	.mod-index {
+		width: 47%;
+	}
+}
+@media only screen and (min-width:1224px) {
+	.mod-index {
+		width: 47%;
+	}
+
+	/* .mod-index i{height: 150px; line-height: 150px;}
+	 .mod-index .fa{ font-size: 150px;}
+	 .mod-index small{font-size: 42px; line-height: 50px; height: 60px;}*/
+}
+@media only screen and (max-width:320px) {
+	.mod-index {
+		width: 46.95%;
+	}
+}

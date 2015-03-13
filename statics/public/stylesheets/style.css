@@ -127,12 +127,14 @@ a:hover{text-decoration: none;}
 	-o-transform-origin: center center;
 	transform-origin: center center;
 	position: relative;
+	width: 268.8px;
+	height: 525px;
 }
 .preview-wrapper {
 	display: inline-block;
 	position: relative;
 	background-color: #444;
-	border-radius: 103px;
+	border-radius: 34px;
 	position: absolute;
 	-ms-transform-origin: 0 0;
 	-webkit-transform-origin: 0 0;
@@ -156,11 +158,90 @@ a:hover{text-decoration: none;}
 }
 .preview-wrapper .buttons.top {
 	border-radius: 3px 3px 0 0;
-	height: 9px;
+	height: 3px;
 	width: 16%;
-	top: -8px;
+	top: -2px;
 	right: 17%;
 	display: none;
+}
+.preview-wrapper .buttons.left {
+	height: 4%;
+	top: 14%;
+	left: -2px;
+}
+/*.preview-wrapper.preview-iphone6 .buttons.left {
+	height: 75px;
+	left: -5px;
+	top: 215px;
+}*/
+.preview-wrapper .buttons.left, 
+.preview-wrapper .buttons.left::before, 
+.preview-wrapper .buttons.left::after {
+	border-radius: 5px 0 0 5px;
+	/*height: 78%;*/
+	width: 3px;
+	position: absolute;
+}
+.preview-wrapper.preview-iphone6 .buttons.left, 
+.preview-wrapper.preview-iphone6 .buttons.left::before, 
+.preview-wrapper.preview-iphone6 .buttons.left::after {
+	width: 2px;
+}
+.preview-wrapper.preview-iphone6 .buttons.left::before, 
+.preview-wrapper.preview-iphone6 .buttons.left::after {
+	height: 180%;
+}
+.preview-wrapper .buttons.left::before {
+	top: 236%;
+}
+.preview-wrapper.preview-iphone6 .buttons.left::before {
+	top: 204%;
+}
+.preview-wrapper .buttons.left::after {
+	top: 446%;
+}
+.preview-wrapper.preview-iphone6 .buttons.left::after {
+	top: 415%;
+}
+.preview-wrapper .buttons.right {
+	border-radius: 0 5px 5px 0;
+	height: 45px;
+	width: 2px;
+	right: -2px;
+	top: 120px;
+}
+.detail-top, 
+.detail-bottom {
+	position: absolute;
+	margin: 0 auto;
+}
+.preview-wrapper .detail-top {
+	top: 12px;
+	width: 4px;
+	height: 4px;
+	margin-left: -2px;
+	border-radius: 50%;
+	left: 50%;
+
+}
+.preview-wrapper.preview-iphone6 .detail-top {
+  top: 13px;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+}
+.preview-wrapper .detail-top::after {
+	border-radius: 10px;
+	width: 40px;
+	height: 3px;
+	top: 18px;
+	right: 18px;
+}
+.preview-wrapper.preview-iphone6 .detail-top::after {
+  top: 6px;
+  right: 24px;
+  width: 48px;
+  height: 4px;
 }
 .preview-wrapper .detail-top, 
 .preview-wrapper .detail-top::before, 
@@ -168,97 +249,29 @@ a:hover{text-decoration: none;}
 .preview-wrapper .detail-bottom {
 	border: 4px solid #333;
 }
-.preview-wrapper .detail-top {
-	border-radius: 50%;
-	width: 25px;
-	height: 25px;
-	top: 56px;
-	left: 50%;
-	margin-left: -15px;
-}
-.preview-wrapper .buttons.left {
-	height: 4%;
-	top: 14%;
-	left: -8px;
-}
-.preview-wrapper.preview-iphone .buttons.left {
-	height: 75px;
-	left: -5px;
-	top: 215px;
-}
-.preview-wrapper .detail-top {
-	top: 37px;
-	width: 14px;
-	height: 14px;
-	margin-left: -7px;
-}
-.preview-wrapper .buttons.left, 
-.preview-wrapper .buttons.left::before, 
-.preview-wrapper .buttons.left::after {
-	border-radius: 5px 0 0 5px;
-	height: 78%;
-	width: 9px;
-	position: absolute;
-}
-.preview-wrapper.preview-iphone .buttons.left, 
-.preview-wrapper.preview-iphone .buttons.left::before, 
-.preview-wrapper.preview-iphone .buttons.left::after {
-	width: 6px;
+.preview-wrapper.preview-iphone6 .detail-top, 
+.preview-wrapper.preview-iphone6 .detail-top::before, 
+.preview-wrapper.preview-iphone6 .detail-top::after, 
+.preview-wrapper.preview-iphone6 .detail-bottom {
+  border: 3px solid #333;
 }
 
-.preview-wrapper .buttons.right {
-	border-radius: 0 5px 5px 0;
-	height: 135px;
-	width: 6px;
-	right: -5px;
-	top: 360px;
-}
+
 .preview-wrapper .detail-bottom {
 	border-radius: 50%;
-	bottom: 44px;
+	bottom: 4px;
 	left: 50%;
 }
 .preview-wrapper .detail-bottom {
-	width: 125px;
-	height: 125px;
-	margin-left: -65px;
+	width: 20px;
+  height: 20px;
+  margin-left: -10px;
 }
-.preview-wrapper .detail-bottom {
-	width: 126px;
-	height: 126px;
-	margin-left: -63px;
-	bottom: 36px;
-}
-.preview-wrapper .detail-top::after {
-	right: 71px;
-	width: 142px;
-}
-.preview-wrapper .detail-top::after {
-	border-radius: 10px;
-	width: 123px;
-	height: 9px;
-	top: 55px;
-	right: 55px;
-}
-.preview-wrapper.preview-iphone .buttons.left::before {
-	top: 204%;
-}
-.preview-wrapper.preview-iphone .buttons.left::before, 
-.preview-wrapper.preview-iphone .buttons.left::after {
-	height: 180%;
-}
-.preview-wrapper .buttons.left::before {
-	top: 236%;
-}
-.preview-wrapper.preview-iphone .buttons.left::after {
-	top: 415%;
-}
-.preview-wrapper .buttons.left::after {
-	top: 446%;
-}
-.detail-top, .detail-bottom {
-	position: absolute;
-	margin: 0 auto;
+.preview-wrapper.preview-iphone6 .detail-bottom {
+	width: 42px;
+	height: 42px;
+	margin-left: -21px;
+	bottom: 18px;
 }
 .preview-wrapper iframe {
 	background: #ccc;
@@ -269,19 +282,11 @@ a:hover{text-decoration: none;}
 }
 .preview-wrapper #pio-playerframe {
 	background: #FFFFFF;
-	border: 6px solid #000;
-	border-radius: 6px;
+	border: 2px solid #000;
+	border-radius: 2px;
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: 50% 50%;
-}
-.preview-wrapper #pio-playerframe {
-	width: 640px;
-	height: 1136px;
-	margin: 222px 47px 223px !important;
-}
-.preview-wrapper #pio-playerframe {
-	width: 750px;
-	height: 1334px;
-	margin: 205px 45px 200px !important;
+	margin: 69px 15px 67px;
+	overflow: scroll;
 }
