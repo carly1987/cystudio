@@ -114,22 +114,37 @@ a:hover{text-decoration: none;}
 .mod-weixin .caption{position: absolute; width: 100%; height: 100%; line-height: 100px; text-align: center; background: rgba(0,0,0,0.1); padding: 0; margin:0; top:0; left: 0; display: none; color: #666;}
 .mod-weixin:hover .caption{display: block;}
 
+.mod-app{padding: 10px 10px}
+.mod-app .thumbnail{background: none; border:0; margin: 0;}
+.mod-app .caption{padding: 0; text-align: center;}
+.mod-app .caption h3{
+	height: 2em;
+	margin: 0;
+	font-weight: normal;
+	font-size: 0.8em;
+	line-height: 2em;
+	color: #333;
+}
+.mod-app .caption small{color: #666; display: block; margin-top: -4px;}
+.app-add .fa{font-size: 3.5em; line-height: 70px; color: #ccc; width: 70px; height: 70px; border-radius: 5px; background: #eee; display: block; text-align: center;}
+
 .mod-page{}
 .mod-page .fa{}
 
 
 .mod-preview {
-	margin: auto !important;
-	display: inline-block;
+	margin: auto;
+	display: block;
 	margin: 0 auto;
 	-ms-transform-origin: center center;
 	-webkit-transform-origin: center center;
 	-o-transform-origin: center center;
 	transform-origin: center center;
 	position: relative;
-	width: 268.8px;
-	height: 525px;
+	width: 310px;
+	height: 654px;
 }
+.preview-weixin{margin: 50px auto;}
 .preview-wrapper {
 	display: inline-block;
 	position: relative;
@@ -174,6 +189,7 @@ a:hover{text-decoration: none;}
 	left: -5px;
 	top: 215px;
 }*/
+
 .preview-wrapper .buttons.left, 
 .preview-wrapper .buttons.left::before, 
 .preview-wrapper .buttons.left::after {
@@ -273,6 +289,12 @@ a:hover{text-decoration: none;}
 	margin-left: -21px;
 	bottom: 18px;
 }
+.preview-wrapper.preview-iphone6 .preview-wrap{
+	width: 280px; height: 498px; background: #ebebeb; padding: 20px 0; position: relative;
+}
+.preview-wrapper.preview-iphone6 .body_generic_inner{
+	padding: 69px 15px 67px;
+}
 .preview-wrapper iframe {
 	background: #ccc;
 	border: 2px solid #000000;
@@ -287,6 +309,67 @@ a:hover{text-decoration: none;}
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: 50% 50%;
-	margin: 69px 15px 67px;
 	overflow: scroll;
 }
+.preview-message{border:1px solid #b3b3b3; box-shadow: 0 0 1px #c8c8c8; width: 270px; padding: 10px; background: #fff; margin: 0 auto; border-radius: 5px;}
+.preview-message .hd{padding-bottom: 10px;}
+.preview-message .bd{}
+.preview-message .bd .img{box-shadow: 0 0 1px #cfcfcf;}
+.preview-message .bd .img img{width: 100%; border-radius: 2px; overflow: hidden;}
+.preview-message .bd p{line-height: 20px; padding: 10px 0;}
+.preview-message .ft{border-top:1px solid #eff1f3; line-height: 40px;}
+.preview-menu{position: absolute; left: 0; bottom: 0; width: 100%; height: 37px; border-top:1px solid #b0b0b0; background: #fafafa;}
+.navLine-ul, .navLine-ul li {
+    list-style: none;
+}
+.navLine-ul {
+    width: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+.navLine-ul >li {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    text-align: center;
+    border-left: 1px solid #b0b0b0;
+}
+.navLine-ul >li>a,
+.navLine-ul >li .dropdown-toggle {
+    display: block;
+    width: 100%;
+	height: 100%;
+	line-height: 36px; text-align: center;
+	color: #666;
+	cursor: pointer;
+}
+.navLine-ul >li>a:hover,
+.navLine-ul >li .dropdown-toggle:hover{text-decoration: none;}
+.navLine-ul >li>a>* {
+    pointer-events: none;
+}
+.navLine-ul >li .fa{padding: 0 5px; color: #ccc; font-size: 30%;}
+.dropdown-menu-top{top:auto; bottom: 100%; min-width: 80px; overflow: hidden; left: 50%; margin-left: -40px;background: #f5f5f5;}
+.dropdown-menu-top > li{padding: 0 5px;}
+.dropdown-menu-top > li > a{padding: 5px 0; text-align: center; border-bottom:1px solid rgba(0, 0, 0, 0.15);}
+.dropdown-menu-top > li:last-child > a{border:0;}
+
+.navbar-brand{padding: 5px 30px;}
+.navbar-brand img,
+.navbar-brand .media-img{width: 40px; height: 40px;}
+.navbar-brand .media-body{vertical-align: middle;}
+.navbar-brand .media-img{background: #eee; display: inline-block; font-size: 0.2em; text-align: center; line-height: 20px;border:1px solid #ccc; border-radius: 5px; color: #aaa;}
+
+.admin-form{padding: 20px 0;}
+
+.menu-list .panel-default{border:0;}
+.menu-list .panel-btns{position: absolute; right: 0; font-size: 14px; padding: 10px; top:0; margin-top: -10px; cursor: pointer;}
+.list-group-item .panel-btns{margin-top: 0;}
+.menu-list .panel-btns a{padding: 0 5px; color: #ccc;}
+.menu-list .panel-btns a:hover{text-decoration: none;}
+.menu-list .panel-title{position: relative;}

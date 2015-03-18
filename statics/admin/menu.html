@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta name="format-detection" content="telephone=no">
+	<meta content="telephone=no" name="format-detection">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>微官网</title>
+	<link rel='stylesheet' type="text/css" href='../public/stylesheets/lib/bootstrap.css' />
+	<link rel='stylesheet' type="text/css" href='../public/stylesheets/style.css' />
+	<link rel="stylesheet" type="text/css" href="../public/font/font-awesome.min.css">
+</head>             
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<div class="navbar-brand" href="#">
+				<div class="media">
+				  <div class="media-left">
+				    <a href="#" class="media-img">
+				      <!-- <img class="media-object" src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png" alt="微信公众号名"> -->
+				      添加<br>头像
+				    </a>
+				  </div>
+				  <div class="media-body">
+				    <h4 class="media-heading">微信公众号名</h4>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+			  <li><a href="first.html">首次关注</a></li>
+			  <li class="active"><a href="menu.html">自定义菜单</a></li>
+			  <li><a href="message.html">图文信息</a></li>
+			  <li><a href="wsite.html">微官网</a></li>
+			  <li><a href="#">更多功能</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
+		            <ul class="dropdown-menu" role="menu">
+		              <li><a href="#">账户中心</a></li>
+		              <li><a href="#">修改密码</a></li>
+		              <li><a href="#">退出</a></li>
+		            </ul>
+		          </li>
+			</ul>
+	  	</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-4 ">
+			<div class="mod-preview preview-weixin">
+				<div class="preview-wrapper preview-iphone6">
+					<div class="buttons top"></div>
+					<div class="detail-top"></div>
+					<div class="web-search"></div>
+					<div class="buttons left"></div>
+					<div class="body_generic_inner">
+						<canvas id="pio-printercanvas" style="display: none;"></canvas>
+						<div class="preview-wrap">
+							<div class="preview-menu">
+								<ul class="navLine-ul">
+									<li>
+										<a class="active"><i class="fa fa-align-justify"></i>菜单1</a>
+									</li>
+									<li>
+										<a class=""><i class="fa fa-align-justify"></i>菜单2</a>
+									</li>
+									<li>
+										<div class="dropdown">
+										  <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-align-justify"></i>菜单3</a>
+										  <ul class="dropdown-menu dropdown-menu-top" role="menu" aria-labelledby="dropdownMenu1">
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="#">政务公开</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="#">政务公开</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="#">政务公开</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="#">政务公开</a></li>
+										  </ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="buttons right"></div>
+					<div class="detail-bottom"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-5 admin-form">
+			<div class="panel-group menu-list" id="menu" role="tablist" aria-multiselectable="true">
+			  <div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="menu-1-head">
+				  <h4 class="panel-title">
+					<a data-toggle="collapse" data-parent="#menu" href="#menu-1" aria-expanded="true" aria-controls="menu-1">
+					  菜单1
+					</a>	
+					<div class="panel-btns">
+				  		<a class="fa fa-link"></a>
+						<a class="fa fa-pencil"></a>
+						<a class="fa fa-times"></a>
+					</div>
+				  </h4>
+				</div>
+				<div id="menu-1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="menu-1-head">
+				  <div class="panel-body">
+					<a href="">添加子菜单</a>
+				  </div>
+				</div>
+			  </div>
+			  <div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="menu-2-head">
+				  <h4 class="panel-title">
+					<a class="collapsed" data-toggle="collapse" data-parent="#menu" href="#menu-2" aria-expanded="false" aria-controls="menu-2">
+					  菜单2
+					</a>
+					<div class="panel-btns">
+				  		<a class="fa fa-link"></a>
+						<a class="fa fa-pencil"></a>
+						<a class="fa fa-times"></a>
+					</div>
+				  </h4>
+				</div>
+				<div id="menu-2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="menu-2-head">
+				  <div class="panel-body">
+					<a href="">添加子菜单</a>
+				  </div>
+				</div>
+			  </div>
+			  <div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="menu-3-head">
+				  <h4 class="panel-title">
+					<a class="collapsed" data-toggle="collapse" data-parent="#menu" href="#menu-3" aria-expanded="false" aria-controls="menu-3">
+					  菜单3
+					</a>
+					<div class="panel-btns">
+						<a class="fa fa-pencil"></a>
+						<a class="fa fa-times"></a>
+					</div>
+				  </h4>
+				</div>
+				<div id="menu-3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="menu-3-head">
+				  <div class="panel-body">
+					<ul class="list-group">
+					  <li class="list-group-item">
+					  	<p>Cras justo odio</p>
+					  	<div class="panel-btns">
+					  		<a class="fa fa-link"></a>
+							<a class="fa fa-pencil"></a>
+							<a class="fa fa-times"></a>
+						</div>
+					  </li>
+					  <li class="list-group-item">Dapibus ac facilisis in</li>
+					  <li class="list-group-item">Morbi leo risus</li>
+					  <li class="list-group-item">Porta ac consectetur ac</li>
+					  <li class="list-group-item">Vestibulum at eros</li>
+					</ul>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../public/javascripts/lib/jquery.js"></script>
+<script type="text/javascript" src="../public/javascripts/lib/bootstrap.js"></script>
+<script type="text/javascript" src="../public/javascripts/admin.js"></script>
+</body>
+</html>

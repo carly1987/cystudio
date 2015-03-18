@@ -18,50 +18,15 @@
 <div class="stage">
 	<section id="sec-index">
 		<div class="body">
-				<div class="mod-slide slide-hor" id="slide-index">
-						<ul class="slide-list">
-								<li><a><img src="../../public/images/1.jpg"/></a></li>
-								<li><a><img src="../../public/images/1.jpg"/></a></li>
-								<li><a><img src="../../public/images/1.jpg"/></a></li>
-								<li><a><img src="../../public/images/1.jpg"/></a></li>
-								<li><a><img src="../../public/images/1.jpg"/></a></li>
-						</ul>
-						<div class="slide-text">
-								<span class="fl slide-span" id="slide-span">标题1</span>
-								<div id="pagenavi" class="fr slide-page">
-										<a href="#" class="active"></a>
-										<a href="#"></a>
-										<a href="#"></a>
-										<a href="#"></a>
-										<a href="#"></a>
-								</div>
-						</div>
-				</div>
-				<div class="mod-wrap">
-						<a class="mod-list mod-active mod-fa fa fa-angle-right" href="">
-								<div class="list-img">
-										<b><i class="fa fa-trophy"></i></b>
-								</div>
-								<div class="list-text">
-										<h1>hhdsdhjkhksdkhdhfhhfhghghkaksdkkdghgghhshhdhhhhGGAGAGHSHDHGFHHFHGHGHggasgggdgdjwwueyrdddd</h1>
-								</div>
-						</a>
-						<a class="mod-list mod-active mod-fa fa fa-angle-right" href="">
-							<div class="list-text">
-									<h1>大标题</h1>
-									<h2>时间或者副标题</h2>
-							</div>
-						</a>
-						<a class="mod-list mod-active mod-fa fa fa-angle-right" href="">
-							<div class="list-img">
-									<b><img src="../../public/images/1.jpg"/></b>
-							</div>
-							<div class="list-text">
-									<b>大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题大标题</b>
-									<small>时间或者副标题</small>
-							</div>
-						</a>
-				</div>
+				<div class="article">
+					<div class="hd">
+						<h1><%= article.title%></h1>
+						<small><%= formatDate(article.post_date)%></small>
+					</div>
+					<div class="bd">
+						<%- article.editor%>
+					</div>
+				</div>			
 		</div>
 </section>
 </div>

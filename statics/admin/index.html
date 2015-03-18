@@ -14,54 +14,45 @@
 	<link rel="stylesheet" type="text/css" href="../public/font/font-awesome.min.css">
 </head>             
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container-fluid">
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
 			<a class="navbar-brand logo" href="#"></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#">Dashboard</a></li>
-				<li><a href="#">Settings</a></li>
-				<li><a href="#">Profile</a></li>
-				<li><a href="#">Help</a></li>
+				<li class="dropdown">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
+		            <ul class="dropdown-menu" role="menu">
+		              <li><a href="#">账户中心</a></li>
+		              <li><a href="#">修改密码</a></li>
+		              <li><a href="#">退出</a></li>
+		            </ul>
+		          </li>
 			</ul>
-			<form class="navbar-form navbar-right">
-				<input type="text" class="form-control" placeholder="Search...">
-			</form>
-		</div>
+	  	</div>
 	</div>
 </nav>
-<div class="container-fluid">
+<div class="container">
+	<h3>我的公众号<small>（10个）</small></h3>
 	<div class="row">
-		<div class="col-sm-2 col-md-1 sidebar">
-			<ul class="nav nav-sidebar">
-				<li class="active"><a href="#">公众号 <span class="sr-only">(current)</span></a></li>
-				<li><a href="#">账户</a></li>
-		  </ul>
-		</div>
-		<div class="col-sm-10 col-sm-offset-2 col-md-11 col-md-offset-1 main">
-			<h3>我的公众号<small>（10个）</small></h3>
-			<div class="row">
-				<div class="col-sm-3 col-md-2">
-					<a href="javascript:;" class="thumbnail weixin-add mod-weixin" data-toggle="modal" data-target="#addWeixinModal">
-					  <i class="fa fa-plus"></i>
-					</a>
-			  </div>
-				<div class="col-sm-3 col-md-2">
-					<a class="thumbnail mod-weixin">
-					  <img src="..." alt="...">
-					  <div class="caption">粉丝：300</div>
-					</a>
+		<a class="col-xs-1 mod-app app-add" data-toggle="modal" data-target="#addWeixinModal" href="javascript:;">
+			<div class="thumbnail">
+				<i class="fa fa-plus"></i>
+			</div>
+			<div class="caption">
+				<h3>添加公众号</h3>
+			 </div>
+		</a>
+		<a class="col-xs-1 mod-app" href="wsite.html">
+			<div class="thumbnail">
+			  <img src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png">
+			  <div class="caption">
+				<h3>开心消消乐</h3>
+				<small>粉丝：300</small>
 			  </div>
 			</div>
-		</div>
+		</a>
 	</div>
 </div>
 <div class="modal fade modal-tab" id="addWeixinModal" tabindex="-1" role="dialog" aria-labelledby="addWeixinModalLabel" aria-hidden="true">
