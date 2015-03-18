@@ -36,8 +36,8 @@
 			  <li><a href="first.html">首次关注</a></li>
 			  <li><a href="menu.html">自定义菜单</a></li>
 			  <li><a href="message.html">图文信息</a></li>
-			  <li class="active"><a href="wsite.html">微官网</a></li>
-			  <li><a href="tool.html">应用库</a></li>
+			  <li><a href="wsite.html">微官网</a></li>
+			  <li class="active"><a href="tool.html">应用库</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
@@ -52,43 +52,59 @@
 	  	</div>
 	</div>
 </nav>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar sidebar-page">
-			<a href="javascript:;" class="fa fa-bars btn-icon"></a>
-			<h4>页面列表</h4>
-			<ul class="nav nav-sidebar" id="wsite-page">
-				<li class="active"><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/index/index1.html"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
-				<li><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/list/list1.html"><i class="fa fa-bookmark"></i> list</a></li>
-				<li><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/article/article1.html"><i class="fa fa-bookmark"></i> list</a></li>
-		  </ul>
-		  <h4>官网配置</h4>
-		  <ul class="nav nav-sidebar" id="wsite-page">
-				<li><a href="wsiteSetting.html"><i class="fa fa-gear"></i> 基本配置 <span class="sr-only">(current)</span></a></li>
-				<li><a href="wsiteCategory.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
-		  	<li><a href="wsiteArticleAdd.html"><i class="fa fa-file"></i> 新建文章 </a></li>
-		  	<li><a href="wsiteArticle.html"><i class="fa fa-list"></i> 管理文章 </a></li>
-		  </ul>
-		</div>
-		<div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2 main">
-			<div class="mod-preview">
-				<div class="preview-wrapper preview-iphone6">
-					<div class="buttons top"></div>
-					<div class="detail-top"></div>
-					<div class="web-search"></div>
-					<div class="buttons left"></div>
-					<div class="body_generic_inner">
-						<canvas id="pio-printercanvas" style="display: none;"></canvas>
-						<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
-					</div>
-					<div class="buttons right"></div>
-					<div class="detail-bottom"></div>
-				</div>
+<div class="container-fluid container-main">
+	<div class="alert alert-info" role="alert">
+		点击图标来添加功能呢。
+	</div>
+	<div class="page-header">
+		<h1>我的应用<small>（10个）</small></h1>
+	</div>
+	<div class="row app-haved">
+		<a class="col-xs-1 mod-app app-tool" href="javascript:;">
+			<div class="thumbnail">
+			  <i class="fa fa-home"></i>
+			  <div class="caption">
+					<h3>微官方</h3>
+			  </div>
 			</div>
-		</div>
-		<div class="col-sm-3 col-md-2 toolbar">
-			<a href="javascript:;" class="fa fa-cog btn-icon"></a>
-		</div>
+		</a>
+	</div>
+	<div class="page-header">
+		<h1>我还可以选择的应用<small>（10个）</small></h1>
+	</div>
+	<div class="row app-list">
+		<a class="col-xs-1 mod-app app-tool" href="javascript:;" data-haved="0">
+			<div class="thumbnail">
+			  <i class="fa fa-shopping-cart"></i>
+			  <div class="caption">
+					<h3>微电商</h3>
+			  </div>
+			</div>
+		</a>
+		<a class="col-xs-1 mod-app app-tool" href="javascript:;" data-haved="0">
+			<div class="thumbnail">
+			  <i class="fa fa-heart"></i>
+			  <div class="caption">
+					<h3>公众号store</h3>
+			  </div>
+			</div>
+		</a>
+		<a class="col-xs-1 mod-app app-tool" href="javascript:;" data-haved="0">
+			<div class="thumbnail">
+			  <i class="fa fa-user"></i>
+			  <div class="caption">
+					<h3>微会员</h3>
+			  </div>
+			</div>
+		</a>
+		<a class="col-xs-1 mod-app app-tool" href="javascript:;" data-haved="0">
+			<div class="thumbnail">
+			  <i class="fa fa-book"></i>
+			  <div class="caption">
+					<h3>微日记</h3>
+			  </div>
+			</div>
+		</a>
 	</div>
 </div>
 <script type="text/javascript" src="../public/javascripts/lib/jquery.js"></script>
