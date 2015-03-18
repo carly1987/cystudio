@@ -20,36 +20,36 @@
 			<div class="navbar-brand" href="#">
 				<div class="media">
 				  <div class="media-left">
-				    <a href="#" class="media-img">
-				      <!-- <img class="media-object" src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png" alt="微信公众号名"> -->
-				      添加<br>头像
-				    </a>
+					<a href="#" class="media-img">
+					  <!-- <img class="media-object" src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png" alt="微信公众号名"> -->
+					  添加<br>头像
+					</a>
 				  </div>
 				  <div class="media-body">
-				    <h4 class="media-heading">微信公众号名</h4>
+					<h4 class="media-heading">微信公众号名</h4>
 				  </div>
 				</div>
 			</div>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-			  <li><a href="first.html">首次关注</a></li>
-			  <li><a href="menu.html">自定义菜单</a></li>
-			  <li><a href="message.html">图文信息</a></li>
-			  <li class="active"><a href="wsite.html">微官网</a></li>
-			  <li><a href="tool.html">应用库</a></li>
+			  <li><a href="../admin/first.html">首次关注</a></li>
+			  <li><a href="../admin/menu.html">自定义菜单</a></li>
+			  <li><a href="../admin/message.html">图文信息</a></li>
+			  <li class="active"><a href="index.html">微官网</a></li>
+			  <li><a href="../admin/tool.html">应用库</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-		            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
-		            <ul class="dropdown-menu" role="menu">
-		              <li><a href="#">账户中心</a></li>
-		              <li><a href="#">修改密码</a></li>
-		              <li><a href="#">退出</a></li>
-		            </ul>
-		          </li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+					  <li><a href="#">账户中心</a></li>
+					  <li><a href="#">修改密码</a></li>
+					  <li><a href="#">退出</a></li>
+					</ul>
+				  </li>
 			</ul>
-	  	</div>
+		</div>
 	</div>
 </nav>
 <div class="container-fluid">
@@ -58,16 +58,17 @@
 			<a href="javascript:;" class="fa fa-bars btn-icon"></a>
 			<h4>页面列表</h4>
 			<ul class="nav nav-sidebar" id="wsite-page">
-				<li class="active"><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/index/index1.html"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
-				<li><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/list/list1.html"><i class="fa fa-bookmark"></i> list</a></li>
-				<li><a href="wsite.html" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/article/article1.html"><i class="fa fa-bookmark"></i> list</a></li>
+				<li class="active"><a href="../wsite/index.html?page=indedx1&id=666"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
+				<li><a href="../wsite/index.html?page=list1&id=666" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/list/list1.html"><i class="fa fa-bookmark"></i> list</a></li>
+				<li><a href="../wsite/index.html?page=article1&id=666"><i class="fa fa-bookmark"></i> article</a></li>
 		  </ul>
 		  <h4>官网配置</h4>
 		  <ul class="nav nav-sidebar" id="wsite-page">
-				<li><a href="wsiteSetting.html"><i class="fa fa-gear"></i> 基本配置 <span class="sr-only">(current)</span></a></li>
-				<li><a href="wsiteCategory.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
-		  	<li><a href="wsiteArticleAdd.html"><i class="fa fa-file"></i> 新建文章 </a></li>
-		  	<li><a href="wsiteArticle.html"><i class="fa fa-list"></i> 管理文章 </a></li>
+				<li><a href="setting.html"><i class="fa fa-gear"></i> 基本配置 <span class="sr-only">(current)</span></a></li>
+				<li><a href="slide.html"><i class="fa fa-film"></i> 首页幻灯 </a></li>
+				<li><a href="category.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
+				<li><a href="articleAdd.html"><i class="fa fa-file"></i> 新建文章 </a></li>
+				<li><a href="article.html"><i class="fa fa-list"></i> 管理文章 </a></li>
 		  </ul>
 		</div>
 		<div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2 main">
@@ -80,6 +81,24 @@
 					<div class="body_generic_inner">
 						<canvas id="pio-printercanvas" style="display: none;"></canvas>
 						<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
+						<div class="tooltip left tooltip-slide" role="tooltip">
+						  <div class="tooltip-arrow"></div>
+						  <div class="tooltip-inner">
+							  <a href="slide.html">修改幻灯片</a>
+						  </div>
+						</div>
+						<div class="tooltip left tooltip-tel" role="tooltip">
+						  <div class="tooltip-arrow"></div>
+						  <div class="tooltip-inner">
+							  <a href="setting.html">修改热线电话</a>
+						  </div>
+						</div>
+						<div class="tooltip left tooltip-category" role="tooltip">
+						  <div class="tooltip-arrow"></div>
+						  <div class="tooltip-inner">
+							  <a href="category.html">修改分类</a>
+						  </div>
+						</div>
 					</div>
 					<div class="buttons right"></div>
 					<div class="detail-bottom"></div>

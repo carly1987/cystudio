@@ -14,11 +14,4 @@ $(function () {
 			self.remove();
 		}
 	});
-	$('#wsite-page a').click(function(){
-		console.log('uuu');
-		var self = $(this);
-		var src = self.attr('data-src');
-		console.log(src);
-		$('#pio-playerframe').attr('src', src);
-	});
 });

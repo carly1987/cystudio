@@ -47,6 +47,7 @@ a:hover{text-decoration: none;}
 	border-radius:0 100% 100% 0;
 }
 .sidebar .btn-icon:before{margin-left: 10px;}
+.toolbar{width: 10px;}
 .toolbar .btn-icon{
 	left:-20px;
 	border-left: 1px solid #e3e3e3;
@@ -117,8 +118,8 @@ a:hover{text-decoration: none;}
 .mod-weixin .caption{position: absolute; width: 100%; height: 100%; line-height: 100px; text-align: center; background: rgba(0,0,0,0.1); padding: 0; margin:0; top:0; left: 0; display: none; color: #666;}
 .mod-weixin:hover .caption{display: block;}
 
-.mod-app{padding: 10px 10px}
-.mod-app .thumbnail{background: none; border:0; margin: 0;}
+.mod-app{padding: 10px 10px; width: 90px; display: block; float: left;}
+.mod-app .thumbnail{background: none; border:0; margin: 0; padding: 0;}
 .mod-app .caption{padding: 0; text-align: center;}
 .mod-app .caption h3{
 	height: 2em;
@@ -128,20 +129,20 @@ a:hover{text-decoration: none;}
 	line-height: 2em;
 	color: #333;
 }
-.mod-app .caption small{color: #666; display: block; margin-top: -4px;}
-.app-add .fa{font-size: 3.5em; line-height: 70px; color: #ccc; width: 70px; height: 70px; border-radius: 5px; background: #eee; display: block; text-align: center;}
+.mod-app .caption small{color: #ccc; display: block; margin-top: -4px;}
 .mod-app .thumbnail .fa{
 	display: block;
-  width: 100%;
+  width: 70px;
   background: #eee;
   text-align: center;
-  height: 132px;
-  line-height: 132px;
-  font-size: 100px;
-  border-radius: 30px;
+  height: 70px;
+  line-height: 70px;
+  font-size: 50px;
+  border-radius: 15px;
   box-shadow: 0 0 5px #ccc;
   color: #666;
 }
+.app-add .thumbnail .fa{font-size: 30px; line-height: 70px; color: #ccc; height: 70px; border-radius: 15px; background: #eee; display: block; text-align: center;}
 .app-tool:active .thumbnail .fa{
 	background: #ddd;
 }
@@ -310,6 +311,10 @@ a:hover{text-decoration: none;}
 .preview-wrapper.preview-iphone6 .preview-wrap{
 	width: 280px; height: 498px; background: #ebebeb; padding: 20px 0; position: relative;
 }
+.preview-wrapper .body_generic_inner{
+	position: relative;
+	overflow: visible;
+}
 .preview-wrapper.preview-iphone6 .body_generic_inner{
 	padding: 69px 15px 67px;
 }
@@ -332,20 +337,29 @@ a:hover{text-decoration: none;}
 .preview-wrapper .preview-message{width: 270px; }
 .preview-message{border:1px solid #b3b3b3; box-shadow: 0 0 1px #c8c8c8; padding: 10px; background: #fff; margin: 10px auto; border-radius: 5px; display: block; color: #666;}
 .preview-message .hd{padding-bottom: 10px; display: block; margin-bottom: 5px;}
-.preview-message .bd{}
-.preview-message .bd .img{box-shadow: 0 0 1px #cfcfcf;}
-.preview-message .img img{width: 100%; border-radius: 2px; overflow: hidden;}
+.preview-message h3{font-weight: normal;}
+.preview-message .bd .img{box-shadow: 0 0 1px #cfcfcf; overflow: hidden; height: 105px;}
+.preview-wrapper .preview-message .bd .img{height: 138px;}
+.preview-message .img img{width: 100%; overflow: hidden;}
 .preview-message .bd p{line-height: 20px; padding: 10px 0;}
 .preview-message .ft{border-top:1px solid #eff1f3; line-height: 40px;}
 .message-add{text-align: center; height: 70px; line-height: 50px; font-size: 3.5em; color: #ccc; background: #eee;}
 .message-multi{padding: 10px;}
-.message-multi .hd{position: relative;height: 200px; overflow: hidden; padding: 10px;}
+.message-multi .hd{position: relative;height: 105px; overflow: hidden; padding: 10px;}
 .message-multi .hd .img{position: absolute; top:0; left: 0; width: 100%; height: 100%; background: #eee;}
-.message-multi .hd h3{position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,0.7); color: #fff; padding: 5px 10px; width: 100%; margin: 0;}
+.message-multi .hd h3{position: absolute; left: 0; bottom: 0; background: rgba(0,0,0,0.7); color: #fff; padding: 5px 10px; width: 100%; margin: 0; font-size: 14px;}
 .message-li{display: table; color: #666; padding: 10px;border-top:1px solid #eff1f3;}
 .message-li>*{display: table-cell; vertical-align: top;}
 .message-li>span{text-align: left; padding: 0 10px; width: 100%;}
 .message-li>img{}
+
+.preview-wrapper .tooltip{filter: alpha(opacity=100);
+opacity: 1; width: 100px;}
+.preview-wrapper .tooltip a{color: #fff;}
+.preview-wrapper .tooltip.left{left: -100px;}
+.preview-wrapper .tooltip-slide{top:75px;}
+.preview-wrapper .tooltip-tel{top:260px;}
+.preview-wrapper .tooltip-category{top:320px;}
 
 .preview-menu{position: absolute; left: 0; bottom: 0; width: 100%; height: 37px; border-top:1px solid #b0b0b0; background: #fafafa;}
 .navLine-ul, .navLine-ul li {
@@ -393,7 +407,7 @@ a:hover{text-decoration: none;}
 .navbar-brand .media-img{width: 40px; height: 40px;}
 .navbar-brand .media-body{vertical-align: middle;}
 .navbar-brand .media-img{background: #eee; display: inline-block; font-size: 0.2em; text-align: center; line-height: 20px;border:1px solid #ccc; border-radius: 5px; color: #aaa;}
-
+.navbar-fixed-top{z-index: 2000;}
 .container-main{padding-top: 20px;}
 
 .menu-list .panel-default{border:0;}
@@ -402,3 +416,5 @@ a:hover{text-decoration: none;}
 .menu-list .panel-btns a{padding: 0 5px; color: #ccc;}
 .menu-list .panel-btns a:hover{text-decoration: none;}
 .menu-list .panel-title{position: relative;}
+
+.list-group-item{position: relative;}
