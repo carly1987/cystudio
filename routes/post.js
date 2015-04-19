@@ -14,34 +14,30 @@ var Wsite = require('../module/wsite');
 var Slide = require('../module/slide');
 var Category = require('../module/category');
 //注册
-exports.register = function(req, res, next){
+exports.signup = function(req, res, next){
 	var email = Validator.trim(req.body.email) || '';
 	var pass = Validator.trim(req.body.pass) || '';
-	var repass = Validator.trim(req.body.repass) || '';
 	if (!email || !Validator.isEmail(email)) {
 		req.flash('error','必须要输入邮箱，请注意格式正确！');
-		res.redirect('/register');
-	}else if(!pass || !repass){
+		res.redirect('/signup');
+	}else if(!pass){
 		req.flash('error','必须要输入密码！');
-		res.redirect('/register');
-	}else if( pass != repass){
-		req.flash('error','两次输入必须一致！');
-		res.redirect('/register');
+		res.redirect('/signup');
 	}else{
 		var md5 = Crypto.createHash('md5');
 		pass = md5.update(req.body.pass).digest('hex');
 		User.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
-				res.redirect('/register');
+				res.redirect('/signup');
 			}else{
 				if(doc){
 					req.flash('error','用户已经存在');
-					res.redirect('/register');
+					res.redirect('/signup');
 				}else{
 					User.register({email:email, pass:pass}, function(){
 						req.session.user=email;
-						res.redirect('/main');
+						res.redirect('/admin');
 					});
 				}
 			}
@@ -49,20 +45,20 @@ exports.register = function(req, res, next){
 	}  
 }
 //登录
-exports.login = function(req, res, next) {
+exports.signin = function(req, res, next) {
 	var email = Validator.trim(req.body.email) || '';
 	var pass = Validator.trim(req.body.pass) || '';
 	if (!email) {
 		req.flash('error','必须要输入邮箱，请注意格式正确！');
-		res.redirect('/login');
+		res.redirect('/');
 	}else if(!pass){
 		req.flash('error','必须要输入密码！');
-		res.redirect('/login');
+		res.redirect('/');
 	}else{
 		User.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
-				res.redirect('/register');
+				res.redirect('/');
 			}else{
 				if(doc){
 					var md5 = Crypto.createHash('md5');
@@ -70,15 +66,15 @@ exports.login = function(req, res, next) {
 					if(doc.pass == pass){
 						req.flash('success','登录成功');
 						req.session.user=email;
-						res.redirect('/main');
+						res.redirect('/admin');
 					}else{
 						req.flash('error','登录失败');
-						res.redirect('/login');
+						res.redirect('/');
 					}
 					
 				}else{
 					req.flash('error','用户不存在，请注册！');
-					res.redirect('/register');
+					res.redirect('/signup');
 				}
 			}
 		});
@@ -96,8 +92,6 @@ exports.changePass = function(req,res,next){
 		var md5 = Crypto.createHash('md5');
 		pass = md5.update(req.body.pass).digest('hex');
 		User.changePass({email:email, pass:pass},function(err,doc){
-			console.log('doc');
-			console.log(doc);
 			if(err){
 				res.redirect('/');
 			}
@@ -133,40 +127,40 @@ exports.changeUser = function(req,res,next){
 	}
 }
 //微信公众号添加
-exports.add = function(req, res, next){
-	var user = req.body.user || '';
+exports.weixinAdd = function(req, res, next){
+	var user = req.session.user;
 	var email = req.body.email || '';
 	var pass = req.body.pass || '';
 	if (!email) {
 		req.flash('error','必须要输入微信号！');
-		res.redirect('/weixin');
+		res.redirect('/admin');
 	}else if(!pass){
 		req.flash('error','必须要输入密码！');
-		res.redirect('/weixin');
+		res.redirect('/admin');
 	}else{
 		var md5 = Crypto.createHash('md5')
 		pass = md5.update(req.body.pass).digest('hex');
 		Weixin.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
-				res.redirect('/weixin/add');	
+				res.redirect('/admin');	
 			}else{
 				if(doc){
 					req.flash('error','公众号已经存在');
-					res.redirect('/weixin/add');
+					res.redirect('/admin');
 				}else{
 					Weixin.login(email,pass,req, function(){
 						Weixin.add({user:user, email:email, pass:pass}, function(){
-							res.redirect('/weixin');
+							res.redirect('/admin');
 						});
 					}, function(msg){
 						req.flash('error',msg);
-						res.redirect('/weixin/add');
+						res.redirect('/admin');
 					}, function(imgcode){
 						console.log(imgcode);
 						req.flash('imgcode',imgcode);
 						req.flash('error','需要输入验证码');
-						res.redirect('/weixin/add');
+						res.redirect('/admin');
 					}, 0, function(name,pic,weixin_id,weixin_name,type,verify,contractorinfo,desc,location,qrcode){
 						Weixin.update({email:email, name:name, pic:pic, weixin_id:weixin_id, weixin_name:weixin_name, type:type, verify:verify, contractorinfo:contractorinfo, desc:desc, location:location, qrcode:qrcode}, function(){
 							Message.add({title:weixin_name+'微官网', img:pic,user:user, email:email, type:'wsite'}, function(err, doc){
@@ -176,7 +170,7 @@ exports.add = function(req, res, next){
 							});
 						});
 					}, function(){
-						res.redirect('/weixin/weixinSafe');
+						res.redirect('/admin');
 					});
 				}
 			}

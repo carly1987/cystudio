@@ -2,91 +2,26 @@ var get = require('./get');
 var post = require('./post');
 module.exports=function(app){
 	app.get('/', get.index);
-	app.get('/register', checkNotLogin);
-	app.get('/register', get.register);
-	app.get('/login', checkNotLogin);
-	app.get('/login', get.login);
-	app.get('/logout', get.logout);
-	app.get('/help', get.help);
-	app.get('/main', checkLogin);
-	app.get('/main', get.main);
-	app.get('/info', checkLogin);
-	app.get('/info', get.info);
-	app.get('/changePass', checkLogin);
-	app.get('/changePass', get.changePass);
-	app.get('/weixin', checkLogin);
-	app.get('/weixin', get.weixin);
-	app.get('/weixin/add', checkLogin);
-	app.get('/weixin/add', get.add);
-	app.get('/weixin/del', checkLogin);
-	app.get('/weixin/del', get.del);
-	app.get('/weixin/weixinSafe', checkLogin);
-	app.get('/weixin/weixinSafe', get.weixinSafe);
-	app.get('/admin', checkLogin);
-	app.get('/admin', get.admin);
-	app.get('/admin/key', checkLogin);
-	app.get('/admin/key', get.key);
-	app.get('/admin/key/del', checkLogin);
-	app.get('/admin/key/del', get.keyDel);
-	app.get('/admin/message', checkLogin);
-	app.get('/admin/message', get.message);
-	app.get('/admin/single', checkLogin);
-	app.get('/admin/single', get.single);
-	app.get('/admin/multi', checkLogin);
-	app.get('/admin/multi', get.multi);
-	app.get('/admin/delMessage', checkLogin);
-	app.get('/admin/delMessage', get.delMessage);
-	app.get('/admin/material', checkLogin);
-	app.get('/admin/material', get.material);
-	app.get('/admin/wsite', checkLogin);
-	app.get('/admin/wsite', get.wsite);
-	app.get('/admin/wsite/slide', checkLogin);
-	app.get('/admin/wsite/slide', get.slide);
-	app.get('/admin/wsite/slide/del', checkLogin);
-	app.get('/admin/wsite/slide/del', get.slideDel);
-	app.get('/admin/wsite/category', checkLogin);
-	app.get('/admin/wsite/category', get.category);
-	app.get('/admin/wsite/category/del', checkLogin);
-	app.get('/admin/wsite/category/del', get.categoryDel);
-	app.get('/mod/uploadImg', checkLogin);
-	app.get('/mod/uploadImg', get.uploadImg);
-	app.get('/app/article', get.appArticle);
 
-	app.post('/register', checkNotLogin);
-	app.post('/register', post.register);
-	app.post('/login', checkNotLogin);
-	app.post('/login', post.login);
-	app.post('/info', checkLogin);
-	app.post('/info', post.changeUser);
-	app.post('/changePass', checkLogin);
-	app.post('/changePass', post.changePass);
-	app.post('/weixin/add', checkLogin);
-	app.post('/weixin/add', post.add);
-	app.post('/admin/postAuto', checkLogin);
-	app.post('/admin/postAuto', post.autoMessage);
-	app.post('/admin/postFirst', checkLogin);
-	app.post('/admin/postFirst', post.firstMessage);
-	app.post('/admin/postKey', checkLogin);
-	app.post('/admin/postKey', post.key);
-	app.post('/admin/single', checkLogin);
-	app.post('/admin/single', post.single);
-	app.post('/admin/multi', checkLogin);
-	app.post('/admin/multi', post.multi);
-	app.post('/admin/material', checkLogin);
-	app.post('/admin/material', post.material);
-	app.post('/admin/wsite', checkLogin);
-	app.post('/admin/wsite', post.wsite);
-	app.post('/admin/wsite/slide', checkLogin);
-	app.post('/admin/wsite/slide', post.slide);
-	app.post('/admin/wsite/category', checkLogin);
-	app.post('/admin/wsite/category', post.category);
-	app.post('/mod/uploadImg', checkLogin);
-	app.post('/mod/uploadImg', post.uploadImg);
+	app.get('/repassword', get.repassword);
+
+	app.post('/signin', post.signin);
+
+	app.get('/signup', get.signup);
+	app.post('/signup', post.signup);
+
+	app.get('/signout', get.signout);
+	
+	app.get('/admin', get.admin);
+
+	app.get('/weixinAdd', get.weixinAdd);
+	app.post('/weixinAdd', post.weixinAdd);
+
 }
 function checkLogin(req, res, next){
 	if(!req.session.user){
 			req.flash('error','未登录'); 
-			return res.redirect('/login');
+			return res.redirect('/index');
 	}
 	next();
 }
@@ -95,7 +30,7 @@ function checkLogin(req, res, next){
 function checkNotLogin(req,res,next){
 	if(req.session.user){
 		req.flash('error','已登录'); 
-		return res.redirect('/main');
+		return res.redirect('/admin');
 	}
 	next();
 }

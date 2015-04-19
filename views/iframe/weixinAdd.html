@@ -1,0 +1,25 @@
+<% include ../head.html %>
+<style type="text/css">
+body{padding: 0;}
+</style>
+<form class="form-horizontal" method="post" action="/weixinAdd">
+  <div class="form-group">
+    <label for="" class="col-sm-3 control-label">邮箱／微信号</label>
+    <div class="col-sm-9">
+      <input type="email" class="form-control" name="email" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="" class="col-sm-3 control-label">密码</label>
+    <div class="col-sm-9">
+      <input type="password" class="form-control" name="pass" placeholder="Password">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <button type="submit" class="btn btn-default">添加</button>
+      <!-- <a href="../wsite/index.html" class="btn btn-default">添加</a> -->
+    </div>
+  </div>
+</form>
+<% include ../foot.html %>

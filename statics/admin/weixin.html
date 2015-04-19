@@ -35,27 +35,40 @@
 </nav>
 <div class="container container-main">
 	<div class="page-header">
-		<h3>我的公众号<small>（10个）</small></h3>
+	  <h3>配置公众号</h3>
 	</div>
-	<div class="row">
-		<a class="mod-app app-add" data-toggle="modal" data-target="#addWeixinModal" href="javascript:;">
-			<div class="thumbnail">
-				<i class="fa fa-plus"></i>
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">公众号名称</label>
+			<div class="col-sm-5">
+			  <input type="text" class="form-control" name="" placeholder="">
 			</div>
-			<div class="caption">
-				<h3>添加公众号</h3>
-			 </div>
-		</a>
-		<a class="mod-app" href="../wsite/index.html">
-			<div class="thumbnail">
-			  <img src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png">
-			  <div class="caption">
-				<h3>开心消消乐</h3>
-				<small>粉丝：300</small>
-			  </div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">公众号原始id</label>
+			<div class="col-sm-5">
+			  <input type="text" class="form-control" name="" placeholder="">
 			</div>
-		</a>
-	</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">微信号</label>
+			<div class="col-sm-5">
+			  <input type="text" class="form-control" name="" placeholder="">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="" class="col-sm-3 control-label">头像</label>
+			<div class="col-sm-5">
+			  <a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#uploadModal" data-stage="1">选择图片</a>
+			  <img src="" id="uploadImgValueImg" width="100"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-3 col-sm-5">
+			  <button type="submit" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</form>
 </div>
 <div class="modal fade modal-tab" id="addWeixinModal" tabindex="-1" role="dialog" aria-labelledby="addWeixinModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

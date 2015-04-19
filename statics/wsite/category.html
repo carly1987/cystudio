@@ -58,7 +58,7 @@
 			<a href="javascript:;" class="fa fa-bars btn-icon"></a>
 			<h4>页面列表</h4>
 			<ul class="nav nav-sidebar" id="wsite-page">
-				<li class="active"><a href="../wsite/index.html?page=indedx1&id=666"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
+				<li><a href="../wsite/index.html?page=indedx1&id=666"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
 				<li><a href="../wsite/index.html?page=list1&id=666" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/list/list1.html"><i class="fa fa-bookmark"></i> list</a></li>
 				<li><a href="../wsite/index.html?page=article1&id=666"><i class="fa fa-bookmark"></i> article</a></li>
 		  </ul>
@@ -66,55 +66,79 @@
 		  <ul class="nav nav-sidebar" id="wsite-page">
 				<li><a href="setting.html"><i class="fa fa-gear"></i> 基本配置 <span class="sr-only">(current)</span></a></li>
 				<li><a href="slide.html"><i class="fa fa-film"></i> 首页幻灯 </a></li>
-				<li><a href="category.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
+				<li class="active"><a href="category.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
 				 
 				<li><a href="article.html"><i class="fa fa-list"></i> 管理文章 </a></li>
 		  </ul>
 		</div>
-		<div class="col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2 main">
-			<div class="mod-preview">
-				<div class="preview-wrapper preview-iphone6">
-					<div class="buttons top"></div>
-					<div class="detail-top"></div>
-					<div class="web-search"></div>
-					<div class="buttons left"></div>
-					<div class="body_generic_inner">
-						<canvas id="pio-printercanvas" style="display: none;"></canvas>
-						<div class="preview-inner">
-							<div class="preview-title">网页标题</div>
-							<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="col-sm-5">
+				<div class="mod-preview">
+					<div class="preview-wrapper preview-iphone6">
+						<div class="buttons top"></div>
+						<div class="detail-top"></div>
+						<div class="web-search"></div>
+						<div class="buttons left"></div>
+						<div class="body_generic_inner">
+							<canvas id="pio-printercanvas" style="display: none;"></canvas>
+							<div class="preview-inner">
+								<div class="preview-title">网页标题</div>
+								<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
+							</div>
 						</div>
-						<div class="tooltip left tooltip-title" role="tooltip">
-						  <div class="tooltip-arrow"></div>
-						  <div class="tooltip-inner">
-							  <a href="slide.html">修改网页标题</a>
-						  </div>
-						</div>
-						<div class="tooltip left tooltip-slide" role="tooltip">
-						  <div class="tooltip-arrow"></div>
-						  <div class="tooltip-inner">
-							  <a href="slide.html">修改幻灯片</a>
-						  </div>
-						</div>
-						<div class="tooltip left tooltip-tel" role="tooltip">
-						  <div class="tooltip-arrow"></div>
-						  <div class="tooltip-inner">
-							  <a href="setting.html">修改热线电话</a>
-						  </div>
-						</div>
-						<div class="tooltip left tooltip-category" role="tooltip">
-						  <div class="tooltip-arrow"></div>
-						  <div class="tooltip-inner">
-							  <a href="category.html">修改分类</a>
-						  </div>
-						</div>
+						<div class="buttons right"></div>
+						<div class="detail-bottom"></div>
 					</div>
-					<div class="buttons right"></div>
-					<div class="detail-bottom"></div>
 				</div>
 			</div>
+			<div class="col-sm-6">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>标题</th>
+							<th>类型</th>
+							<th>图片</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>标题1</td>
+							<td>分类1</td>
+							<td><img/></td>
+							<td><a class="edit edit-toolbar">编辑</a> ｜ <a>删除</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class="col-sm-3 col-md-2 toolbar">
+		<div class="col-sm-3 col-md-2 toolbar toolbar-in">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">标题</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="" placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">图片</label>
+					<div class="col-sm-5">
+						<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#uploadModal" data-stage="1">选择图片</a>
+						<img src="" id="uploadImgValueImg" width="100"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">跳转到</label>
+					<div class="col-sm-5">
+						<select class="form-control"><option>dsgfg</option></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<button type="submit" class="btn btn-primary">提交</button>
+					</div>
+				</div>
+			</form>
 			<a href="javascript:;" class="fa fa-cog btn-icon"></a>
 		</div>
 	</div>

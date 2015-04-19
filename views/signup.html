@@ -1,15 +1,14 @@
 <% include head.html %>
 <div class="container">
-	<form class="form-signin" method="post" action="signin">
-		<h2><img src="/images/logo.png"/><small>请您先登录</small></h2>
+	<form class="form-signin" method="post" action="signup">
+		<h2><img src="/images/logo.png"/><small>注册一个吧</small></h2>
 		<% if(error){%><div class="alert alert-danger" role="alert"><%= error %></div><%}%>
 		<label class="sr-only">邮箱</label>
 		<input type="email" name="email" class="form-control" placeholder="example@qq.com">
 		<label class="sr-only">密码</label>
 		<input type="password" name="pass" class="form-control" placeholder="******">
-		<a href="/repassword">忘记密码？</a>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-		<a href="/signup" class="btn btn-lg btn-success btn-block">注册</a>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+		<a href="/" class="btn btn-lg btn-success btn-block">登录</a>
 	</form>
 </div>
 <% include foot.html %>

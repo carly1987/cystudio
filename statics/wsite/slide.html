@@ -20,9 +20,9 @@
 			<div class="navbar-brand" href="#">
 				<div class="media">
 				  <div class="media-left">
-					<a href="#" class="media-img">
+					<a href="../admin/weixin.html" class="media-img">
 					  <!-- <img class="media-object" src="http://images.apple.com/autopush/cn/itunes/charts/free-apps/images/2015/2/9faa0f55-8232-cb62-7916-67eef6d96e4emzl.vczoprne_2x.png" alt="微信公众号名"> -->
-					  添加<br>头像
+					  <i class="fa fa-user"></i>
 					</a>
 				  </div>
 				  <div class="media-body">
@@ -43,7 +43,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-					  <li><a href="#">账户中心</a></li>
+					  <li><a href="../admin/account.html">账户中心</a></li>
 					  <li><a href="#">修改密码</a></li>
 					  <li><a href="#">退出</a></li>
 					</ul>
@@ -58,21 +58,21 @@
 			<a href="javascript:;" class="fa fa-bars btn-icon"></a>
 			<h4>页面列表</h4>
 			<ul class="nav nav-sidebar" id="wsite-page">
-				<li class="active"><a href="../wsite/index.html?page=indedx1&id=666"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
+				<li><a href="../wsite/index.html?page=indedx1&id=666"><i class="fa fa-home"></i> index <span class="sr-only">(current)</span></a></li>
 				<li><a href="../wsite/index.html?page=list1&id=666" data-src="file:///Users/cieldon/nodejs/cystudio/statics/app/list/list1.html"><i class="fa fa-bookmark"></i> list</a></li>
 				<li><a href="../wsite/index.html?page=article1&id=666"><i class="fa fa-bookmark"></i> article</a></li>
 		  </ul>
 		  <h4>官网配置</h4>
 		  <ul class="nav nav-sidebar" id="wsite-page">
 				<li><a href="setting.html"><i class="fa fa-gear"></i> 基本配置 <span class="sr-only">(current)</span></a></li>
-				<li><a href="slide.html"><i class="fa fa-film"></i> 首页幻灯 </a></li>
+				<li class="active"><a href="slide.html"><i class="fa fa-film"></i> 首页幻灯 </a></li>
 				<li><a href="category.html"><i class="fa fa-code-fork"></i> 分类管理 </a></li>
-				<li><a href="articleAdd.html"><i class="fa fa-file"></i> 新建文章 </a></li>
+				 
 				<li><a href="article.html"><i class="fa fa-list"></i> 管理文章 </a></li>
 		  </ul>
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<div class="col-sm-5">
+			<div class="col-sm-4">
 				<div class="mod-preview">
 					<div class="preview-wrapper preview-iphone6">
 						<div class="buttons top"></div>
@@ -81,44 +81,64 @@
 						<div class="buttons left"></div>
 						<div class="body_generic_inner">
 							<canvas id="pio-printercanvas" style="display: none;"></canvas>
-							<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
+							<div class="preview-inner">
+								<div class="preview-title">网页标题</div>
+								<iframe id="pio-playerframe" src="../app/index/index1.html" width="280" height="498"></iframe>
+							</div>
 						</div>
 						<div class="buttons right"></div>
 						<div class="detail-bottom"></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
-				<ul class="list-group">
-				  <li class="list-group-item">
-					<div class="media">
-					  <div class="media-left media-middle">
-						<img class="media-object" src="../../public/images/1.jpg" width="100">
-					  </div>
-					  <div class="media-body">
-						<h4 class="media-heading">标题1</h4>
-						<p>跳转到：微官网</p>
-						<p><a>编辑</a> | <a>删除</a></p>
-					  </div>
-					</div>
-				  </li>
-				  <li class="list-group-item">
-					<div class="media">
-					  <div class="media-left media-middle">
-						<img class="media-object" src="../../public/images/1.jpg" width="100">
-					  </div>
-					  <div class="media-body">
-						<h4 class="media-heading">标题1</h4>
-						<p>跳转到：微官网</p>
-						<p><a>编辑</a> | <a>删除</a></p>
-					  </div>
-					</div>
-				  </li>
-				</div>
+			<div class="col-sm-7">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>标题</th>
+							<th>图片</th>
+							<th>跳转到</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>标题1</td>
+							<td><img/></td>
+							<td>分类1</td>
+							<td><a class="edit edit-toolbar">编辑</a> ｜ <a>删除</a></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="col-sm-3 col-md-2 toolbar toolbar-in">
-			123
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">标题</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="" placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">图片</label>
+					<div class="col-sm-5">
+						<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#uploadModal" data-stage="1">选择图片</a>
+						<img src="" id="uploadImgValueImg" width="100"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">跳转到</label>
+					<div class="col-sm-5">
+						<select class="form-control"><option>dsgfg</option></select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-5">
+						<button type="submit" class="btn btn-primary">提交</button>
+					</div>
+				</div>
+			</form>
 			<a href="javascript:;" class="fa fa-cog btn-icon"></a>
 		</div>
 	</div>

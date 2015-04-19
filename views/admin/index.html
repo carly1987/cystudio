@@ -1,21 +1,30 @@
 <% include ../head.html %>
 <% include nav.html %>
-<div class="container-fluid">
-<div class="row">
-	<% include sidebar.html %>
-	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-	  <div class="page-header">
-	  	<div class="mod-weixin">
-			<a href="admin?email=<%=weixin.email%>" class="thumbnail">
-			  <img src="<%= weixin.pic%>" alt="<%= weixin.name%>" width="60" height="60">
-			  <span><%= weixin.name %></span>
-			</a>
-		</div>	 
-	  </div>
-	  <div class="row">
-		222
-	  </div>
+<div class="container container-main">
+	<div class="page-header">
+		<h3>我的公众号<small>（<%= list.length%>个）</small></h3>
 	</div>
-  </div>
+	<div class="row">
+		<a class="mod-app app-add" data-toggle="modal" data-target="#addWeixinModal" href="javascript:;">
+			<div class="thumbnail">
+				<i class="fa fa-plus"></i>
+			</div>
+			<div class="caption">
+				<h3>添加公众号</h3>
+			 </div>
+		</a>
+		<% list.forEach(function(i){ %>
+		<a class="mod-app" href="/first?email=<%=i.email%>">
+			<div class="thumbnail">
+			  <i><img src="<%=i.pic%> " width="70" height="70"></i>
+			  <div class="caption">
+				<h3><%=i.name%></h3>
+				<small>粉丝：300</small>
+			  </div>
+			</div>
+		</a>
+		<%})%>
+	</div>
 </div>
+<% include ../mod/modal-weixin-add.html %>
 <% include ../foot.html %>

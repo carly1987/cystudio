@@ -41,13 +41,13 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#">账户中心</a></li>
-									<li><a href="#">修改密码</a></li>
-									<li><a href="#">退出</a></li>
-								</ul>
-							</li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">用户名 <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">账户中心</a></li>
+						<li><a href="#">修改密码</a></li>
+						<li><a href="#">退出</a></li>
+					</ul>
+				</li>
 			</ul>
 			</div>
 	</div>
@@ -63,18 +63,34 @@
 					<div class="buttons left"></div>
 					<div class="body_generic_inner">
 						<canvas id="pio-printercanvas" style="display: none;"></canvas>
-						<div class="preview-wrap">
-							<div class="preview-message">
+						<div class="preview-inner">
+							<div class="preview-message" id="message-single">
 								<div class="hd">
-									<h3>标题标题标题</h3>
+									<h3 id="preview-title">标题标题标题</h3>
 									<small>3月11日</small>
 								</div>
 								<div class="bd">
-									<div class="img"><img src="../assets/img/join.gif"></div>
-									<p>hjeg gsshd ghs hdshdhsgfhsg fh hdghs</p>
+									<div class="img"><img src=" " id="preview-pic"></div>
+									<p id="preview-desc">hjeg gsshd ghs hdshdhsgfhsg fh hdghs</p>
 								</div>
 								<div class="ft">
 									阅读全文
+								</div>
+							</div>
+							<div class="preview-message message-multi hide"  id="message-multi">
+								<a class="hd">
+									<div class="img"><img src=" "></div>
+									<h3>标题标题标题</h3>
+								</a>
+								<div class="bd">
+									<a href="message?id=" class="message-li" data-id="">
+										<span>fjhgkhkdhfkg</span>
+										<img src=" " width="50" height="50">
+									</a>
+									<a class="message-li">
+										<span>fjhgkhkdhfkg</span>
+										<img src=" " width="50" height="50">
+									</a>
 								</div>
 							</div>
 						</div>
@@ -89,26 +105,27 @@
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">标题</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="" placeholder="">
+						<input type="text" class="form-control" name="title" placeholder="" data-input="keypress" data-for="#preview-title">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">排序id</label>
 					<div class="col-sm-5">
-						<input type="text" class="form-control" name="" placeholder="">
+						<input type="text" class="form-control" name="order" placeholder="">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">图文封面</label>
 					<div class="col-sm-5">
 						<a class="btn btn-primary ajax-img" data-toggle="modal" data-target="#uploadModal" data-stage="1">选择图片</a>
-					<img src="" id="uploadImgValueImg" width="100"/>
+						<img src="" id="uploadImgValueImg" width="100"/>
+						<input type="hidden" value="" name="pic" data-input="change" data-for="#preview-pic"/>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">简介</label>
 					<div class="col-sm-5">
-						<textarea class="form-control"></textarea>
+						<textarea class="form-control" name="desc" data-input="keypress" data-for="#preview-desc"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -120,23 +137,45 @@
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">图文类型</label>
 					<div class="col-sm-5">
-						<select class="form-control"><option>dsgfg</option></select>
+						<select class="form-control" name="fed" data-edit="select">
+						<option value="0">图文</option>
+						<option value="1">链接</option>
+						<option value="2">导航</option>
+						<option value="3">微官网</option>
+					</select>
+					</div>
+				</div>
+				<div class="form-group form-fed" data-fed="0">
+					<div class="col-sm-offset-2  col-sm-9">
+						<iframe class="iframe" src="../iframe/wysiwyg.html"></iframe>
+					</div>
+				</div>
+				<div class="form-group hide form-fed" data-fed="1">
+					<label for="" class="col-sm-2 control-label">url</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="order" placeholder="">
+					</div>
+				</div>
+				<div class="form-group hide form-fed" data-fed="2">
+					<div class="col-sm-offset-2  col-sm-9">
+						<iframe class="iframe" src="../iframe/map.html"></iframe>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">多图文</label>
 					<div class="col-sm-5">
-						<a class="btn btn-default" data-toggle="modal" data-target="#messageModal">添加</a>
+						<a class="btn btn-default" data-toggle="show" data-for="#list-message">添加</a>
 						<p class="help-inline">最多添加9个</p>
 					</div>
 					<div class="col-sm-5 col-sm-offset-2 mt10">
-						<ul class="list-group">
-						<li class="list-group-item"><a>Cras justo odio</a></li>
-						<li class="list-group-item"><a>Dapibus ac facilisis in</a></li>
-						<li class="list-group-item"><a>Morbi leo risus</a></li>
-						<li class="list-group-item"><a>Porta ac consectetur ac</a></li>
-						<li class="list-group-item"><a>Vestibulum at eros</a></li>
-					</ul>
+						<input type="hidden" value="" name="list-message"/>
+						<div class="list-group hide" id="list-message">
+							<a class="list-group-item" data-id="0" data-pic="">Cras justo odio</a>
+							<a class="list-group-item" data-id="1">Dapibus ac facilisis in</a>
+							<a class="list-group-item" data-id="2">Morbi leo risus</a>
+							<a class="list-group-item" data-id="3">Porta ac consectetur</a>
+							<a class="list-group-item" data-id="4">Vestibulum at eros</a>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">

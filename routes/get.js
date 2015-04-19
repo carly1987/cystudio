@@ -10,95 +10,35 @@ var Wsite = require('../module/wsite');
 var Slide = require('../module/slide');
 var Category = require('../module/category');
 //首页
-exports.index = function(req, res, next){
-	User.list(function (err, list) {
-		if (err) {
-				return next(err);
-		}
-		res.render('index', {
-			title: 'Express',
-			list: list
-		});
+exports.index = function(req, res){
+	res.render('index', { 
+		title: '筋斗云---登录',
+		error:req.flash('error').toString() || ''
+	});
+};
+//忘记密码
+exports.repassword = function(req, res){
+	res.render('repassword', { 
+		title: '筋斗云---忘记密码'
 	});
 };
 //注册页
-exports.register = function(req, res){
-	res.render('main/register', { 
-		title: '注册',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString()
+exports.signup = function(req, res){
+	res.render('signup', { 
+		title: '筋斗云---注册',
+		error:req.flash('error').toString() || ''
 	});
 };
-//登录页
-exports.login = function(req, res){
-	res.render('main/login', { 
-		title: '登录',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString(),
-		user: req.session.user
-	});
-};
+
 //退出登录
-exports.logout = function(req, res, next){
+exports.signout = function(req, res, next){
 	req.session.user=null;
+	req.session.error=null;
 	res.redirect('/');
 }
-//帮住中心
-exports.help = function(req, res){
-	res.render('admin/help/index', {
-		title: '帮助中心',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString(),
-		user: req.session.user
-	});
-}
-//账户管理
-exports.main = function(req, res, next){
-	User.findMain(req.session.user,function(err,doc){
-		if (err) {
-			return next(err);
-		}
-		res.render('main/index', {
-			title: '管理平台',
-			page: 'index',
-			user: doc,
-			list: doc.weixin,
-			format: Format.dateFormat,
-			endDate: Format.endDate
-		});
-	});
-};
-//账户信息页
-exports.info = function(req, res){
-	User.findOne(req.session.user, function(err, doc){
-		if(err){
-			req.flash('error',err);
-			return res.redirect('/main');
-		}else{
-			if(doc){
-				res.render('main/info', { 
-					title: '用户信息',
-					page: 'info',
-					success:req.flash('success').toString(),
-					error:req.flash('error').toString(),
-					user: doc
-				});
-			}
-		}
-	});
-};
-//账户密码修改页
-exports.changePass = function(req, res){
-	res.render('main/changePass', {
-		title: '修改密码',
-		page: 'changePass',
-		success:req.flash('success').toString(),
-		error:req.flash('error').toString(),
-		user: req.session.user
-	});
-};
+
 //微信公众号管理
-exports.weixin = function(req, res, next){
+exports.admin = function(req, res, next){
 	Weixin.list(req.session.user, function (err, list) {
 		if (err) {
 			return next(err);
@@ -107,9 +47,9 @@ exports.weixin = function(req, res, next){
 			list = [];
 		}
 		req.session.weixin = '';
-		res.render('main/weixin/index', {
-			title: '管理公众号',
-			page: 'weixin',
+		res.render('admin/index', {
+			title: '筋斗云---首次关注',
+			page: 'first',
 			list: list,
 			user: req.session.user,
 			format: Format.dateFormat,
@@ -118,10 +58,9 @@ exports.weixin = function(req, res, next){
 	});
 };
 //微信公众号添加
-exports.add = function(req, res){
-	res.render('main/weixin/add', {
+exports.weixinAdd = function(req, res){
+	res.render('iframe/weixinAdd', {
 		title: '添加公众号',
-		page: 'weixin',
 		success:req.flash('success').toString(),
 		error:req.flash('error').toString(),
 		user: req.session.user,
@@ -157,23 +96,6 @@ exports.del = function(req, res){
 	});
 }
 
-//公众号的配置平台
-exports.admin = function(req, res, next){
-	var $url = Url.parse(req.url).query;
-	$url = QS.parse($url);
-	var email = $url["email"];
-	req.session.email = email;
-	Weixin.findOne(email, function(err, doc){
-		if (err) {
-			return next(err);
-		}
-		res.render('admin/index', {
-			title: '公众号配置中心',
-			weixin: doc,
-			page: 'index'
-		});
-	});
-}
 //公众号的自动回复
 exports.key = function(req, res, next){
 	var $url = Url.parse(req.url).query;

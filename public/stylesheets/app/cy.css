@@ -10,16 +10,14 @@ body, div, h1, h2, h3, h4, h5, h6, hr, p, dl, dt, dd, ul, ol, li, form, button, 
     margin: 0;
     padding: 0;
     outline: 0;
+    font-size: 62.5%;
+    font-family: arial, "\5FAE\8F6F\96C5\9ED1";
 }
 html, body {
     width: 100%;
     height: 100%;
     -webkit-user-select: none;
     -webkit-text-size-adjust: none
-}
-html, body, button, input, select, textarea {
-    font-size: 14px;
-    font-family: arial, "\5FAE\8F6F\96C5\9ED1";
 }
 body {
     position: relative;
@@ -29,9 +27,15 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 100%;
     font-weight: 400
 }
-h1{font-size: 30px;}
-h2{font-size: 20px;}
-h3{font-size: 14px;}
+h1 {
+    font-size: 30px;
+}
+h2 {
+    font-size: 20px;
+}
+h3 {
+    font-size: 14px;
+}
 a {
     text-decoration: none;
     -webkit-tap-highlight-color: transparent
@@ -162,7 +166,6 @@ video {
 }
 .html {
     position: relative;
-    max-width: 640px;
     margin: auto;
     overflow: hidden;
     min-height: 100%;
@@ -173,6 +176,7 @@ video {
     min-height: 100%;
     -webkit-transition: -webkit-transform .8s;
 }
+.body{overflow: hidden;}
 footer {
     height: 35px;
     line-height: 35px;
@@ -209,53 +213,60 @@ header a.fl {
 header a.fr {
     right: 0;
 }
-/*slider*/
-.mod-slider {
+
+/*slide*/
+.mod-slide {
     width: 100%;
     position: relative;
     overflow: hidden;
     text-align: center;
 }
-.slider-hor {
+.slide-hor {
     height: 170px;
 }
-.slider-ver {
+@media only screen and (min-width:1200px){
+    .slide-hor {height: 653px;}
+}
+@media only screen and (min-width:1800px){
+    .slide-hor {height: 340px;}
+}
+.slide-ver {
     height: 100%;
     position: fixed;
     top: 0;
     left: 0;
 }
-.mod-slider ul, .mod-slider li {
+.mod-slide ul, .mod-slide li {
     list-style: none;
 }
-.slider-list, .slider-text {
+.slide-list, .slide-text {
     position: absolute;
     width: 100%;
     left: 0;
 }
-.slider-list {
+.slide-list {
     height: 100%;
     top: 0;
     z-index: 0;
 }
-.slider-list li, .slider-list a {
+.slide-list li, .slide-list a {
     width: 100%;
     height: 100%;
     overflow: hidden;
     display: block;
     text-align: center;
 }
-.slider-hor img {
+.slide-hor img {
     width: 100%;
-    max-height: 170px;
+    max-height: 100%;
 }
-.slider-ver img {
+.slide-ver img {
     max-width: 100%;
 }
-.slider-text {
+.slide-text {
     z-index: 1;
 }
-.slider-hor .slider-text {
+.slide-hor .slide-text {
     padding: 5px 10px;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5);
@@ -263,24 +274,24 @@ header a.fr {
     height: 30px;
     line-height: 20px;
 }
-.slider-ver .slider-text {
+.slide-ver .slide-text {
     padding: 0;
     z-index: 1000;
 }
-.slider-hor .slider-center {
+.slide-hor .slide-center {
     background: none;
 }
-.slider-span {
+.slide-span {
     height: 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.slider-hor .slider-span {
+.slide-hor .slide-span {
     width: 60%;
     text-align: left;
 }
-.slider-ver .slider-span {
+.slide-ver .slide-span {
     width: 100%;
     height: 50px;
     line-height: 50px;
@@ -288,22 +299,22 @@ header a.fr {
     background: rgba(0, 0, 0, 0.8);
     display: block;
 }
-.slider-page {
+.slide-page {
     height: 20px;
 }
-.slider-hor .slider-page {
+.slide-hor .slide-page {
     width: 40%;
     text-align: right;
 }
-.slider-ver .slider-page, .slider-center .slider-page {
+.slide-ver .slide-page, .slide-center .slide-page {
     width: 100%;
     text-align: center;
 }
-.slider-ver .slider-page {
+.slide-ver .slide-page {
     height: 50px;
     line-height: 50px;
 }
-.slider-page a {
+.slide-page a {
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -313,8 +324,35 @@ header a.fr {
     border-radius: 10px;
     margin: 0 5px;
 }
-.slider-page a.active {
+.slide-page a.active {
     background: #fff;
 }
-.mod-fa{position: relative; padding-right: 30px;}
-.mod-fa:before{position: absolute; right: 0; width: 30px; height: 30px; text-align: center;line-height: 30px; top:50%; margin-top: -15px;}
+.mod-fa.fa {
+    position: relative;
+    padding-right: 30px;
+    display: block;
+}
+.mod-fa:before {
+    position: absolute;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    top: 50%;
+    margin-top: -15px;
+}
+.mod-active:active,
+.mod-active.active{
+    opacity:0.8;
+    filter:alpha(opacity=80);
+    -moz-opacity:0.8;
+    -khtml-opacity:0.8;
+}
+.btn {
+    font-size: 18px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+}
+.btn-block{display: block;margin: 10px 2% 0 2%;}

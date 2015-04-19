@@ -27,6 +27,8 @@ a:hover{text-decoration: none;}
 		border-left: 1px solid #eee;
 	}
 }
+.btn-icon,
+.btn-icon:hover{text-decoration: none; cursor: pointer;}
 .sidebar .btn-icon,
 .toolbar .btn-icon{
 	position: absolute;
@@ -47,7 +49,7 @@ a:hover{text-decoration: none;}
 	border-radius:0 100% 100% 0;
 }
 .sidebar .btn-icon:before{margin-left: 10px;}
-.toolbar{width: 10px;}
+.toolbar{width: 0px; padding-top: 30px;}
 .toolbar .btn-icon{
 	left:-20px;
 	border-left: 1px solid #e3e3e3;
@@ -55,27 +57,27 @@ a:hover{text-decoration: none;}
 }
 .toolbar .btn-icon:before{margin-right: 10px;}
 .nav-sidebar > li{position: relative;}
-.nav-sidebar > li > a[class !='fa']{ padding: 10px 20px;}
-.sidebar-page .nav-sidebar > li > a[class !='fa']{ padding: 5px 20px;}
-.nav-sidebar > .active > a[class !='fa'],
-.nav-sidebar > .active > a[class !='fa']:hover,
-.nav-sidebar > .active > a[class !='fa']:focus {
+.nav-sidebar > li > a{ padding: 10px 20px;}
+.sidebar-page .nav-sidebar > li > a{ padding: 5px 20px;}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
 	color: #e0e0e0;
 	background-color: #999;
 }
 .nav-sidebar > li > a.fa{position: absolute; display: block; right: 0; top:0; color: #ccc;}
 .nav-sidebar > li > a.fa:hover{background: none; color: #666;}
-.sidebar-page .nav-sidebar > .active > a[class !='fa'],
-.sidebar-page .nav-sidebar > .active > a[class !='fa']:hover,
-.sidebar-page .nav-sidebar > .active > a[class !='fa']:focus {
+.sidebar-page .nav-sidebar > .active > a,
+.sidebar-page .nav-sidebar > .active > a:hover,
+.sidebar-page .nav-sidebar > .active > a:focus {
 	color: #666;
 	background-color: #dcf1f6;
 }
-.nav-sidebar > li:hover > a[class !='fa']{
+.nav-sidebar > li:hover > a{
 	color: #808080;
 	background: #e3e3e3;
 }
-.sidebar-page .nav-sidebar > li:hover > a[class !='fa']{
+.sidebar-page .nav-sidebar > li:hover > a{
 	background: #f5f5f5;
 }
 .navbar-inverse{background: #f5f5f5; border-color: #e3e3e3;}
@@ -308,9 +310,10 @@ a:hover{text-decoration: none;}
 	margin-left: -21px;
 	bottom: 18px;
 }
-.preview-wrapper.preview-iphone6 .preview-wrap{
-	width: 280px; height: 498px; background: #ebebeb; padding: 20px 0; position: relative;
+.preview-wrapper.preview-iphone6 .preview-inner{
+	width: 280px; height: 538px; background: url(../images/bg-weixin.gif) no-repeat #ebebeb; background-size: 100% auto; padding: 10px 0; position: relative;
 }
+.preview-wrapper .preview-title{background: #000; color: #fff; text-align: center; height:30px; line-height: 30px; padding: 0 10px; font-size: 12px;}
 .preview-wrapper .body_generic_inner{
 	position: relative;
 	overflow: visible;
@@ -336,6 +339,8 @@ a:hover{text-decoration: none;}
 }
 .preview-wrapper .preview-message{width: 270px; }
 .preview-message{border:1px solid #b3b3b3; box-shadow: 0 0 1px #c8c8c8; padding: 10px; background: #fff; margin: 10px auto; border-radius: 5px; display: block; color: #666;}
+.preview-message.hide{display: none;}
+.preview-message > div{overflow: hidden;}
 .preview-message .hd{padding-bottom: 10px; display: block; margin-bottom: 5px;}
 .preview-message h3{font-weight: normal;}
 .preview-message .bd .img{box-shadow: 0 0 1px #cfcfcf; overflow: hidden; height: 105px;}
@@ -357,9 +362,10 @@ a:hover{text-decoration: none;}
 opacity: 1; width: 100px;}
 .preview-wrapper .tooltip a{color: #fff;}
 .preview-wrapper .tooltip.left{left: -100px;}
-.preview-wrapper .tooltip-slide{top:75px;}
-.preview-wrapper .tooltip-tel{top:260px;}
-.preview-wrapper .tooltip-category{top:320px;}
+.preview-wrapper .tooltip-slide{top:120px;}
+.preview-wrapper .tooltip-tel{top:300px;}
+.preview-wrapper .tooltip-category{top:360px;}
+.preview-wrapper .tooltip-title{top:75px;}
 
 .preview-menu{position: absolute; left: 0; bottom: 0; width: 100%; height: 37px; border-top:1px solid #b0b0b0; background: #fafafa;}
 .navLine-ul, .navLine-ul li {
@@ -406,7 +412,9 @@ opacity: 1; width: 100px;}
 .navbar-brand img,
 .navbar-brand .media-img{width: 40px; height: 40px;}
 .navbar-brand .media-body{vertical-align: middle;}
-.navbar-brand .media-img{background: #eee; display: inline-block; font-size: 0.2em; text-align: center; line-height: 20px;border:1px solid #ccc; border-radius: 5px; color: #aaa;}
+.navbar-brand .media-img{background: #eee; display: inline-block; font-size: 30px; text-align: center; line-height: 38px;border:1px solid #ccc; border-radius: 5px; color: #ccc;}
+
+
 .navbar-fixed-top{z-index: 2000;}
 .container-main{padding-top: 20px;}
 
