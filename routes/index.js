@@ -17,11 +17,13 @@ module.exports=function(app){
 	app.get('/weixinAdd', get.weixinAdd);
 	app.post('/weixinAdd', post.weixinAdd);
 
+	app.get('/weixinDel', get.weixinDel);
+
 }
 function checkLogin(req, res, next){
 	if(!req.session.user){
-			req.flash('error','未登录'); 
-			return res.redirect('/index');
+		req.flash('error','未登录'); 
+		return res.redirect('/index');
 	}
 	next();
 }

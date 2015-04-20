@@ -68,23 +68,22 @@ exports.weixinAdd = function(req, res){
 	});
 };
 //微信公众号删除
-exports.del = function(req, res){
+exports.weixinDel = function(req, res){
 	var $url = Url.parse(req.url).query;
 	$url = QS.parse($url);
-	var email = $url["email"];
-	var pass = $url["pass"];
-	Weixin.deleteOne(email, pass, req, function(msg){
+	var id = $url["id"];
+	Weixin.deleteOne(id, req, function(msg){
 		req.flash('success',msg);
 		return res.redirect('/weixin');
 	}, function(err){
 		if(err){res.redirect('/');}
-		Key.delByemail(email, function(){
+		Key.delByemail(email, function(email){
 			Material.delByemail(email, function(){
 				Message.delByemail(email, function(){
 					Wsite.delByemail(email, function(){
 						Slide.delByemail(email, function(){
 							Category.delByemail(email, function(){
-								return res.redirect('/weixin');
+								return res.redirect('/admin');
 							});
 						});
 					});
@@ -92,7 +91,7 @@ exports.del = function(req, res){
 			});
 		});
 	}, function(){
-		return res.redirect('/weixin/weixinSafe');
+		return res.redirect('/admin');
 	});
 }
 

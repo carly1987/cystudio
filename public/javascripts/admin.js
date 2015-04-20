@@ -14,6 +14,12 @@ $(function () {
 			self.remove();
 		}
 	});
+	$(document).on('click', '.mod-app em', function(e){
+		e.preventDefault();
+		var href = $(this).attr('data-href');
+		console.log(href);
+		window.location.href = href;
+	});
 	$(document).on('click', '[data-toggle="show"]', function(){
 		var self = $(this);
 		var id = self.attr('data-for');

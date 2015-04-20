@@ -141,11 +141,11 @@ exports.firstMessage = function(options,callback){
 		}
 		doc.firstMessage = options.firstMessage;
 		doc.save(function(err){
-				if(err){
-					util.log("FATAL"+err);
-				}else{
-					callback(null, doc);
-				}
+			if(err){
+				util.log("FATAL"+err);
+			}else{
+				callback(null, doc);
+			}
 		});
 	});
 }
@@ -158,8 +158,8 @@ exports.list = function(user,callback){
 		callback(null, doc);
 	});
 }
-exports.findOne = function(email,callback){
-	Weixin.findOne({email:email},function(err,doc){
+exports.findOne = function(id,callback){
+	Weixin.findOne({_id:id},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -167,21 +167,23 @@ exports.findOne = function(email,callback){
 		callback(null, doc);
 	});
 }
-exports.deleteOne = function(email, pass, request,fcb,callback, safecb){
-	exports.login(email, pass, request, function(){
-		Weixin.findOne({email:email},function(err,doc){
-			if (err) {
-				util.log('FATAL '+ err);
-				callback(err, null);
-			}
-			if(doc){
+exports.deleteOne = function(id,request,fcb,callback, safecb){
+	exports.findOne(id,function(err,doc){
+		if (err) {
+			util.log('FATAL '+ err);
+			callback(err, null);
+		}
+		if(doc){
+			var email = doc.email;
+			var pass = doc.pass;
+			exports.login(email, pass, request, function(){
 				doc.remove();
-				callback(null);
-			}
-		});
-	}, fcb, function(){
-		console.log('验证码成功！');
-	},1, function(){return false;}, safecb);
+				callback(email);
+			}, fcb, function(){
+				console.log('验证码成功！');
+			},1, function(){return false;}, safecb);
+		}
+	});
 }
 exports.openLogin = function(){
 	https.get('https://mp.weixin.qq.com/', function(res) {

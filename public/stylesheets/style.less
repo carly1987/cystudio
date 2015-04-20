@@ -132,9 +132,9 @@ a:hover{text-decoration: none;}
 }
 
 .mod-app{padding: 10px 10px; width: 90px; display: block; float: left;
-	.thumbnail{background: none; border:0; margin: 0; padding: 0;
-		.fa{
-			display: block;
+	.thumbnail{background: none; border:0; margin: 0; padding: 0; position: relative;
+		i.fa{
+		  display: block;
 		  width: 70px;
 		  background: #eee;
 		  text-align: center;
@@ -149,6 +149,9 @@ a:hover{text-decoration: none;}
 			height: 70px; border-radius: 15px; background: #eee; display: block; text-align: center; width: 70px; line-height: 70px; overflow: hidden;
 			img{border-radius: 15px;}
 		}
+		em.fa{
+			position: absolute; top: 0; right: 0; background: #cfc8d2; color: #000; border-radius: 100%; width: 20px; height: 20px; line-height: 20px; text-align: center; display: none;
+		}
 	}
 	.caption{padding: 0; text-align: center;
 		h3{
@@ -161,6 +164,9 @@ a:hover{text-decoration: none;}
 		}
 		small{color: #ccc; display: block; margin-top: -4px;}
 	}
+}
+.mod-app:hover{
+	em.fa{display: block;}
 }
 .app-add{
 	.thumbnail{

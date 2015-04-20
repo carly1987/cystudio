@@ -196,8 +196,9 @@ a:hover {
   border: 0;
   margin: 0;
   padding: 0;
+  position: relative;
 }
-.mod-app .thumbnail .fa {
+.mod-app .thumbnail i.fa {
   display: block;
   width: 70px;
   background: #eee;
@@ -222,6 +223,19 @@ a:hover {
 .mod-app .thumbnail i img {
   border-radius: 15px;
 }
+.mod-app .thumbnail em.fa {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #cfc8d2;
+  color: #000;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  display: none;
+}
 .mod-app .caption {
   padding: 0;
   text-align: center;
@@ -238,6 +252,9 @@ a:hover {
   color: #ccc;
   display: block;
   margin-top: -4px;
+}
+.mod-app:hover em.fa {
+  display: block;
 }
 .app-add .thumbnail .fa {
   font-size: 30px;
