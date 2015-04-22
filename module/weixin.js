@@ -158,8 +158,8 @@ exports.list = function(user,callback){
 		callback(null, doc);
 	});
 }
-exports.findOne = function(id,callback){
-	Weixin.findOne({_id:id},function(err,doc){
+exports.findOne = function(email,callback){
+	Weixin.findOne({email:email},function(err,doc){
 		if (err) {
 			util.log('FATAL '+ err);
 			callback(err, null);
@@ -168,22 +168,20 @@ exports.findOne = function(id,callback){
 	});
 }
 exports.deleteOne = function(id,request,fcb,callback, safecb){
-	exports.findOne(id,function(err,doc){
-		if (err) {
-			util.log('FATAL '+ err);
-			callback(err, null);
-		}
-		if(doc){
-			var email = doc.email;
-			var pass = doc.pass;
-			exports.login(email, pass, request, function(){
+	exports.login(email, pass, request, function(){
+		Weixin.findOne({email:email},function(err,doc){
+			if (err) {
+				util.log('FATAL '+ err);
+				callback(err, null);
+			}
+			if(doc){
 				doc.remove();
-				callback(email);
-			}, fcb, function(){
-				console.log('验证码成功！');
-			},1, function(){return false;}, safecb);
-		}
-	});
+				callback(null);
+			}
+		});
+	}, fcb, function(){
+		console.log('验证码成功！');
+	},1, function(){return false;}, safecb);
 }
 exports.openLogin = function(){
 	https.get('https://mp.weixin.qq.com/', function(res) {

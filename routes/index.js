@@ -19,6 +19,8 @@ module.exports=function(app){
 
 	app.get('/weixinDel', get.weixinDel);
 
+	app.get('/weixinSafe', get.weixinSafe);
+
 }
 function checkLogin(req, res, next){
 	if(!req.session.user){

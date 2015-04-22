@@ -133,21 +133,21 @@ exports.weixinAdd = function(req, res, next){
 	var pass = req.body.pass || '';
 	if (!email) {
 		req.flash('error','必须要输入微信号！');
-		res.redirect('/admin');
+		res.redirect('/weixinAdd');
 	}else if(!pass){
 		req.flash('error','必须要输入密码！');
-		res.redirect('/admin');
+		res.redirect('/weixinAdd');
 	}else{
 		var md5 = Crypto.createHash('md5')
 		pass = md5.update(req.body.pass).digest('hex');
 		Weixin.findOne(email, function(err, doc){
 			if(err){
 				req.flash('error',err);
-				res.redirect('/admin');	
+				res.redirect('/weixinAdd');	
 			}else{
 				if(doc){
 					req.flash('error','公众号已经存在');
-					res.redirect('/admin');
+					res.redirect('/weixinAdd');
 				}else{
 					Weixin.login(email,pass,req, function(){
 						Weixin.add({user:user, email:email, pass:pass}, function(){
@@ -170,7 +170,7 @@ exports.weixinAdd = function(req, res, next){
 							});
 						});
 					}, function(){
-						res.redirect('/admin');
+						res.redirect('/weixinSafe');
 					});
 				}
 			}
